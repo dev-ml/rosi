@@ -1,0 +1,19 @@
+.EquipmentBar {
+  display: flex;
+
+  > * {
+    margin: 0 0.6rem;
+  }
+
+  .icon {
+    &_broken {
+      fill: #D32F2F;
+    }
+    &_notavailable {
+      fill: #757575;
+    }
+    &_available {
+      fill: #FFFFFF;
+    }
+  }
+}

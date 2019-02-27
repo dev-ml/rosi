@@ -1,0 +1,15 @@
+.AllocationMenu {
+  display: flex;
+  &.free > * {
+    background:#388E3C;
+    border: 1px solid #8BC34A;
+  }
+  &.occupied > * {
+    background: #D32F2F;
+    border: 1px solid #FF5722;
+  }
+  &.awaiting > * {
+    background:#FF9800;
+    border: 1px solid #FFEB3B;
+  }
+}
