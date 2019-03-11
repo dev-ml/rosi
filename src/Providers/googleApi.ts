@@ -239,7 +239,7 @@ export class GoogleApi {
 
   private updateSigninStatus(isSignedIn: boolean) {
     if (isSignedIn) {
-      // this.listUpcomingEvents(10);
+      this.listUpcomingEvents(10);
     }
     this.sign = isSignedIn;
   }
