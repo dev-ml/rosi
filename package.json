@@ -23,10 +23,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-github-pages": "react-scripts build && mv build docs",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' -t verbose",
-    "cypress:open": "cypress open"
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' -t verbose"
   },
   "eslintConfig": {
     "extends": "react-app"
