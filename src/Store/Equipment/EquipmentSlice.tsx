@@ -1,5 +1,6 @@
 import { createSlice } from "redux-starter-kit";
-import { Equipment, EquipmentStatus } from "../../models/Equipment";
+import { Equipment } from "../../models/Equipment";
+import { EquipmentStatus } from "../../models/EquipmentStatus";
 
 // EQUIPMENT ////////////////////////
 // [TODO] add ids
