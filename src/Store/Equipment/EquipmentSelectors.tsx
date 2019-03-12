@@ -1,5 +1,5 @@
 import { createSelector } from "redux-starter-kit";
-import { Equipment } from "../../Models/Equipment";
+import { Equipment } from "../../models/Equipment";
 
 export const getRoomEquipment = (name: string) => createSelector(
   ["equipment"],

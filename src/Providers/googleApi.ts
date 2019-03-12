@@ -1,11 +1,10 @@
-import store from '../Store/store';
-import allocationSlice from '../Store/Allocation/AllocationSlice';
-import Allocation from '../Models/Allocation';
-import { start } from 'repl';
+import Allocation from "../models/Allocation";
+import allocationSlice from "../store/Allocation/AllocationSlice";
+import store from "../store/store";
 
 export class GoogleApi {
   public get gapi(): any {
-    return (window as any)['gapi'];
+    return (window as any).gapi;
   }
 
   public sign: boolean = false;
@@ -43,9 +42,9 @@ export class GoogleApi {
     script.src = "https://apis.google.com/js/api.js";
     document.body.appendChild(script);
     script.onload = () => {
-      // this.gapi = window['gapi'] as any;
-      // this.gapi.load('client:auth2', this.initClient);
-      this.gapi.load('client:auth2', () => this.initClient());
+      // this.gapi = window["gapi"] as any;
+      // this.gapi.load("client:auth2", this.initClient);
+      this.gapi.load("client:auth2", () => this.initClient());
     };
     // gapi.load("client:auth2", initClient);
   }
@@ -70,7 +69,7 @@ export class GoogleApi {
    * Execute the callback function when a user is disconnected or connected with the sign status.
    * @param callback
    */
-  public listenSign(callback: Function) {
+  public listenSign(callback: (status: any) => void) {
     if (this.gapi) {
       this.gapi.auth2.getAuthInstance().isSignedIn.listen(callback);
     } else {
@@ -79,7 +78,7 @@ export class GoogleApi {
   }
 
   public sync() {
-    // Construct the {@link Calendar.Events.List} request, but don't execute it yet.
+    // Construct the {@link Calendar.Events.List} request, but don"t execute it yet.
     // Calendar.Events.List request = client.events().list("primary");
     let request: any;
 
@@ -87,8 +86,8 @@ export class GoogleApi {
     if (this.syncToken == null) {
       console.log("Performing full sync.");
       request = this.constructUpcomingEventsRequestFull();
-      
-      // Set the filters you want to use during the full sync. Sync tokens aren't compatible with
+
+      // Set the filters you want to use during the full sync. Sync tokens aren"t compatible with
       // most filters, but you may want to limit your full sync to only a certain date range.
       // In this example we are only syncing events up to a year old.
       // Date oneYearAgo = Utils.getRelativeDate(java.util.Calendar.YEAR, -1);
@@ -109,35 +108,36 @@ export class GoogleApi {
     // try {
     const singleSync = (pageToken: string | null) => {
       request.pageToken = pageToken;
-      console.log('request body: ', request);
+      console.log("request body: ", request);
       this.gapi.client.calendar.events.list(request)
         .then((response: any) => {
-          console.log('synced object: ', response.result);
-          console.log('events synced: ', response.result.items);
+          console.log("synced object: ", response.result);
+          console.log("events synced: ", response.result.items);
           this.events = response.result;
 
           if (this.events.items.length === 0) {
             console.log("No new events to sync.");
           } else {
-            for (let event of this.events.items) {
-              // console.log('event: ', event);
+            for (const event of this.events.items) {
+              // console.log("event: ", event);
+              // [TODO] this needs to be implemented
               // syncEvent(event);
             }
           }
 
-          let pageToken = this.events.nextPageToken;
-          if (pageToken) {
-            console.log('new pageToken: ', pageToken);
-            singleSync(pageToken);
+          const nextPageToken = this.events.nextPageToken;
+          if (nextPageToken) {
+            console.log("new pageToken: ", nextPageToken);
+            singleSync(nextPageToken);
           } else {
-            console.log('setting sync Token: ', this.events.nextSyncToken);
+            console.log("setting sync Token: ", this.events.nextSyncToken);
             this.syncToken = this.events.nextSyncToken;
             console.log("Sync complete.");
           }
 
         })
         .catch((err: any) => {
-          console.log('Sync Error: ', err);
+          console.log("Sync Error: ", err);
           if (err.statusCode === 410) {
             // A 410 status code, "Gone", indicates that the sync token is invalid.
             console.log("Invalid sync token, clearing event store and re-syncing.");
@@ -159,50 +159,21 @@ export class GoogleApi {
     // this.syncToken = this.events.syncToken;
   }
 
-  private constructUpcomingEventsRequestFull(calendarId = "primary", maxResults = 1000) {
-    const today = new Date();
-    // const tomorrow = new Date();
-    // tomorrow.setDate(today.getDate() + 1);
-    // tomorrow.setTime(today.getTime() + 30000);
-    return {
-      'calendarId': calendarId,
-      'timeMin': (today).toISOString(),
-      // 'timeMax': (tomorrow).toISOString(),
-      'singleEvents': true,
-      'maxResults': maxResults,
-      'syncToken': null as (string | null),
-      'pageToken': null as (string | null)
-    }
-  }
-
-  private constructUpcomingEventsRequestPartial(calendarId = "primary", maxResults = 1000) {
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-    return {
-      'calendarId': calendarId,
-      'singleEvents': true,
-      'maxResults': maxResults,
-      'syncToken': null as (string | null),
-      'pageToken': null as (string | null)
-    }
-  }
-
   public listUpcomingEvents(maxResults: number) {
     if (this.gapi) {
       return this.gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': (new Date()).toISOString(),
-        'showDeleted': false,
-        'singleEvents': true,
-        'maxResults': maxResults,
-        'orderBy': 'startTime'
+        calendarId: "primary",
+        maxResults,
+        orderBy: "startTime",
+        showDeleted: false,
+        singleEvents: true,
+        timeMin: (new Date()).toISOString(),
       }).then((response: any) => {
-        console.log('events: ', response.result.items);
-        for (let allocation of response.result.items) {
-          var a = new Allocation(allocation.summary, "Supernova",
+        console.log("events: ", response.result.items);
+        for (const allocation of response.result.items) {
+          const a = new Allocation(allocation.summary, "Supernova",
             new Date(allocation.start.dateTime).getTime(),
-            new Date(allocation.end.dateTime).getTime())
+            new Date(allocation.end.dateTime).getTime());
 
           // allocation.organizer.displayName
           // status
@@ -211,16 +182,44 @@ export class GoogleApi {
           store.dispatch(allocationSlice.actions.addAllocation({ ...a }));
         }
       });
-    }
-    else {
+    } else {
       console.log("Error: this.gapi not loaded");
       return false;
     }
   }
 
+  private constructUpcomingEventsRequestFull(calendarId = "primary", maxResults = 1000) {
+    const today = new Date();
+    // const tomorrow = new Date();
+    // tomorrow.setDate(today.getDate() + 1);
+    // tomorrow.setTime(today.getTime() + 30000);
+    return {
+      calendarId,
+      // "timeMax": (tomorrow).toISOString(),
+      maxResults,
+      pageToken: null as (string | null),
+      singleEvents: true,
+      syncToken: null as (string | null),
+      timeMin: (today).toISOString(),
+    };
+  }
+
+  private constructUpcomingEventsRequestPartial(calendarId = "primary", maxResults = 1000) {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    return {
+      calendarId,
+      maxResults,
+      pageToken: null as (string | null),
+      singleEvents: true,
+      syncToken: null as (string | null),
+    };
+  }
+
   /**
- * Auth to the google Api.
- */
+   * Auth to the google Api.
+   */
   private initClient() {
     this.gapi.client.init(this.CONFIG)
       .then(() => {
@@ -246,5 +245,5 @@ export class GoogleApi {
 
 }
 
-let apiCalendar: GoogleApi = new GoogleApi();
+const apiCalendar: GoogleApi = new GoogleApi();
 export default apiCalendar;

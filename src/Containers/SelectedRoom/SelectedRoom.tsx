@@ -1,32 +1,31 @@
 import { connect } from "react-redux";
-import Allocation from "../../Models/Allocation";
-import { Equipment } from "../../Models/Equipment";
-import RoomView from "../../Presentational/RoomView/RoomView";
-import allocationSlice from "../../Store/Allocation/AllocationSlice";
-import equipmentSlice from "../../Store/Equipment/EquipmentSlice";
-import { getSelectedRoom, getSelectedRoomCurrentAllocations, getSelectedRoomEquipment,
-         getSelectedRoomNextAllocation, isSelectedRoomOccupied, getSelectedRoomStatus } from "../../Store/selectors";
-import { getDate } from "../../Store/UI/UISelectors";
+import RoomView from "../../components/RoomView/RoomView";
+import Allocation from "../../models/Allocation";
+import { Equipment } from "../../models/Equipment";
+import allocationSlice from "../../store/Allocation/AllocationSlice";
+import equipmentSlice from "../../store/Equipment/EquipmentSlice";
+import * as selectors from "../../store/selectors";
+import { getDate } from "../../store/UI/UISelectors";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   console.log("mapState: ", state);
   const time = getDate(state);
-  const room = getSelectedRoom(state);
-  const equipment = getSelectedRoomEquipment(state);
+  const room = selectors.getSelectedRoom(state);
+  const equipment = selectors.getSelectedRoomEquipment(state);
 
   // 2 min
-  const roomStatus = getSelectedRoomStatus(120000)(state);
+  const roomStatus = selectors.getSelectedRoomStatus(120000)(state);
 
   // [TODO] If there are more then two allocations it should be marked in allocationinfobig
-  const currentAllocation = getSelectedRoomCurrentAllocations(state)[0];
-  const nextAllocation = getSelectedRoomNextAllocation(state);
+  const currentAllocation = selectors.getSelectedRoomCurrentAllocations(state)[0];
+  const nextAllocation = selectors.getSelectedRoomNextAllocation(state);
 
   return {
     currentAllocation,
     equipment,
     nextAllocation,
-    roomStatus,
     room,
+    roomStatus,
     time,
   };
 };
@@ -38,12 +37,12 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(allocationSlice.actions.addAllocation({
         ...new Allocation("Ad hoc meeting", "Supernova", Date.now() - 60000, Date.now() + 50000), confirmed: true}));
     },
-    onConfirmMeetingClick: (id: string) => {
-      dispatch(allocationSlice.actions.confirmMeeting({id}));
-    },
     onChangeStatusClick: (e: Equipment) => {
       dispatch(equipmentSlice.actions.changeStatus(e));
       console.log("TODO change status. Ids need to be added to equipment");
+    },
+    onConfirmMeetingClick: (id: string) => {
+      dispatch(allocationSlice.actions.confirmMeeting({id}));
     },
     onExtendMeetingClick: (id: string, amount: number) => {
       dispatch(allocationSlice.actions.extendMeeting({id, amount}));

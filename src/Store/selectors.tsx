@@ -1,7 +1,7 @@
 import { createSelector } from "redux-starter-kit";
-import Allocation from "../Models/Allocation";
-import { Equipment } from "../Models/Equipment";
-import Room, { RoomStatus } from "../Models/Room";
+import Allocation from "../models/Allocation";
+import { Equipment } from "../models/Equipment";
+import Room, { RoomStatus } from "../models/Room";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
 

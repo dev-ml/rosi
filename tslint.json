@@ -8,7 +8,9 @@
   "rules": {
     // override tslint-react rules here
     "jsx-wrap-multiline": false,
-    "no-console": false
+    "jsx-no-lambda": false,
+    "no-console": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": []
 }

@@ -1,5 +1,5 @@
 import { createSlice } from "redux-starter-kit";
-import Allocation from "../../Models/Allocation";
+import Allocation from "../../models/Allocation";
 
 // ALLOCATIONS ////////////////////////
 const allocationSlice = createSlice({

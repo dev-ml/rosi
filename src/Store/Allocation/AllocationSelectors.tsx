@@ -1,5 +1,5 @@
 import { createSelector } from "redux-starter-kit";
-import Allocation from "../../Models/Allocation";
+import Allocation from "../../models/Allocation";
 
 export const getRoomAllocations = (name: string) => createSelector(
   ["allocation"],

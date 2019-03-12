@@ -1,8 +1,8 @@
-import Allocation from "../Models/Allocation";
-import Room from "../Models/Room";
+import Allocation from "../models/Allocation";
+import Room from "../models/Room";
 import store from "./store";
 
-import { Equipment, EquipmentStatus, EquipmentType } from "../Models/Equipment";
+import { Equipment, EquipmentStatus, EquipmentType } from "../models/Equipment";
 import allocationSlice from "./Allocation/AllocationSlice";
 import equipmentSlice from "./Equipment/EquipmentSlice";
 import roomSlice from "./Room/RoomSlice";

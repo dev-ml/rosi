@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./App";
 import "./Assets/symbol-defs.svg";
+import App from "./containers/App/App";
 import "./index.scss";
 import * as serviceWorker from "./serviceWorker";
-import start from "./Store/start";
-import store from "./Store/store";
+import start from "./store/start";
+import store from "./store/store";
 
 start();
 
