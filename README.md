@@ -1,3 +1,10 @@
+# Rosi
+
+## Demo
+
+See [Github pages](https://dev-ml.github.io/rosi/)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

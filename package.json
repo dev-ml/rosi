@@ -23,7 +23,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build-github-pages": "react-scripts build && mv build docs",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}' -t verbose"
@@ -39,6 +40,7 @@
   ],
   "devDependencies": {
     "cypress": "^3.1.5",
+    "gh-pages": "^2.0.1",
     "tslint": "^5.12.1",
     "tslint-react": "^3.6.0"
   }
