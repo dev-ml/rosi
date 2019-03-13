@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./Assets/symbol-defs.svg";
 import App from "./containers/App/App";
-import "./index.scss";
+import "./styles/index.scss";
 import * as serviceWorker from "./serviceWorker";
 import start from "./store/start";
 import store from "./store/store";

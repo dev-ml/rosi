@@ -1,15 +1,16 @@
 .AllocationMenu {
   display: flex;
+
   &.free > * {
-    background:#388E3C;
-    border: 1px solid #8BC34A;
+    background: var(--color-green-secondary);
+    border: 1px solid var(--color-green-alt);
   }
   &.occupied > * {
-    background: #D32F2F;
-    border: 1px solid #FF5722;
+    background: var(--color-red-secondary);
+    border: 1px solid var(--color-red-alt);
   }
   &.awaiting > * {
-    background:#FF9800;
-    border: 1px solid #FFEB3B;
+    background: var(--color-orange-secondary);
+    border: 1px solid var(--color-orange-alt);
   }
 }

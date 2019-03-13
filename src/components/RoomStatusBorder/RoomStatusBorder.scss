@@ -11,14 +11,14 @@
   }
 
   &.free {
-    background: #4CAF50;
+    background: var(--color-green-primary);
   }
   
   &.occupied {
-    background: #F44336;
+    background: var(--color-red-primary);
   }
 
   &.awaiting {
-    background: #FBC02D;
+    background: var(--color-orange-primary);
   }
 }

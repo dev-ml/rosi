@@ -7,13 +7,13 @@
 
   .icon {
     &_broken {
-      fill: #D32F2F;
+      fill: var(--color-red-primary);
     }
     &_notavailable {
-      fill: #757575;
+      fill: var(--color-gray);
     }
     &_available {
-      fill: #FFFFFF;
+      fill: var(--color-green-primary);
     }
   }
 }
