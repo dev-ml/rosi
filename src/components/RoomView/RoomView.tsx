@@ -6,6 +6,8 @@ import RoomStatusBorder from "../RoomStatusBorder/RoomStatusBorder";
 import StatusBar from "../StatusBar/StatusBar";
 import TimeView from "../TimeView/TimeView";
 import "./RoomView.scss";
+import Header from "../Header/Header";
+import Popup from "../Popup/Popup";
 
 const roomView = (props: any) => {
   console.log("roomView: ", props);
@@ -25,7 +27,7 @@ const roomView = (props: any) => {
 
   return (
     <div className="RoomView">
-      <StatusBar  time={props.time} {...props}/>
+      <Header time={props.time} {...props}/>
       <RoomStatusBorder roomStatus={props.roomStatus}>
         <TimeView time={props.time} />
         <div className="Separator"/>
@@ -43,6 +45,12 @@ const roomView = (props: any) => {
           />
         </div>
       </RoomStatusBorder>
+      <StatusBar onAdminClicked={props.onAdminClick}/>
+      <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
+        <p>This is first child</p>
+        <div>This is second</div>
+        {/* <AdminPanel></AdminPanel> */}
+      </Popup>
     </div>
   );
 };

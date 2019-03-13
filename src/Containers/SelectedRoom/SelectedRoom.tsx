@@ -5,11 +5,13 @@ import { Equipment } from "../../models/Equipment";
 import allocationSlice from "../../store/Allocation/AllocationSlice";
 import equipmentSlice from "../../store/Equipment/EquipmentSlice";
 import * as selectors from "../../store/selectors";
-import { getDate } from "../../store/UI/UISelectors";
+import { getDate, getAdminPanelOpen } from "../../store/UI/UISelectors";
+import uiSlice from "../../store/UI/UISlice";
 
 const mapStateToProps = (state: any, ownProps: any) => {
   console.log("mapState: ", state);
   const time = getDate(state);
+  const adminPanelOpen = getAdminPanelOpen(state);
   const room = selectors.getSelectedRoom(state);
   const equipment = selectors.getSelectedRoomEquipment(state);
 
@@ -27,11 +29,18 @@ const mapStateToProps = (state: any, ownProps: any) => {
     room,
     roomStatus,
     time,
+    adminPanelOpen,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    onAdminClick: () => {
+      dispatch(uiSlice.actions.showAdminPanel());
+    },
+    onPopupCloseClick: () => {
+      dispatch(uiSlice.actions.hideAdminPanel());
+    },
     onAddMeetingClick: (id: string) => {
       // [TODO] roomName to id
       dispatch(allocationSlice.actions.addAllocation({
