@@ -6,7 +6,7 @@ const StatusBar = (props: any) => {
   return (
     <div className="StatusBar">
       <div>This is StatusBar</div>
-      <Button type="icon-text" onClick={props.onAdminClicked} iconId="icon-users" label="Admin" />
+      <Button type="icon-text" onClick={props.onAdminClicked} iconId="icon-settings" label="Admin" />
     </div>
   );
 };
