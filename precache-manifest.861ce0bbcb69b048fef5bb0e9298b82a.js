@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/rosi/static/css/main.7fe9bc3f.chunk.css"
   },
   {
-    "revision": "77e8a159e227fc1368e54afb6f821c9b",
+    "revision": "948aaee4bdf9fb193bd84442e22a5b1a",
     "url": "/rosi/index.html"
   }
 ];
