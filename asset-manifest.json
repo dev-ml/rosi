@@ -1,13 +1,13 @@
 {
-  "main.css": "/rosi/static/css/main.a455b2dc.chunk.css",
-  "main.js": "/rosi/static/js/main.69d890ae.chunk.js",
-  "main.js.map": "/rosi/static/js/main.69d890ae.chunk.js.map",
-  "static/js/1.7fdf83d4.chunk.js": "/rosi/static/js/1.7fdf83d4.chunk.js",
-  "static/js/1.7fdf83d4.chunk.js.map": "/rosi/static/js/1.7fdf83d4.chunk.js.map",
+  "main.css": "/rosi/static/css/main.7fe9bc3f.chunk.css",
+  "main.js": "/rosi/static/js/main.b03d3c1b.chunk.js",
+  "main.js.map": "/rosi/static/js/main.b03d3c1b.chunk.js.map",
+  "static/js/1.515c3f60.chunk.js": "/rosi/static/js/1.515c3f60.chunk.js",
+  "static/js/1.515c3f60.chunk.js.map": "/rosi/static/js/1.515c3f60.chunk.js.map",
   "runtime~main.js": "/rosi/static/js/runtime~main.5dd57311.js",
   "runtime~main.js.map": "/rosi/static/js/runtime~main.5dd57311.js.map",
-  "static/css/main.a455b2dc.chunk.css.map": "/rosi/static/css/main.a455b2dc.chunk.css.map",
+  "static/css/main.7fe9bc3f.chunk.css.map": "/rosi/static/css/main.7fe9bc3f.chunk.css.map",
   "index.html": "/rosi/index.html",
-  "precache-manifest.5db6ed4ffca2f6451e5ef7d72b07bfd7.js": "/rosi/precache-manifest.5db6ed4ffca2f6451e5ef7d72b07bfd7.js",
+  "precache-manifest.d7a0da403a8efede282c4633d9a480cd.js": "/rosi/precache-manifest.d7a0da403a8efede282c4633d9a480cd.js",
   "service-worker.js": "/rosi/service-worker.js"
 }
