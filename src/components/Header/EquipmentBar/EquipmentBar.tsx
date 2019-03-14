@@ -6,6 +6,7 @@ import Button from "../../UI/Button/Button";
 const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: Equipment) => void }) => {
   const mapEquipmentToButton = (e: Equipment) => {
     return <Button
+      key={e.type}
       type="icon"
       onClick={() => props.onChangeStatusClick(e)}
       iconId={`icon-${e.type.toLowerCase()}`}

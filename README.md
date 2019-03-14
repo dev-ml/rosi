@@ -9,7 +9,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+### `npm run deploy`
+
+Builds the application and deploys it to Github pages<br>
+Open [Github pages](https://dev-ml.github.io/rosi/) to view it in the browser.
 
 ### `npm start`
 
