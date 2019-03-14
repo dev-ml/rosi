@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as selectors from "../../store/selectors";
 import roomSlice from "../../store/Room/RoomSlice";
 import Room from "../../models/Room";
+import Button from "../../components/UI/Button/Button";
 
 interface IAdminPanelProps {
   onSettingsSaved: (roomId: string, newName: string) => void;
@@ -50,7 +51,11 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
               onChange={(e) => this.inputChangedHandler(e)}
             />
           </div>
-          <button type="submit">Save Settings</button>
+          <Button
+            type="icon-text"
+            iconId="icon-save"
+            label="Save Settings"
+          />
         </form>
       </div>
     );

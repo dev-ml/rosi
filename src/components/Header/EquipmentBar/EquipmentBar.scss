@@ -5,15 +5,15 @@
     margin: 0 0.6rem;
   }
 
-  .icon {
+  .btn {
     &_broken {
-      fill: var(--color-red-primary);
+      .icon { fill: var(--color-red-primary); }
     }
     &_notavailable {
-      fill: var(--color-gray);
+      .icon { fill: var(--color-gray); }
     }
     &_available {
-      fill: var(--color-green-primary);
+      .icon { fill: var(--color-green-primary); }
     }
   }
 }

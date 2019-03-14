@@ -1,11 +1,12 @@
 import React from "react";
 import "./StatusBar.scss";
+import Button from "../UI/Button/Button";
 
 const StatusBar = (props: any) => {
   return (
     <div className="StatusBar">
       <div>This is StatusBar</div>
-      <button type="button" className="btn" onClick={() => props.onAdminClicked()}>Admin</button>
+      <Button type="icon-text" onClick={props.onAdminClicked} iconId="icon-users" label="Admin" />
     </div>
   );
 };

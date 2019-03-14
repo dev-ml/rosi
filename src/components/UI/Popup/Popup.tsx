@@ -1,6 +1,7 @@
 import React from "react";
 import "./Popup.scss";
 import Backdrop from "../Backdrop/Backdrop";
+import Button from "../Button/Button";
 
 const Popup = (props: any) => {
   const classes = ["Popup"];
@@ -12,7 +13,12 @@ const Popup = (props: any) => {
     <div className={classes.join(" ")}>
       <Backdrop/>
       <div className="content">
-        <button type="button" onClick={props.onCloseClick}>Close</button>
+        <Button
+          type="icon-text"
+          onClick={props.onCloseClick}
+          iconId="icon-close"
+          label="Close"
+        />
         {props.children}
       </div>
     </div>

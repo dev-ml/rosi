@@ -1,6 +1,7 @@
 import React from "react";
 import { RoomStatus } from "../../../../models/RoomStatus";
 import "./AllocationMenu.scss";
+import Button from "../../../UI/Button/Button";
 
 const allocationMenu = (props: any) => {
   console.log("Allocation menu:", props.id);
@@ -12,29 +13,29 @@ const allocationMenu = (props: any) => {
 
     if (props.roomStatus === RoomStatus.awaiting) {
       confirmCurrentAllocationTag = (
-        <button className="btn btn_flat" onClick={() => props.onConfirmMeetingClick(props.currentAllocation.id)}>
-          <svg className="icon">
-            <use xlinkHref="symbol-defs.svg#icon-calendar-check-o"/>
-          </svg>
-          <span>Confirm</span>
-        </button>
+        <Button
+          type="icon-text"
+          onClick={() => props.onConfirmMeetingClick(props.currentAllocation.id)}
+          iconId="icon-calendar-check-o"
+          label="Confirm"
+        />
       );
     }
 
     meetingButtons = (
       <>
-        <button className="btn btn_flat" onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, 60000)}>
-          <svg className="icon">
-            <use xlinkHref="symbol-defs.svg#icon-calendar-plus-o"/>
-          </svg>
-          <span>Extend</span>
-        </button>
-        <button className="btn btn_flat" onClick={() => props.onFinishEarlyClick(props.currentAllocation.id)}>
-          <svg className="icon">
-            <use xlinkHref="symbol-defs.svg#icon-calendar-times-o"/>
-          </svg>
-          <span>Finish</span>
-        </button>
+        <Button
+          type="icon-text"
+          onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, 60000)}
+          iconId="icon-calendar-plus-o"
+          label="Extend"
+        />
+        <Button
+          type="icon-text"
+          onClick={() => props.onFinishEarlyClick(props.currentAllocation.id)}
+          iconId="icon-calendar-times-o"
+          label="Finish"
+        />
         {confirmCurrentAllocationTag}
       </>
     );
@@ -43,23 +44,23 @@ const allocationMenu = (props: any) => {
 
     if (props.roomStatus === RoomStatus.awaiting) {
       confirmNextAllocationTag = (
-        <button className="btn btn_flat" onClick={() => props.onConfirmMeetingClick(props.nextAllocation.id)}>
-          <svg className="icon">
-            <use xlinkHref="symbol-defs.svg#icon-calendar-check-o"/>
-          </svg>
-          <span>Confirm</span>
-        </button>
+        <Button
+          type="icon-text"
+          onClick={() => props.onConfirmMeetingClick(props.nextAllocation.id)}
+          iconId="icon-calendar-check-o"
+          label="Confirm"
+        />
       );
     }
 
     meetingButtons = (
       <>
-        <button className="btn btn_flat" onClick={() => props.onAddMeetingClick(props.roomId)}>
-          <svg className="icon">
-            <use xlinkHref="symbol-defs.svg#icon-calendar-o"/>
-          </svg>
-          <span>Book now</span>
-        </button>
+        <Button
+          type="icon-text"
+          onClick={() => props.onAddMeetingClick(props.roomId)}
+          iconId="icon-calendar-o"
+          label="Book now"
+        />
         {confirmNextAllocationTag}
       </>
     );
