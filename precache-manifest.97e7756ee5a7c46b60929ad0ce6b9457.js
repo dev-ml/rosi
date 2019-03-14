@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/rosi/static/js/runtime~main.5dd57311.js"
   },
   {
-    "revision": "8a83a69ac8bea5e62a19",
-    "url": "/rosi/static/js/main.8a83a69a.chunk.js"
+    "revision": "7a6d7334cfc267526182",
+    "url": "/rosi/static/js/main.7a6d7334.chunk.js"
   },
   {
     "revision": "515c3f60d8231a682476",
     "url": "/rosi/static/js/1.515c3f60.chunk.js"
   },
   {
-    "revision": "8a83a69ac8bea5e62a19",
-    "url": "/rosi/static/css/main.7fe9bc3f.chunk.css"
+    "revision": "7a6d7334cfc267526182",
+    "url": "/rosi/static/css/main.60d73147.chunk.css"
   },
   {
-    "revision": "50492eb608b6efdb2e8b5480a01540bb",
+    "revision": "a8c73c770b6c2c1dd3e25664c03c91c4",
     "url": "/rosi/index.html"
   }
 ];
