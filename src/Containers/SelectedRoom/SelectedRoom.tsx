@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import RoomView from "../../components/RoomView/RoomView";
+import RoomView from "../../components/Room/RoomView/RoomView";
 import Allocation from "../../models/Allocation";
 import { Equipment } from "../../models/Equipment";
 import allocationSlice from "../../store/Allocation/AllocationSlice";

@@ -1,5 +1,5 @@
 import React from "react";
-import { Equipment } from "../../models/Equipment";
+import { Equipment } from "../../../models/Equipment";
 import "./EquipmentBar.scss";
 
 const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: Equipment) => void }) => {

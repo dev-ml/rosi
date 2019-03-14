@@ -1,5 +1,5 @@
 import React from "react";
-import EquipmentBar from "../EquipmentBar/EquipmentBar";
+import EquipmentBar from "./EquipmentBar/EquipmentBar";
 import "./Header.scss";
 
 const Header = (props: any) => {

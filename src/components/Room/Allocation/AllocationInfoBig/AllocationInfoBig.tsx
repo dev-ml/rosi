@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTimeStamp } from "../../../shared/utility";
+import { formatTimeStamp } from "../../../../shared/utility";
 import "./AllocationInfoBig.scss";
 
 const allocationInfo = (props: any) => {

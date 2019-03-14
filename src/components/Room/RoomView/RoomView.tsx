@@ -3,11 +3,11 @@ import AllocationInfo from "../Allocation/AllocationInfo/AllocationInfo";
 import AllocationInfoBig from "../Allocation/AllocationInfoBig/AllocationInfoBig";
 import AllocationMenu from "../Allocation/AllocationMenu/AllocationMenu";
 import RoomStatusBorder from "../RoomStatusBorder/RoomStatusBorder";
-import StatusBar from "../StatusBar/StatusBar";
+import StatusBar from "../../StatusBar/StatusBar";
 import TimeView from "../TimeView/TimeView";
 import "./RoomView.scss";
-import Header from "../Header/Header";
-import Popup from "../Popup/Popup";
+import Header from "../../Header/Header";
+import Popup from "../../UI/Popup/Popup";
 
 const roomView = (props: any) => {
   console.log("roomView: ", props);

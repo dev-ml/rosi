@@ -1,5 +1,5 @@
 import React from "react";
-import { RoomStatus } from "../../../models/Room";
+import { RoomStatus } from "../../../../models/Room";
 import "./AllocationMenu.scss";
 
 const allocationMenu = (props: any) => {
