@@ -8,6 +8,7 @@ import TimeView from "../TimeView/TimeView";
 import "./RoomView.scss";
 import Header from "../../Header/Header";
 import Popup from "../../UI/Popup/Popup";
+import AdminPanel from "../../../containers/AdminPanel/AdminPanel";
 
 const roomView = (props: any) => {
   console.log("roomView: ", props);
@@ -38,6 +39,7 @@ const roomView = (props: any) => {
             currentAllocation={props.currentAllocation}
             nextAllocation={props.nextAllocation}
             roomStatus={props.roomStatus}
+            roomId={props.room.id}
             onFinishEarlyClick={props.onFinishEarlyClick}
             onExtendMeetingClick={props.onExtendMeetingClick}
             onConfirmMeetingClick={props.onConfirmMeetingClick}
@@ -47,9 +49,7 @@ const roomView = (props: any) => {
       </RoomStatusBorder>
       <StatusBar onAdminClicked={props.onAdminClick}/>
       <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
-        <p>This is first child</p>
-        <div>This is second</div>
-        {/* <AdminPanel></AdminPanel> */}
+        <AdminPanel></AdminPanel>
       </Popup>
     </div>
   );

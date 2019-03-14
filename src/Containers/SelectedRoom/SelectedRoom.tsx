@@ -41,10 +41,9 @@ const mapDispatchToProps = (dispatch: any) => {
     onPopupCloseClick: () => {
       dispatch(uiSlice.actions.hideAdminPanel());
     },
-    onAddMeetingClick: (id: string) => {
-      // [TODO] roomName to id
+    onAddMeetingClick: (roomId: string) => {
       dispatch(allocationSlice.actions.addAllocation({
-        ...new Allocation("Ad hoc meeting", "Supernova", Date.now() - 60000, Date.now() + 50000), confirmed: true}));
+        ...new Allocation("Ad hoc meeting", roomId, Date.now() - 60000, Date.now() + 50000), confirmed: true}));
     },
     onChangeStatusClick: (e: Equipment) => {
       dispatch(equipmentSlice.actions.changeStatus(e));

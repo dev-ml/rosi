@@ -1,9 +1,10 @@
 import React from "react";
-import { RoomStatus } from "../../../../models/Room";
+import { RoomStatus } from "../../../../models/RoomStatus";
 import "./AllocationMenu.scss";
 
 const allocationMenu = (props: any) => {
   console.log("Allocation menu:", props.id);
+  console.log("Props: ", props);
   let meetingButtons;
 
   if (props.currentAllocation) {
@@ -53,7 +54,7 @@ const allocationMenu = (props: any) => {
 
     meetingButtons = (
       <>
-        <button className="btn btn_flat" onClick={() => props.onAddMeetingClick()}>
+        <button className="btn btn_flat" onClick={() => props.onAddMeetingClick(props.roomId)}>
           <svg className="icon">
             <use xlinkHref="symbol-defs.svg#icon-calendar-o"/>
           </svg>

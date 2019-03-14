@@ -7,7 +7,7 @@ export default class Allocation {
   public attendees?: number;
   public agenda?: string;
 
-  constructor(public title: string, public roomName: string, public from: number, public to: number) {
+  constructor(public title: string, public roomId: string, public from: number, public to: number) {
     this.id = uuidv4();
   }
 }

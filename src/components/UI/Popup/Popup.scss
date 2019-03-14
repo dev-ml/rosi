@@ -1,14 +1,17 @@
 .Popup {
   display: none;
-  position: fixed;
-  height: 80vh;
-  width: 80vw;
-  background: pink;
-  z-index: 10;
-  top: 10vh;
-  left: 10vw;
-
+  
   &.open {
     display: block;
+  }
+  
+  .content {
+    position: fixed;
+    height: 80vh;
+    width: 80vw;
+    background: pink;
+    z-index: 1000;
+    top: 10vh;
+    left: 10vw;
   }
 }

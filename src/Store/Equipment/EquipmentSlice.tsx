@@ -11,13 +11,13 @@ const equipmentSlice = createSlice({
     addEquipment: (state, action) => [...state, action.payload] as never[],
     setStatus: (state, action) => {
       const equipment: Equipment =
-        state.filter((eq: Equipment) => eq.roomName === action.payload.roomName && eq.type === action.payload.type)[0];
+        state.filter((eq: Equipment) => eq.roomId === action.payload.roomId && eq.type === action.payload.type)[0];
       equipment.status = action.payload.status;
       return state;
     },
     changeStatus: (state, action) => {
       const equipment: Equipment =
-        state.filter((eq: Equipment) => eq.roomName === action.payload.roomName && eq.type === action.payload.type)[0];
+        state.filter((eq: Equipment) => eq.roomId === action.payload.roomId && eq.type === action.payload.type)[0];
       let newStatus: EquipmentStatus = EquipmentStatus.Available;
       switch (equipment.status) {
         case EquipmentStatus.Available:

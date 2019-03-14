@@ -1,5 +1,6 @@
-import React, { Children } from "react";
+import React from "react";
 import "./Popup.scss";
+import Backdrop from "../Backdrop/Backdrop";
 
 const Popup = (props: any) => {
   const classes = ["Popup"];
@@ -9,9 +10,11 @@ const Popup = (props: any) => {
 
   return (
     <div className={classes.join(" ")}>
-      <button type="button" onClick={props.onCloseClick}>Close</button>
-      <p>Hello World</p>
-      {props.children}
+      <Backdrop/>
+      <div className="content">
+        <button type="button" onClick={props.onCloseClick}>Close</button>
+        {props.children}
+      </div>
     </div>
   )
 }

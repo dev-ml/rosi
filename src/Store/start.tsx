@@ -22,34 +22,35 @@ const start = () => {
     console.log(store.getState());
   });
 
-  store.dispatch(roomSlice.actions.addRoom({...new Room("Supernova")}));
+  const usedRoom = new Room("Supernova");
+  store.dispatch(roomSlice.actions.addRoom({...usedRoom}));
   store.dispatch(roomSlice.actions.addRoom({...new Room("Room 2")}));
 
-  store.dispatch(uiSlice.actions.setSelectedRoomId("Supernova"));
+  store.dispatch(uiSlice.actions.setSelectedRoomId(usedRoom.id));
 
   // store.dispatch(allocationSlice.actions.addAllocation(
-  //   {...new Allocation("Test allocation 1a", "Supernova", Date.now() - 1200000, Date.now() - 1200000)}));
+  //   {...new Allocation("Test allocation 1a", usedRoom.id, Date.now() - 1200000, Date.now() - 1200000)}));
   // store.dispatch(allocationSlice.actions.addAllocation(
-  //   {...new Allocation("Test allocation 1b", "Supernova", Date.now() - 1200000, Date.now() - 1200000)}));
+  //   {...new Allocation("Test allocation 1b", usedRoom.id, Date.now() - 1200000, Date.now() - 1200000)}));
   // store.dispatch(allocationSlice.actions.addAllocation(
-  //   {...new Allocation("Test allocation Current 1c", "Supernova", Date.now() - 120000 , Date.now() + 50000)}));
+  //   {...new Allocation("Test allocation Current 1c", usedRoom.id, Date.now() - 120000 , Date.now() + 50000)}));
   // store.dispatch(allocationSlice.actions.addAllocation(
-  //   {...new Allocation("Test allocation Next 1d", "Supernova", Date.now() + 110000, Date.now() + 480000)}));
+  //   {...new Allocation("Test allocation Next 1d", usedRoom.id, Date.now() + 110000, Date.now() + 480000)}));
   // store.dispatch(allocationSlice.actions.addAllocation(
-  //   {...new Allocation("Test allocation 1e", "Supernova", Date.now() + 1000000, Date.now() + 1200000)}));
+  //   {...new Allocation("Test allocation 1e", usedRoom.id, Date.now() + 1000000, Date.now() + 1200000)}));
 
   store.dispatch(allocationSlice.actions.addAllocation(
     {...new Allocation("Test allocation 2a", "Room 2", Date.now() - 1200000, Date.now() - 1200000)}));
 
   store.dispatch(equipmentSlice.actions.addEquipment(
-    {...new Equipment("Supernova", EquipmentType.Projector, EquipmentStatus.Available)}));
+    {...new Equipment(usedRoom.id, EquipmentType.Projector, EquipmentStatus.Available)}));
   store.dispatch(equipmentSlice.actions.addEquipment(
-    {...new Equipment("Supernova", EquipmentType.Skype, EquipmentStatus.Available)}));
+    {...new Equipment(usedRoom.id, EquipmentType.Skype, EquipmentStatus.Available)}));
   store.dispatch(equipmentSlice.actions.addEquipment(
-    {...new Equipment("Supernova", EquipmentType.WhiteBoard, EquipmentStatus.Available)}));
+    {...new Equipment(usedRoom.id, EquipmentType.WhiteBoard, EquipmentStatus.Available)}));
 
   // store.dispatch(equipmentSlice.actions.changeStatus(
-  //   {...new Equipment("Supernova", EquipmentType.WhiteBoard, EquipmentStatus.Available)}));
+  //   {...new Equipment(usedRoom.id, EquipmentType.WhiteBoard, EquipmentStatus.Available)}));
 
   const roomName1 = getSelectedRoomId(store.getState());
   const roomAllocations = getSelectedRoomAllocations(store.getState());

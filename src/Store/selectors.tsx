@@ -1,7 +1,8 @@
 import { createSelector } from "redux-starter-kit";
 import Allocation from "../models/Allocation";
 import { Equipment } from "../models/Equipment";
-import Room, { RoomStatus } from "../models/Room";
+import Room from "../models/Room";
+import { RoomStatus } from "../models/RoomStatus";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
 
@@ -14,7 +15,7 @@ export const isRoomOccupied = (name: string) => createSelector(
 // Selected Room
 export const getSelectedRoom = createSelector(
   [getSelectedRoomId, "room"],
-  (roomId, rooms) => rooms.filter((r: Room) => r.name === roomId)[0],
+  (roomId, rooms) => rooms.entity[roomId],
 );
 
 // [TODO] rewrite
@@ -22,7 +23,7 @@ export const getSelectedRoomAllocations = createSelector(
   [getSelectedRoomId, "allocation"],
   (roomId, allocation) => {
     const allocations: Allocation[] = Object.values(allocation.entity);
-    return allocations.filter((a: Allocation) => a.roomName === roomId);
+    return allocations.filter((a: Allocation) => a.roomId === roomId);
   },
 );
 // export const getSelectedRoomAllocations = createSelector(
@@ -92,5 +93,5 @@ export const getSelectedRoomStatus = (threshold: number) => createSelector(
 
 export const getSelectedRoomEquipment = createSelector(
   [getSelectedRoomId, "equipment"],
-  (roomId, equipment) => equipment.filter((e: Equipment) => e.roomName === roomId),
+  (roomId, equipment) => equipment.filter((e: Equipment) => e.roomId === roomId),
 );
