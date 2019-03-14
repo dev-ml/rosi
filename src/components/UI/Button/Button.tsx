@@ -6,7 +6,7 @@ const Button = (props: any) => {
   switch (props.type) {
     case "icon":
       buttonElement = (
-        <button className={`btn ${props.btnClassName}`} onClick={props.onClick} name={props.iconId}>
+        <button className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.iconId}>
           <svg className={`icon`}>
             <use xlinkHref={`symbol-defs.svg#${props.iconId}`} />
           </svg>
@@ -15,7 +15,7 @@ const Button = (props: any) => {
       break;
       case "icon-text":
       buttonElement = (
-        <button className="btn btn_flat" onClick={props.onClick} name={props.label}>
+        <button className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
             <use xlinkHref={`symbol-defs.svg#${props.iconId}`} />
           </svg>
