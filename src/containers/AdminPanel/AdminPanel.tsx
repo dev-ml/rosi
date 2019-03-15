@@ -5,13 +5,14 @@ import roomSlice from "../../store/Room/RoomSlice";
 import Room from "../../models/Room";
 import Button from "../../components/UI/Button/Button";
 import {saveState} from "../../store/crossSliceReducer";
+import uiSlice from "../../store/UI/UISlice";
 
 interface IAdminPanelProps {
-  onSettingsSaved: (roomId: string, newName: string) => void;
+  onSettingsSaved: (room: Room) => void;
 }
 
 interface IAdminPanelState {
-  roomName: string;
+  room: Room;
 }
 
 class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
@@ -21,8 +22,13 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     super(props)
     console.log("!!props", props);
     this.selectedRoom = props.selectedRoom;
+
+    if (!this.selectedRoom) {
+      this.selectedRoom = {... new Room("Conference Room 1")};
+    }
+
     this.state = {
-      roomName: this.selectedRoom.name,
+      room: {... this.selectedRoom},
     };
 }
 
@@ -30,12 +36,14 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     event.preventDefault();
     console.log(event);
 
-    this.props.onSettingsSaved(this.selectedRoom.id, this.state.roomName);
+    this.props.onSettingsSaved(this.state.room);
   };
 
   inputChangedHandler(event: ChangeEvent<HTMLInputElement>) {
     console.log(event);
-    this.setState({roomName: event.target.value});
+    const newState = {...this.state};
+    newState.room.name = event.target.value;
+    this.setState(newState);
   }
 
   render() {
@@ -48,7 +56,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
             <input
               type="text"
               placeholder="Room Name" 
-              value={this.state.roomName}
+              value={this.state.room.name}
               onChange={(e) => this.inputChangedHandler(e)}
             />
           </div>
@@ -73,8 +81,10 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSettingsSaved: (roomId: string, newName: string) => {
-      dispatch(roomSlice.actions.changeRoomName({id: roomId, name: newName}));
+    onSettingsSaved: (room: Room) => {
+      dispatch(roomSlice.actions.changeRoomName(room));
+      // [TODO] temporary solution, need to be changed when multiple room management will be added
+      dispatch(uiSlice.actions.setSelectedRoomId(room.id));
       dispatch(saveState());
     }
   };

@@ -18,19 +18,20 @@ import { loadState, saveState } from "./crossSliceReducer";
 // Starting init
 ///////////////////////////////////////////////////////////////
 const start = () => {
-  store.subscribe(() => {
-    console.log(store.getState());
-  });
-
+  const startState = store.getState();
+  console.log("[Start] startState:", startState);
   store.dispatch(loadState());
-  
+
   setInterval(() => {
     console.log("[Start] Interval");
-    // console.log('Time: ', selectDateTime(store.getState()));
     store.dispatch(uiSlice.actions.setTime(Date.now()));
     store.dispatch(saveState());
   }, 1000 * 60);
 
+  
+  // store.subscribe(() => {
+  //   console.log(store.getState());
+  // });
   const initData = () => {
     console.log('[Start] init data');
     // const usedRoom = new Room("Supernova");

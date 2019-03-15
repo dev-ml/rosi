@@ -14,7 +14,7 @@ const roomView = (props: any) => {
   console.log("roomView: ", props);
   if (!props.room) {
     console.error("[RoomView] No room provided!");
-    return <p>Error: no room provided</p>;
+    return <AdminPanel/>;
   }
 
   let currentAllocationTag;
