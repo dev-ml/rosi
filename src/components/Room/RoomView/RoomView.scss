@@ -16,11 +16,17 @@
     min-width: 40vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-start;
-    padding-top: 35vh;
-    padding-bottom: 2rem;
+    padding: 2rem;
     
+    .Allocations {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     @media only screen and (max-width: 37.5em) { 
       padding-top: 0;
     }

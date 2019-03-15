@@ -33,8 +33,10 @@ const roomView = (props: any) => {
         <TimeView time={props.time} />
         <div className="Separator"/>
         <div className="RightSection">
-          {currentAllocationTag}
-          {nextAllocationTag}
+          <div className="Allocations">
+            {currentAllocationTag}
+            {nextAllocationTag}
+          </div>
           <AllocationMenu
             currentAllocation={props.currentAllocation}
             nextAllocation={props.nextAllocation}

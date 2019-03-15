@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.6rem;
+  font-size: var(--font-size-normal);
   min-width: 3rem;
   min-height: 3rem;
   color: var(--color-light);
