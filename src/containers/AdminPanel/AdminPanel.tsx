@@ -4,6 +4,7 @@ import * as selectors from "../../store/selectors";
 import roomSlice from "../../store/Room/RoomSlice";
 import Room from "../../models/Room";
 import Button from "../../components/UI/Button/Button";
+import {saveState} from "../../store/crossSliceReducer";
 
 interface IAdminPanelProps {
   onSettingsSaved: (roomId: string, newName: string) => void;
@@ -72,8 +73,10 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    onSettingsSaved: (roomId: string, newName: string) => 
-      dispatch(roomSlice.actions.changeRoomName({id: roomId, name: newName}))
+    onSettingsSaved: (roomId: string, newName: string) => {
+      dispatch(roomSlice.actions.changeRoomName({id: roomId, name: newName}));
+      dispatch(saveState());
+    }
   };
 };
 

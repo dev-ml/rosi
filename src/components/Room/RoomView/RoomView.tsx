@@ -12,6 +12,11 @@ import AdminPanel from "../../../containers/AdminPanel/AdminPanel";
 
 const roomView = (props: any) => {
   console.log("roomView: ", props);
+  if (!props.room) {
+    console.error("[RoomView] No room provided!");
+    return <p>Error: no room provided</p>;
+  }
+
   let currentAllocationTag;
   let nextAllocationTag;
 
