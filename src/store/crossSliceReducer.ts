@@ -1,9 +1,5 @@
 import { createAction, createReducer } from "redux-starter-kit";
 import * as cacheManager from "../shared/cacheManager";
-import { IRosiState } from "./RosiState";
-
-// const saveState = createAction("crossslice/savestate")
-// const loadState = createAction("crossslice/loadstate")
 
 const saveStateStarted = createAction("crossslice/savestate/started")
 const saveStateSucceeded = createAction("crossslice/savestate/succeeded")
@@ -18,16 +14,16 @@ export const saveState = () => (dispatch: any, getState: any) => {
   return cacheManager.writeData("state", getState()).then(
     () => dispatch(saveStateSucceeded()),
     (error) => dispatch(saveStateFailed(error))
-  )
-}
+  );
+};
 
 export const loadState = () => (dispatch: any) => {
   dispatch(loadStateStarted());
   return cacheManager.readData("state").then(
     (state) => dispatch(loadStateSucceeded(state)),
     (error) => dispatch(loadStateFailed(error))
-  )
-}
+  );
+};
 
 export const crossSliceReducer = (state: any, action: any) => {
   let newState: any = {...state};
@@ -49,6 +45,7 @@ export const crossSliceReducer = (state: any, action: any) => {
       return newState;
     case loadStateSucceeded.toString():
       newState = {...newState, ...action.payload};
+      newState.ui.time = Date.now();
       newState.ui.syncInProgress = false;
       return newState;
     case loadStateFailed.toString():
@@ -58,4 +55,4 @@ export const crossSliceReducer = (state: any, action: any) => {
     default:
       return state;
   }
-};
+}
