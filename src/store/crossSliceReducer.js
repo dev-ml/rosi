@@ -1,19 +1,19 @@
 import { createAction, createReducer } from "redux-starter-kit";
 import * as cacheManager from "../shared/cacheManager";
 
-const saveStateStarted = createAction("crossslice/savestate/started")
-const saveStateSucceeded = createAction("crossslice/savestate/succeeded")
-const saveStateFailed = createAction("crossslice/savestate/failed")
+const saveStateStarted = createAction("crossslice/savestate/started");
+const saveStateSucceeded = createAction("crossslice/savestate/succeeded");
+const saveStateFailed = createAction("crossslice/savestate/failed");
 
-const loadStateStarted = createAction("crossslice/loadstate/started")
-const loadStateSucceeded = createAction("crossslice/loadstate/succeeded")
-const loadStateFailed = createAction("crossslice/loadstate/failed")
+const loadStateStarted = createAction("crossslice/loadstate/started");
+const loadStateSucceeded = createAction("crossslice/loadstate/succeeded");
+const loadStateFailed = createAction("crossslice/loadstate/failed");
 
 export const saveState = () => (dispatch: any, getState: any) => {
   dispatch(saveStateStarted());
   return cacheManager.writeData("state", getState()).then(
     () => dispatch(saveStateSucceeded()),
-    (error) => dispatch(saveStateFailed(error))
+    (error) => dispatch(saveStateFailed(error)),
   );
 };
 
@@ -21,7 +21,7 @@ export const loadState = () => (dispatch: any) => {
   dispatch(loadStateStarted());
   return cacheManager.readData("state").then(
     (state) => dispatch(loadStateSucceeded(state)),
-    (error) => dispatch(loadStateFailed(error))
+    (error) => dispatch(loadStateFailed(error)),
   );
 };
 
@@ -55,4 +55,4 @@ export const crossSliceReducer = (state: any, action: any) => {
     default:
       return state;
   }
-}
+};

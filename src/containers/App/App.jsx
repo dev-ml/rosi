@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 
 import SelectedRoom from "../SelectedRoom/SelectedRoom";
-import "./App.scss";
+import "./App";
 
-class App extends Component {
-  public render() {
+type Props = {
+};
+
+class App extends Component<Props> {
+  render() {
     console.log("hello world", "test");
+    
+    let b = 2 + "2";
+    
     return (
       <div className="App">
         <SelectedRoom/>

@@ -1,10 +1,11 @@
+// @flow
 import React from "react";
 import { Equipment } from "../../../models/Equipment";
-import "./EquipmentBar.scss";
+import "./EquipmentBar";
 import Button from "../../UI/Button/Button";
 
-const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: Equipment) => void }) => {
-  const mapEquipmentToButton = (e: Equipment) => {
+const equipmentBar = (props: any) => {
+  const mapEquipmentToButton = (e) => {
     return <Button
       key={e.type}
       type="icon"

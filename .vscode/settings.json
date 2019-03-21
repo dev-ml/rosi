@@ -3,5 +3,6 @@
     "href",
     "localforage",
     "xlink"
-  ]
+  ],
+  "flowide.pathToFlow": "${workspaceFolder}/node_modules/.bin/flow"
 }
