@@ -1,4 +1,5 @@
 import React from "react";
+import icons from "../../../assets/symbol-defs.svg";
 
 const Button = (props: any) => {
   let buttonElement = <button>Not configured button</button>;
@@ -8,7 +9,7 @@ const Button = (props: any) => {
       buttonElement = (
         <button className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.iconId}>
           <svg className={`icon`}>
-            <use xlinkHref={`symbol-defs.svg#${props.iconId}`} />
+            <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>
         </button>
       );
@@ -17,7 +18,7 @@ const Button = (props: any) => {
       buttonElement = (
         <button className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
-            <use xlinkHref={`symbol-defs.svg#${props.iconId}`} />
+            <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>
           <span>{props.label}</span>
         </button>

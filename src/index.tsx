@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import "./Assets/symbol-defs.svg";
 import App from "./containers/App/App";
 import "./styles/index.scss";
 import * as serviceWorker from "./serviceWorker";
