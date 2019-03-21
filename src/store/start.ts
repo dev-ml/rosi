@@ -32,6 +32,7 @@ const start = () => {
   // store.subscribe(() => {
   //   console.log(store.getState());
   // });
+  
   const initData = () => {
     console.log('[Start] init data');
     // const usedRoom = new Room("Supernova");

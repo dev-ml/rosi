@@ -1,8 +1,8 @@
 import React from "react";
-import { formatTimeStamp } from "../../../../shared/utility";
+import { formatTimeStamp, millisecondsToMinutes } from "../../../../shared/utility";
 import "./AllocationInfoBig.scss";
 
-const allocationInfo = (props: any) => {
+const allocationInfoBig = (props: any) => {
   return (
     <>
       <div className="AllocationInfoBig">Current Meeting:
@@ -11,9 +11,12 @@ const allocationInfo = (props: any) => {
         <div>{props.title}</div>
         {props.attendees ? <div>Attendees: {props.attendees}</div> : null}
         {props.agenda ? <div>Agenda: {props.agenda}</div> : null}
+        <div>Duration: {millisecondsToMinutes(props.to - props.from)} min</div>
+        <div>Time till end: {millisecondsToMinutes(props.to - props.time)} min</div>
+        <div>% Done: {100 - Math.floor(100 * (props.to - props.time) / (props.to - props.from))}</div>
       </div>
     </>
   );
 };
 
-export default allocationInfo;
+export default allocationInfoBig;

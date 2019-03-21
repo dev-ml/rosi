@@ -19,7 +19,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const roomStatus = selectors.getSelectedRoomStatus(120000)(state);
 
   // [TODO] If there are more then two allocations it should be marked in allocationinfobig
-  const currentAllocation = selectors.getSelectedRoomCurrentAllocations(state)[0];
+  const currentAllocation = selectors.getSelectedRoomCurrentAllocation(state);
   const nextAllocation = selectors.getSelectedRoomNextAllocation(state);
 
   return {

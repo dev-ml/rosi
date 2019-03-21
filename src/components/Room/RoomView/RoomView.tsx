@@ -22,13 +22,13 @@ const roomView = (props: any) => {
 
   if (props.currentAllocation) {
     currentAllocationTag =
-    <AllocationInfoBig
+    <AllocationInfoBig time={props.time}
       {...props.currentAllocation}
     />;
   }
 
   if (props.nextAllocation) {
-    nextAllocationTag = <AllocationInfo {...props.nextAllocation}/>;
+    nextAllocationTag = <AllocationInfo time={props.time} {...props.nextAllocation}/>;
   }
 
   return (

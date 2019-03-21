@@ -5,6 +5,7 @@ import Room from "../models/Room";
 import { RoomStatus } from "../models/RoomStatus";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
+import timeView from "../components/Room/TimeView/TimeView";
 
 // General
 export const isRoomOccupied = (name: string) => createSelector(
@@ -56,9 +57,24 @@ export const getSelectedRoomNextAllocation = createSelector(
   (allocations) => allocations[0],
 );
 
+export const getSelectedRoomNextAllocationTimeToBegin = createSelector(
+  [getSelectedRoomNextAllocation, getDate],
+  (allocation: Allocation, time: number) => allocation.from - time,
+);
+
 export const getSelectedRoomCurrentAllocation = createSelector(
   [getSelectedRoomCurrentAllocations],
   (allocations) => allocations[0],
+);
+
+export const getSelectedRoomCurrentAllocationLength = createSelector(
+  [getSelectedRoomCurrentAllocation],
+  (allocation: Allocation) => allocation.to - allocation.from,
+);
+
+export const getSelectedRoomCurrentAllocationTimeToEnd = createSelector(
+  [getSelectedRoomCurrentAllocations, getDate],
+  (allocation: Allocation, time: number) => allocation.to - time,
 );
 
 export const isSelectedRoomOccupied = createSelector(
