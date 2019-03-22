@@ -11,26 +11,14 @@ export class GoogleApi {
   public onLoadCallback: any;
   public events: any = {};
 
-  // Client ID and API key from the Developer Console
-  private readonly CLIENT_ID = "162342559011-rh81oauc2fut2lj6d03j4srkk3oeea2l.apps.googleusercontent.com";
-  private readonly API_KEY = "AIzaSyBe9hJXEgWHgkhAjqMEnxDtyCQLVCdEByI";
-
-  // Array of API discovery doc URLs for APIs used by the quickstart
-  private readonly DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-  // Authorization scopes required by the API; multiple scopes can be
-  // included, separated by spaces.
-  private readonly SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-
-  private readonly CONFIG = {
-    apiKey: this.API_KEY,
-    clientId: this.CLIENT_ID,
-    discoveryDocs: this.DISCOVERY_DOCS,
-    scope: this.SCOPES,
-  };
-
   private syncToken: string | null = null;
 
-  constructor() {
+  private readonly CONFIG: any;
+  private readonly roomId: string;
+
+  constructor(roomId: string, Config: any) {
+    this.roomId = roomId;
+    this.CONFIG = Config;
     this.handleClientLoad();
   }
 
@@ -118,11 +106,9 @@ export class GoogleApi {
           if (this.events.items.length === 0) {
             console.log("No new events to sync.");
           } else {
-            for (const event of this.events.items) {
-              // console.log("event: ", event);
-              // [TODO] this needs to be implemented
-              // syncEvent(event);
-            }
+            console.log("[TODO] syncEvents");
+            this.syncEvents(this.events.items);
+
           }
 
           const nextPageToken = this.events.nextPageToken;
@@ -159,28 +145,57 @@ export class GoogleApi {
     // this.syncToken = this.events.syncToken;
   }
 
-  public listUpcomingEvents(maxResults: number) {
+  private syncEvents(events: any) {
+    const mappedEvents = events.map((event: any) => {
+      const a = new Allocation(
+        event.summary, 
+        this.roomId,
+        new Date(event.start.dateTime).getTime(),
+        new Date(event.end.dateTime).getTime());
+      if (event.attendees) {
+        a.attendees = event.attendees.length;
+      }
+      a.extId = event.id;
+      a.extStatus = event.status;
+      return {...a};
+    })
+      // allocation.organizer.displayName
+      // status
+      // description
+      // attendees.length
+    store.dispatch(allocationSlice.actions.syncExternalAllocations(mappedEvents));
+
+    console.log("Google api. syncEvents items: ", events.length);
+  }
+
+  public listUpcomingEvents(maxResults: number = 100) {
+    console.log("[GoogleApi] list upcoming events");
     if (this.gapi) {
+      var today = new Date();
+      var tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
       return this.gapi.client.calendar.events.list({
         calendarId: "primary",
         maxResults,
         orderBy: "startTime",
-        showDeleted: false,
+        showDeleted: true,
         singleEvents: true,
-        timeMin: (new Date()).toISOString(),
+        timeMin: today.toISOString(),
+        timeMax: tomorrow.toISOString()
       }).then((response: any) => {
         console.log("events: ", response.result.items);
-        for (const allocation of response.result.items) {
-          const a = new Allocation(allocation.summary, "Supernova",
-            new Date(allocation.start.dateTime).getTime(),
-            new Date(allocation.end.dateTime).getTime());
+        this.syncEvents(response.result.items)
+        // for (const allocation of response.result.items) {
+        //   const a = new Allocation(allocation.summary, this.roomId,
+        //     new Date(allocation.start.dateTime).getTime(),
+        //     new Date(allocation.end.dateTime).getTime());
 
-          // allocation.organizer.displayName
-          // status
-          // description
-          // attendees.length
-          store.dispatch(allocationSlice.actions.addAllocation({ ...a }));
-        }
+        //   // allocation.organizer.displayName
+        //   // status
+        //   // description
+        //   // attendees.length
+        //   store.dispatch(allocationSlice.actions.addAllocation({ ...a }));
+        // }
       });
     } else {
       console.log("Error: this.gapi not loaded");
@@ -188,7 +203,7 @@ export class GoogleApi {
     }
   }
 
-  private constructUpcomingEventsRequestFull(calendarId = "primary", maxResults = 1000) {
+  private constructUpcomingEventsRequestFull(calendarId = "mobica.com_3331303731333131353835@resource.calendar.google.com", maxResults = 10000) {
     const today = new Date();
     // const tomorrow = new Date();
     // tomorrow.setDate(today.getDate() + 1);
@@ -204,7 +219,7 @@ export class GoogleApi {
     };
   }
 
-  private constructUpcomingEventsRequestPartial(calendarId = "primary", maxResults = 1000) {
+  private constructUpcomingEventsRequestPartial(calendarId = "mobica.com_3331303731333131353835@resource.calendar.google.com", maxResults = 1000) {
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
@@ -245,5 +260,5 @@ export class GoogleApi {
 
 }
 
-const apiCalendar: GoogleApi = new GoogleApi();
-export default apiCalendar;
+// const apiCalendar: GoogleApi = new GoogleApi();
+export default GoogleApi;

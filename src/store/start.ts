@@ -22,6 +22,7 @@ const start = () => {
   console.log("[Start] startState:", startState);
   store.dispatch(loadState());
 
+  // [TODO] once a day clean old entries
   setInterval(() => {
     console.log("[Start] Interval");
     store.dispatch(uiSlice.actions.setTime(Date.now()));

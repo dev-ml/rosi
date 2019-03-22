@@ -1,7 +1,7 @@
 import React from "react";
-import { RoomStatus } from "../../../../models/RoomStatus";
+import { RoomStatus } from "../../../models/RoomStatus";
 import "./AllocationMenu.scss";
-import Button from "../../../UI/Button/Button";
+import Button from "../../UI/Button/Button";
 
 const allocationMenu = (props: any) => {
   console.log("Allocation menu:", props.id);

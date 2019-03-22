@@ -5,7 +5,6 @@ import "./App.scss";
 
 class App extends Component {
   public render() {
-    console.log("hello world", "test");
     return (
       <div className="App">
         <SelectedRoom/>

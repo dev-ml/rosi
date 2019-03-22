@@ -1,25 +1,26 @@
 import React from "react";
-import AllocationInfo from "../Allocation/AllocationInfo/AllocationInfo";
-import AllocationInfoBig from "../Allocation/AllocationInfoBig/AllocationInfoBig";
-import AllocationMenu from "../Allocation/AllocationMenu/AllocationMenu";
+import AllocationInfo from "../../Allocation/AllocationInfo/AllocationInfo";
+import AllocationInfoBig from "../../Allocation/AllocationInfoBig/AllocationInfoBig";
+import AllocationMenu from "../../Allocation/AllocationMenu/AllocationMenu";
 import RoomStatusBorder from "../RoomStatusBorder/RoomStatusBorder";
 import StatusBar from "../../StatusBar/StatusBar";
 import TimeView from "../TimeView/TimeView";
 import "./RoomView.scss";
 import Header from "../../Header/Header";
 import Popup from "../../UI/Popup/Popup";
-import AdminPanel from "../../../containers/AdminPanel/AdminPanel";
+import Admin from "../../../containers/Admin/Admin";
 
 const roomView = (props: any) => {
-  console.log("roomView: ", props);
+  // console.log("roomView: ", props);
   if (!props.room) {
     console.error("[RoomView] No room provided!");
-    return <AdminPanel/>;
+    return <Admin/>;
   }
 
   let currentAllocationTag;
   let nextAllocationTag;
 
+  // [TODO] Overlapping events, if current event is overlapping next
   if (props.currentAllocation) {
     currentAllocationTag =
     <AllocationInfoBig time={props.time}
@@ -54,9 +55,9 @@ const roomView = (props: any) => {
           />
         </div>
       </RoomStatusBorder>
-      <StatusBar onAdminClicked={props.onAdminClick}/>
+      <StatusBar room={props.room} onAdminClicked={props.onAdminClick}/>
       <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
-        <AdminPanel></AdminPanel>
+        <Admin></Admin>
       </Popup>
     </div>
   );

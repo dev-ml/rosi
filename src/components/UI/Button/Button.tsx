@@ -14,12 +14,19 @@ const Button = (props: any) => {
         </button>
       );
       break;
-      case "icon-text":
+    case "icon-text":
       buttonElement = (
         <button className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
             <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>
+          <span>{props.label}</span>
+        </button>
+      );
+      break;
+    case "text":
+      buttonElement = (
+        <button type="button" className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
           <span>{props.label}</span>
         </button>
       );

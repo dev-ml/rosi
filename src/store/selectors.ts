@@ -6,6 +6,7 @@ import { RoomStatus } from "../models/RoomStatus";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
 import timeView from "../components/Room/TimeView/TimeView";
+import { getRoomEquipment } from "./Equipment/EquipmentSelectors";
 
 // General
 export const isRoomOccupied = (name: string) => createSelector(
@@ -109,5 +110,8 @@ export const getSelectedRoomStatus = (threshold: number) => createSelector(
 
 export const getSelectedRoomEquipment = createSelector(
   [getSelectedRoomId, "equipment"],
-  (roomId, equipment) => equipment.filter((e: Equipment) => e.roomId === roomId),
+  (roomId, equipment) => {
+    const equipmentArray: Equipment[] = Object.values(equipment.entity) || [];
+    return equipmentArray.filter((e: Equipment) => e.roomId === roomId);
+  }
 );

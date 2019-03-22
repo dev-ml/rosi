@@ -3,5 +3,5 @@ import { Equipment } from "../../models/Equipment";
 
 export const getRoomEquipment = (id: string) => createSelector(
   ["equipment"],
-  (equipment) => equipment.filter((e: Equipment) => e.roomId === id),
+  (equipment) => equipment.entity.filter((e: Equipment) => e.roomId === id),
 );

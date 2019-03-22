@@ -9,11 +9,12 @@ import { getDate, getAdminPanelOpen } from "../../store/UI/UISelectors";
 import uiSlice from "../../store/UI/UISlice";
 
 const mapStateToProps = (state: any, ownProps: any) => {
-  console.log("mapState: ", state);
+  // console.log("mapState: ", state);
   const time = getDate(state);
   const adminPanelOpen = getAdminPanelOpen(state);
   const room = selectors.getSelectedRoom(state);
   const equipment = selectors.getSelectedRoomEquipment(state);
+  // console.log("equipment: ", equipment);
 
   // 2 min
   const roomStatus = selectors.getSelectedRoomStatus(120000)(state);

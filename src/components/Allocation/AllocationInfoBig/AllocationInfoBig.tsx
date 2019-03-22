@@ -1,5 +1,5 @@
 import React from "react";
-import { formatTimeStamp, millisecondsToMinutes } from "../../../../shared/utility";
+import { formatTimeStamp, millisecondsToMinutes } from "../../../shared/utility";
 import "./AllocationInfoBig.scss";
 
 const allocationInfoBig = (props: any) => {
@@ -13,7 +13,7 @@ const allocationInfoBig = (props: any) => {
         {props.agenda ? <div>Agenda: {props.agenda}</div> : null}
         <div>Duration: {millisecondsToMinutes(props.to - props.from)} min</div>
         <div>Time till end: {millisecondsToMinutes(props.to - props.time)} min</div>
-        <div>% Done: {100 - Math.floor(100 * (props.to - props.time) / (props.to - props.from))}</div>
+        <div>% Done: {100 - Math.ceil(100 * (props.to - props.time) / (props.to - props.from))}</div>
       </div>
     </>
   );
