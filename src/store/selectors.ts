@@ -53,6 +53,11 @@ export const getSelectedRoomFutureNAllocations = (n: number) => createSelector(
   (allocations) => allocations.slice(0, n),
 );
 
+export const getSelectedRoomFutureAllocationsForNextNMinutes = (n: number) => createSelector(
+  [getSelectedRoomFutureAllocationsSorted, getDate],
+  (allocations: Allocation[], time: number) => allocations.filter((a: Allocation) => a.to < time + n * 60 * 1000),
+);
+
 export const getSelectedRoomNextAllocation = createSelector(
   [getSelectedRoomFutureNAllocations(1)],
   (allocations) => allocations[0],

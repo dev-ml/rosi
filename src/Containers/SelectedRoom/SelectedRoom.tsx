@@ -23,6 +23,10 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const currentAllocation = selectors.getSelectedRoomCurrentAllocation(state);
   const nextAllocation = selectors.getSelectedRoomNextAllocation(state);
 
+  // get allocations for next 10 hours
+  const clockMaxTime = 10 * 60;
+  const clockAllocations = selectors.getSelectedRoomFutureAllocationsForNextNMinutes(clockMaxTime)(state);
+
   return {
     currentAllocation,
     equipment,
@@ -31,6 +35,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     roomStatus,
     time,
     adminPanelOpen,
+    clockAllocations,
   };
 };
 

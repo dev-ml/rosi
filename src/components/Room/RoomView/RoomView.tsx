@@ -36,7 +36,7 @@ const roomView = (props: any) => {
     <div className="RoomView">
       <Header time={props.time} {...props}/>
       <RoomStatusBorder roomStatus={props.roomStatus}>
-        <TimeView time={props.time} />
+        <TimeView time={props.time} allocations={props.clockAllocations} />
         <div className="Separator"/>
         <div className="RightSection">
           <div className="Allocations">
