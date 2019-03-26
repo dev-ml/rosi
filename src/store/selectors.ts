@@ -53,9 +53,16 @@ export const getSelectedRoomFutureNAllocations = (n: number) => createSelector(
   (allocations) => allocations.slice(0, n),
 );
 
+// [TODO] not only future meeting should be given but also meetings date - 60 min
 export const getSelectedRoomFutureAllocationsForNextNMinutes = (n: number) => createSelector(
   [getSelectedRoomFutureAllocationsSorted, getDate],
   (allocations: Allocation[], time: number) => allocations.filter((a: Allocation) => a.to < time + n * 60 * 1000),
+);
+
+// Gives allocations that end after from, but also end before to
+export const getSelectedRoomAllocationsFromTo = (from: number, to: number) => createSelector(
+  [getSelectedRoomAllocations],
+  (allocations: Allocation[]) => allocations.filter((a: Allocation) => a.to > from && a.to < to),
 );
 
 export const getSelectedRoomNextAllocation = createSelector(
@@ -116,6 +123,11 @@ export const getSelectedRoomStatus = (threshold: number) => createSelector(
 export const getSelectedRoomEquipment = createSelector(
   [getSelectedRoomId, "equipment"],
   (roomId, equipment) => {
+    // [TODO] Bug on the production
+    if (!equipment.entity) {
+      return [];
+    }
+
     const equipmentArray: Equipment[] = Object.values(equipment.entity) || [];
     return equipmentArray.filter((e: Equipment) => e.roomId === roomId);
   }

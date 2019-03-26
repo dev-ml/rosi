@@ -2,13 +2,14 @@ import React from "react";
 import { formatTimeStamp } from "../../../shared/utility";
 import "./TimeView.scss";
 
+// [TODO] show overlapping events with different color
 const timeView = (props: any) => {
 
   const mainRadius = 240;
   const timeRadius = 225;
   const canvasSize = 500;
-  const greenColor = "rgb(139, 195, 74)";
-  const redColor = "rgb(255, 87, 34)";
+  const greenColor = "#4CAF50"; //"rgb(139, 195, 74)";
+  const redColor = "#F44336"; // "rgb(255, 87, 34)";
 
   function drawCircleStroke(ctx: any, fromMinute: number, toMinute: number, color: string, radius?: number, lineWidth?: number) {
     const clockRadius = radius || mainRadius;
@@ -39,17 +40,29 @@ const timeView = (props: any) => {
   function drawCurrentTime(ctx: any) {
     const minutes = UTCToClockTime(props.time);
     // Draw current time
-    drawCircleStroke(ctx, minutes - 3, minutes + 2, "#000", timeRadius, 8);
+    drawCircleStroke(ctx, minutes - 2, minutes + 2, "#000", 160, 20);
 
-    drawCircleStroke(ctx, minutes, minutes - 1, "#000", mainRadius, 10);
+    // Draw circle background
+    drawCircleStroke(ctx, minutes + 1, minutes, "#000", 200, 22);
     
     // Draw available slots for whole day
-    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, mainRadius, 6);
-
-    // Draw busy slots for the next 11 hours
+    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 200, 5);
+    
+    // Draw busy slots for given allocations
+    // [TODO] The busy slots drawing should have min and max value so it shouldn't exceed 11 hours threshold
     props.allocations
-      .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
-      .forEach((e: any) => drawCircleStroke(ctx, e.from, e.to, redColor, mainRadius, 12));
+    .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
+    .forEach((e: any) => drawCircleStroke(ctx, e.from, e.to, redColor, 200, 12));
+    
+    // draw 30 min slots
+    for (let i = 0; i < 24; i++) {
+      // long line on each full hour and short on not full hour
+      if (i % 2) {
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#000", 200, 22);
+      } else {
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#000", 196, 29);
+      }
+    }
   }
 
   let canvas: any = React.createRef();

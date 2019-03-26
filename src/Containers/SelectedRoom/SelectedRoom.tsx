@@ -14,7 +14,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const adminPanelOpen = getAdminPanelOpen(state);
   const room = selectors.getSelectedRoom(state);
   const equipment = selectors.getSelectedRoomEquipment(state);
-  // console.log("equipment: ", equipment);
 
   // 2 min
   const roomStatus = selectors.getSelectedRoomStatus(120000)(state);
@@ -24,8 +23,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const nextAllocation = selectors.getSelectedRoomNextAllocation(state);
 
   // get allocations for next 10 hours
-  const clockMaxTime = 10 * 60;
-  const clockAllocations = selectors.getSelectedRoomFutureAllocationsForNextNMinutes(clockMaxTime)(state);
+  const clockMaxTime = time + 10 * 60 * 60 * 1000;
+  const clockMinTime = time - 1 * 60 * 60 * 1000;
+  const clockAllocations = selectors.getSelectedRoomAllocationsFromTo(clockMinTime, clockMaxTime)(state);
 
   return {
     currentAllocation,
