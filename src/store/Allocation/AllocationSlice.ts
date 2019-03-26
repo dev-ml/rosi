@@ -1,5 +1,6 @@
 import { createSlice } from "redux-starter-kit";
 import Allocation from "../../models/Allocation";
+import { roundEpochToMinutes } from "../../shared/utility";
 
 // ALLOCATIONS ////////////////////////
 const allocationSlice = createSlice({
@@ -19,7 +20,7 @@ const allocationSlice = createSlice({
       state.ids = state.ids.filter((id: string) => id !== action.payload.id);
     },
     finishEarly: (state, action) => {
-      state.entity[action.payload].to = Date.now() - 60000;
+      state.entity[action.payload].to = roundEpochToMinutes(action.payload.time);
       state.entity[action.payload].confirmed = true;
     },
     extendMeeting: (state, action) => {
@@ -28,8 +29,9 @@ const allocationSlice = createSlice({
     },
     confirmMeeting: (state, action) => {
       state.entity[action.payload.id].confirmed = true;
-      state.entity[action.payload.id].from = Date.now() - 60000;
+      state.entity[action.payload.id].from = roundEpochToMinutes(action.payload.time);
     },
+    // [TODO] sync adhoc meetings to external source
     syncExternalAllocations: (state, action) => {
       console.log("[AllocationSlice:syncExternalAllocations] : ", action);
       // [TODO] Delete objects with extId && !confirmed && not in newAllocations

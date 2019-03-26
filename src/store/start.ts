@@ -8,11 +8,14 @@ import { EquipmentType } from "../models/EquipmentType";
 import allocationSlice from "./Allocation/AllocationSlice";
 import equipmentSlice from "./Equipment/EquipmentSlice";
 import roomSlice from "./Room/RoomSlice";
-import { getSelectedRoomAllocations, getSelectedRoomCurrentAllocations,
-   getSelectedRoomEquipment, getSelectedRoomNextAllocation, isSelectedRoomOccupied } from "./selectors";
+import {
+  getSelectedRoomAllocations, getSelectedRoomCurrentAllocations,
+  getSelectedRoomEquipment, getSelectedRoomNextAllocation, isSelectedRoomOccupied
+} from "./selectors";
 import { getSelectedRoomId } from "./UI/UISelectors";
 import uiSlice from "./UI/UISlice";
 import { loadState, saveState } from "./crossSliceReducer";
+import { roundEpochToMinutes } from "../shared/utility";
 
 ///////////////////////////////////////////////////////////////
 // Starting init
@@ -25,15 +28,16 @@ const start = () => {
   // [TODO] once a day clean old entries
   setInterval(() => {
     console.log("[Start] Interval");
-    store.dispatch(uiSlice.actions.setTime(Date.now()));
+    // Set time to be alway 1 milliesecond after full minute
+    store.dispatch(uiSlice.actions.setTime(roundEpochToMinutes(Date.now()) + 1));
     store.dispatch(saveState());
-  }, 1000 * 60);
+  }, 60 * 1000);
 
-  
+
   // store.subscribe(() => {
   //   console.log(store.getState());
   // });
-  
+
   const initData = () => {
     console.log('[Start] init data');
     // const usedRoom = new Room("Supernova");

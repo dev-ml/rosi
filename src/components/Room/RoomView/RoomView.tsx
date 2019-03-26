@@ -44,10 +44,11 @@ const roomView = (props: any) => {
             {nextAllocationTag}
           </div>
           <AllocationMenu
+            roomId={props.room.id}
+            time={props.time}
             currentAllocation={props.currentAllocation}
             nextAllocation={props.nextAllocation}
             roomStatus={props.roomStatus}
-            roomId={props.room.id}
             onFinishEarlyClick={props.onFinishEarlyClick}
             onExtendMeetingClick={props.onExtendMeetingClick}
             onConfirmMeetingClick={props.onConfirmMeetingClick}

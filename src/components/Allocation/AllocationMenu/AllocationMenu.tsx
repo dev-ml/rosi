@@ -26,13 +26,13 @@ const allocationMenu = (props: any) => {
       <>
         <Button
           type="icon-text"
-          onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, 60000)}
+          onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, props.time, 60000 * 15)}
           iconId="icon-calendar-plus-o"
           label="Extend"
         />
         <Button
           type="icon-text"
-          onClick={() => props.onFinishEarlyClick(props.currentAllocation.id)}
+          onClick={() => props.onFinishEarlyClick(props.currentAllocation.id, props.time)}
           iconId="icon-calendar-times-o"
           label="Finish"
         />
@@ -57,7 +57,7 @@ const allocationMenu = (props: any) => {
       <>
         <Button
           type="icon-text"
-          onClick={() => props.onAddMeetingClick(props.roomId)}
+          onClick={() => props.onAddMeetingClick(props.roomId, props.time)}
           iconId="icon-calendar-o"
           label="Book now"
         />

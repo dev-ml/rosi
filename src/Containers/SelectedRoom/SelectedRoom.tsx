@@ -47,9 +47,9 @@ const mapDispatchToProps = (dispatch: any) => {
     onPopupCloseClick: () => {
       dispatch(uiSlice.actions.hideAdminPanel());
     },
-    onAddMeetingClick: (roomId: string) => {
+    onAddMeetingClick: (roomId: string, time: number) => {
       dispatch(allocationSlice.actions.addAllocation({
-        ...new Allocation("Ad hoc meeting", roomId, Date.now() - 60000, Date.now() + 50000), confirmed: true}));
+        ...new Allocation("Ad hoc meeting", roomId, time, time + 60 * 1000 * 30), confirmed: true}));
     },
     onChangeStatusClick: (e: Equipment) => {
       dispatch(equipmentSlice.actions.changeStatus(e));
@@ -58,11 +58,11 @@ const mapDispatchToProps = (dispatch: any) => {
     onConfirmMeetingClick: (id: string) => {
       dispatch(allocationSlice.actions.confirmMeeting({id}));
     },
-    onExtendMeetingClick: (id: string, amount: number) => {
-      dispatch(allocationSlice.actions.extendMeeting({id, amount}));
+    onExtendMeetingClick: (id: string, time: number, amount: number) => {
+      dispatch(allocationSlice.actions.extendMeeting({id, time, amount}));
     },
-    onFinishEarlyClick: (id: string) => {
-      dispatch(allocationSlice.actions.finishEarly(id));
+    onFinishEarlyClick: (id: string, time: number) => {
+      dispatch(allocationSlice.actions.finishEarly(id, time));
     },
   };
 };

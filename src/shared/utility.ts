@@ -3,7 +3,11 @@ export const formatTimeStamp = (timeStamp: number): string => {
 };
 
 export const millisecondsToMinutes = (milliseconds: number): number => {
-  return Math.floor((milliseconds / 1000) / 60);
+  return Math.ceil((milliseconds / 1000) / 60);
+}
+
+export const roundEpochToMinutes = (epoch: number): number => {
+  return epoch - (epoch % (1000 * 60));
 }
 
 export const uuidv4 = () => {
