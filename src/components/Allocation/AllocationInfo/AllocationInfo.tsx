@@ -1,15 +1,18 @@
 import React from "react";
-import { formatTimeStamp } from "../../../shared/utility";
+import { formatTimeStamp, millisecondsToMinutes } from "../../../shared/utility";
 import "./AllocationInfo.scss";
 
 const allocationInfo = (props: any) => {
-  console.log("allocationInfo: ", props);
+  // console.log("allocationInfo: ", props);
+  const startsIn = millisecondsToMinutes(props.from - props.time);
 
   return (
-    <div className="AllocationInfo">Next Meeting:
+    <div className="AllocationInfo">
+      <div>Next Meeting</div>
+      <div><h4>{props.title}</h4></div>
       <div>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</div>
-      <div>{props.by}</div>
-      <div>{props.title}</div>
+      {/* <div>{props.by}{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</div> */}
+      <div>Starts In: {Math.floor(startsIn / 60) ? <span>{Math.floor(startsIn / 60)} h</span> : null} {startsIn % 60} min</div>
     </div>
   );
 };

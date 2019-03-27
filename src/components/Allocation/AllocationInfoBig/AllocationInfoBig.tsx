@@ -10,15 +10,16 @@ const allocationInfoBig = (props: any) => {
 
   return (
     <>
-      <div className="AllocationInfoBig">Current Meeting:
-        <div>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</div>
-        <div>{props.by}</div>
-        <div>{props.title}</div>
-        {props.attendees ? <div>Attendees: {props.attendees}</div> : null}
+      <div className="AllocationInfoBig">
+        <div>In Progress</div>
+        <div><h2>{props.title}</h2></div>
+        <div><span>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</span></div>
+        {/* <div><h3>{props.by}</h3><span>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</span></div> */}
+        <div>Ends In: {Math.floor(timeTillEnd / 60) ? <span>{Math.floor(timeTillEnd / 60)} h</span> : null} {timeTillEnd % 60} min</div>
+        {props.attendees ? <div>{props.attendees} attendees</div> : null}
         {props.agenda ? <div>Agenda: {props.agenda}</div> : null}
-        <div>Duration: {duration} min</div>
-        <div>Time till end: {timeTillEnd} min</div>
-        <div>% Done: {percentInMeeting}</div>
+        {/* <div>Duration: {duration} min</div> */}
+        {/* <div>% Done: {percentInMeeting}</div> */}
       </div>
     </>
   );

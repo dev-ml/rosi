@@ -39,14 +39,11 @@ const timeView = (props: any) => {
 
   function drawCurrentTime(ctx: any) {
     const minutes = UTCToClockTime(props.time);
-    // Draw current time
-    drawCircleStroke(ctx, minutes - 2, minutes + 2, "#000", 160, 20);
-
     // Draw circle background
     drawCircleStroke(ctx, minutes + 1, minutes, "#000", 200, 22);
     
     // Draw available slots for whole day
-    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 200, 5);
+    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 203, 5);
     
     // Draw busy slots for given allocations
     // [TODO] The busy slots drawing should have min and max value so it shouldn't exceed 11 hours threshold
@@ -54,15 +51,20 @@ const timeView = (props: any) => {
     .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
     .forEach((e: any) => drawCircleStroke(ctx, e.from, e.to, redColor, 200, 12));
     
+    // Draw current time
+    drawCircleStroke(ctx, minutes - 2, minutes + 3, "#FFF", 170, 30);
+    drawCircleStroke(ctx, minutes, minutes + 1, "#000", 196, 20);
+
     // draw 30 min slots
     for (let i = 0; i < 24; i++) {
       // long line on each full hour and short on not full hour
       if (i % 2) {
-        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#000", 200, 22);
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 200, 12);
       } else {
-        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#000", 196, 29);
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 196, 20);
       }
     }
+    
   }
 
   let canvas: any = React.createRef();

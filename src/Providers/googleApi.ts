@@ -13,13 +13,42 @@ export class GoogleApi {
 
   private syncToken: string | null = null;
 
-  private readonly CONFIG: any;
-  private readonly roomId: string;
+     // Client ID and API key from the Developer Console
+    // TODO move to state and admin panel
+    // private readonly CLIENT_ID = "162342559011-rh81oauc2fut2lj6d03j4srkk3oeea2l.apps.googleusercontent.com";
+    // private readonly API_KEY = "AIzaSyBe9hJXEgWHgkhAjqMEnxDtyCQLVCdEByI";
+  
 
-  constructor(roomId: string, Config: any) {
+    // Array of API discovery doc URLs for APIs used by the quickstart
+    private readonly DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
+    // Authorization scopes required by the API; multiple scopes can be
+    // included, separated by spaces.
+    private readonly SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
+  
+    private readonly CONFIG = {
+      apiKey: "[googleApi] apiKey not provided!!",
+      clientId: "[googleApi] clientId not provided!!",
+      discoveryDocs: this.DISCOVERY_DOCS,
+      scope: this.SCOPES,
+    };
+
+  private calendarId: string;
+  private roomId: string;
+
+  constructor(roomId: string, apiKey: string, clientId: string, calendarId: string) {
     this.roomId = roomId;
-    this.CONFIG = Config;
+    this.calendarId = calendarId;
+
+    this.CONFIG.apiKey = apiKey;
+    this.CONFIG.clientId = clientId;
     this.handleClientLoad();
+  }
+
+  public changeConfig(roomId: string, apiKey: string, clientId: string, calendarId: string) {
+    this.roomId = roomId;
+    this.calendarId = calendarId;
+    this.CONFIG.apiKey = apiKey;
+    this.CONFIG.clientId = clientId;
   }
 
   /**
@@ -32,7 +61,7 @@ export class GoogleApi {
     script.onload = () => {
       // this.gapi = window["gapi"] as any;
       // this.gapi.load("client:auth2", this.initClient);
-      this.gapi.load("client:auth2", () => this.initClient());
+      this.gapi.load("client:auth2", () => console.log("[Google Api] gapi loaded")); //this.initClient());
     };
     // gapi.load("client:auth2", initClient);
   }
@@ -155,6 +184,9 @@ export class GoogleApi {
       if (event.attendees) {
         a.attendees = event.attendees.length;
       }
+      if (event.organizer && event.organizer.displayName) {
+        a.by = event.organizer.displayName;
+      }
       a.extId = event.id;
       a.extStatus = event.status;
       return {...a};
@@ -175,7 +207,7 @@ export class GoogleApi {
       var tomorrow = new Date();
       tomorrow.setDate(today.getDate() + 1);
       return this.gapi.client.calendar.events.list({
-        calendarId: "primary",
+        calendarId: this.calendarId,
         maxResults,
         orderBy: "startTime",
         showDeleted: true,
@@ -203,7 +235,7 @@ export class GoogleApi {
     }
   }
 
-  private constructUpcomingEventsRequestFull(calendarId = "mobica.com_3331303731333131353835@resource.calendar.google.com", maxResults = 10000) {
+  private constructUpcomingEventsRequestFull(calendarId = this.calendarId, maxResults = 10000) {
     const today = new Date();
     // const tomorrow = new Date();
     // tomorrow.setDate(today.getDate() + 1);
@@ -219,7 +251,7 @@ export class GoogleApi {
     };
   }
 
-  private constructUpcomingEventsRequestPartial(calendarId = "mobica.com_3331303731333131353835@resource.calendar.google.com", maxResults = 1000) {
+  private constructUpcomingEventsRequestPartial(calendarId = this.calendarId, maxResults = 1000) {
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
@@ -235,9 +267,10 @@ export class GoogleApi {
   /**
    * Auth to the google Api.
    */
-  private initClient() {
+  public initClient() {
     this.gapi.client.init(this.CONFIG)
       .then(() => {
+        console.log("[Google API] Client init success");
         // Listen for sign-in state changes.
         this.gapi.auth2.getAuthInstance().isSignedIn.listen((e: any) => this.updateSigninStatus(e));
         // Handle the initial sign-in state.
@@ -247,7 +280,7 @@ export class GoogleApi {
         }
       })
       .catch((e: any) => {
-        console.log(e);
+        console.log("[Google API] Client init error:", e);
       });
   }
 

@@ -5,7 +5,8 @@ import "./Header.scss";
 const Header = (props: any) => {
   return (
     <div className="Header">
-      <div>{props.room.name}</div>
+      <div><h1>{props.room.name}</h1></div>
+      <div>{new Date().toLocaleDateString()}</div>
       <EquipmentBar equipment={props.equipment} onChangeStatusClick={props.onChangeStatusClick}/>
     </div>
   );

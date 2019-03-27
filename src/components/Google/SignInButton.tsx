@@ -3,32 +3,26 @@ import { GoogleApi } from "../../providers/googleApi";
 
 
 
-export default class SignInButton extends React.Component<{roomId: string}, { signedIn: boolean }> {
+export default class SignInButton extends React.Component<{roomId: string, googleApi: any}, { signedIn: boolean }> {
 
     // Client ID and API key from the Developer Console
-    private readonly CLIENT_ID = "162342559011-rh81oauc2fut2lj6d03j4srkk3oeea2l.apps.googleusercontent.com";
-    private readonly API_KEY = "AIzaSyBe9hJXEgWHgkhAjqMEnxDtyCQLVCdEByI";
+    // TODO move to state and admin panel
+    // private readonly CLIENT_ID = "162342559011-rh81oauc2fut2lj6d03j4srkk3oeea2l.apps.googleusercontent.com";
+    // private readonly API_KEY = "AIzaSyBe9hJXEgWHgkhAjqMEnxDtyCQLVCdEByI";
   
-    // Array of API discovery doc URLs for APIs used by the quickstart
-    private readonly DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
-    // Authorization scopes required by the API; multiple scopes can be
-    // included, separated by spaces.
-    private readonly SCOPES = "https://www.googleapis.com/auth/calendar.readonly";
-  
-    private readonly CONFIG = {
-      apiKey: this.API_KEY,
-      clientId: this.CLIENT_ID,
-      discoveryDocs: this.DISCOVERY_DOCS,
-      scope: this.SCOPES,
-    };
+    // private readonly CONFIG = {
+    //   apiKey: this.API_KEY,
+    //   clientId: this.CLIENT_ID,
+    //   calendarId: "primary",
+    // };
 
   private apiCalendar: GoogleApi;
   
   
   constructor(props: any) {
-    
+    console.log("[SignInButton] constructor");
     super(props);
-    this.apiCalendar = new GoogleApi(props.roomId, this.CONFIG);
+    this.apiCalendar = this.props.googleApi; 
 
     this.state = {signedIn: this.apiCalendar.sign};
     this.handleItemClick = this.handleItemClick.bind(this);
@@ -42,6 +36,10 @@ export default class SignInButton extends React.Component<{roomId: string}, { si
       });
     };
   }
+  componentDidMount() {
+    console.log("[SignInButton] componentDidMount");
+  }
+
 
   public handleItemClick(event: SyntheticEvent<any>, name: string): void {
     if (name === "sign-in") {
@@ -52,8 +50,15 @@ export default class SignInButton extends React.Component<{roomId: string}, { si
   }
 
   public sync() {
-    this.apiCalendar.listUpcomingEvents();
+    setInterval(() => {
+      console.log("[SignIn button] syncing events in interval");
+      this.apiCalendar.listUpcomingEvents();
+    }, 60 * 1000);
     // this.apiCalendar.sync();
+  }
+
+  public initClient() {
+    this.apiCalendar.initClient();
   }
 
   public render(): ReactNode {
@@ -68,6 +73,9 @@ export default class SignInButton extends React.Component<{roomId: string}, { si
 
     return (
       <>
+        <button onClick={() => this.initClient()}>
+          init client
+        </button>
         {signButton}
         <button onClick={() => this.sync()}>
           sync

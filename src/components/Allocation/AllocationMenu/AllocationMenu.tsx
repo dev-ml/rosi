@@ -4,8 +4,8 @@ import "./AllocationMenu.scss";
 import Button from "../../UI/Button/Button";
 
 const allocationMenu = (props: any) => {
-  console.log("Allocation menu:", props.id);
-  console.log("Props: ", props);
+  // console.log("Allocation menu:", props.id);
+  // console.log("Props: ", props);
   let meetingButtons;
 
   if (props.currentAllocation) {

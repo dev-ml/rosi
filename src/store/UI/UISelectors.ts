@@ -11,3 +11,7 @@ export const getSelectedRoomId = createSelector(
 export const getAdminPanelOpen = createSelector(
   ["ui.adminPanelOpen"],
 );
+
+export const getSyncSettings = createSelector(
+  ["ui.syncSettings"],
+);

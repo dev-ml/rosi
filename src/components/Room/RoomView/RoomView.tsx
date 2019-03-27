@@ -34,8 +34,10 @@ const roomView = (props: any) => {
 
   return (
     <div className="RoomView">
-      <Header time={props.time} {...props}/>
       <RoomStatusBorder roomStatus={props.roomStatus}>
+        <Header time={props.time} {...props}/>
+      </RoomStatusBorder>
+      <div className="Content">
         <TimeView time={props.time} allocations={props.clockAllocations} />
         <div className="Separator"/>
         <div className="RightSection">
@@ -55,8 +57,10 @@ const roomView = (props: any) => {
             onAddMeetingClick={props.onAddMeetingClick}
           />
         </div>
+      </div>
+      <RoomStatusBorder roomStatus={props.roomStatus}>
+        <StatusBar room={props.room} onAdminClicked={props.onAdminClick}/>
       </RoomStatusBorder>
-      <StatusBar room={props.room} onAdminClicked={props.onAdminClick}/>
       <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
         <Admin></Admin>
       </Popup>

@@ -1,12 +1,11 @@
 .StatusBar {
   height: 4vh;
+  min-height: 3rem;
   padding: 0 2vw;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  background-color: var(--color-dark);
 
   font-size: var(--font-size-big);
 }
