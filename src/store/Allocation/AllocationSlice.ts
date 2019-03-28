@@ -20,8 +20,8 @@ const allocationSlice = createSlice({
       state.ids = state.ids.filter((id: string) => id !== action.payload.id);
     },
     finishEarly: (state, action) => {
-      state.entity[action.payload].to = roundEpochToMinutes(action.payload.time);
-      state.entity[action.payload].confirmed = true;
+      state.entity[action.payload.id].to = roundEpochToMinutes(action.payload.time);
+      state.entity[action.payload.id].confirmed = true;
     },
     extendMeeting: (state, action) => {
       state.entity[action.payload.id].to += action.payload.amount;

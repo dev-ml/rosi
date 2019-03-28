@@ -15,7 +15,7 @@ const allocationMenu = (props: any) => {
       confirmCurrentAllocationTag = (
         <Button
           type="icon-text"
-          onClick={() => props.onConfirmMeetingClick(props.currentAllocation.id)}
+          onClick={() => props.onConfirmMeetingClick(props.currentAllocation.id, props.time)}
           iconId="icon-calendar-check-o"
           label="Confirm"
         />
@@ -46,7 +46,7 @@ const allocationMenu = (props: any) => {
       confirmNextAllocationTag = (
         <Button
           type="icon-text"
-          onClick={() => props.onConfirmMeetingClick(props.nextAllocation.id)}
+          onClick={() => props.onConfirmMeetingClick(props.nextAllocation.id, props.time)}
           iconId="icon-calendar-check-o"
           label="Confirm"
         />

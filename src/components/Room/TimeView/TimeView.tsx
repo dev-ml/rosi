@@ -37,6 +37,14 @@ const timeView = (props: any) => {
     return date.getHours() * 60 + date.getMinutes();
   };
 
+  function capLimitMin(currentTime: number, limitTime: number, minHourRange: number) {
+    return Math.max(limitTime, currentTime - minHourRange * 60 * 60 * 1000);
+  }
+
+  function capLimitMax(currentTime: number, limitTime: number, maxHourRange: number) {
+    return Math.min(limitTime, currentTime + maxHourRange * 60 * 60 * 1000);
+  }
+
   function drawCurrentTime(ctx: any) {
     const minutes = UTCToClockTime(props.time);
     // Draw circle background
@@ -48,6 +56,7 @@ const timeView = (props: any) => {
     // Draw busy slots for given allocations
     // [TODO] The busy slots drawing should have min and max value so it shouldn't exceed 11 hours threshold
     props.allocations
+    .map((a: any) => ({from: capLimitMin(props.time, a.from, 1), to: capLimitMax(props.time, a.to, 10)}))
     .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
     .forEach((e: any) => drawCircleStroke(ctx, e.from, e.to, redColor, 200, 12));
     

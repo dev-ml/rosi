@@ -62,7 +62,7 @@ export const getSelectedRoomFutureAllocationsForNextNMinutes = (n: number) => cr
 // Gives allocations that end after from, but also end before to
 export const getSelectedRoomAllocationsFromTo = (from: number, to: number) => createSelector(
   [getSelectedRoomAllocations],
-  (allocations: Allocation[]) => allocations.filter((a: Allocation) => a.to > from && a.to < to),
+  (allocations: Allocation[]) => allocations.filter((a: Allocation) => a.to > from && a.from < to),
 );
 
 export const getSelectedRoomNextAllocation = createSelector(

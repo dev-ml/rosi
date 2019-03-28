@@ -15,8 +15,9 @@ const mapStateToProps = (state: any, ownProps: any) => {
   const room = selectors.getSelectedRoom(state);
   const equipment = selectors.getSelectedRoomEquipment(state);
 
-  // 2 min
-  const roomStatus = selectors.getSelectedRoomStatus(120000)(state);
+  // [TODO] move all magin numbers to a config const file
+  // [TODO] set proper threshold for confirmation 5 min
+  const roomStatus = selectors.getSelectedRoomStatus(5 * 60 * 1000)(state);
 
   // [TODO] If there are more then two allocations it should be marked in allocationinfobig
   const currentAllocation = selectors.getSelectedRoomCurrentAllocation(state);
@@ -55,14 +56,14 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(equipmentSlice.actions.changeStatus(e));
       console.log("TODO change status. Ids need to be added to equipment");
     },
-    onConfirmMeetingClick: (id: string) => {
-      dispatch(allocationSlice.actions.confirmMeeting({id}));
+    onConfirmMeetingClick: (id: string, time: number) => {
+      dispatch(allocationSlice.actions.confirmMeeting({id, time}));
     },
     onExtendMeetingClick: (id: string, time: number, amount: number) => {
       dispatch(allocationSlice.actions.extendMeeting({id, time, amount}));
     },
     onFinishEarlyClick: (id: string, time: number) => {
-      dispatch(allocationSlice.actions.finishEarly(id, time));
+      dispatch(allocationSlice.actions.finishEarly({id, time}));
     },
   };
 };

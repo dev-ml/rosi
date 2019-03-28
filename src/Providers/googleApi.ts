@@ -268,6 +268,7 @@ export class GoogleApi {
    * Auth to the google Api.
    */
   public initClient() {
+    // [TODO] client can be null when network connectin issues
     this.gapi.client.init(this.CONFIG)
       .then(() => {
         console.log("[Google API] Client init success");
