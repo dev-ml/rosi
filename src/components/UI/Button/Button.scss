@@ -2,6 +2,8 @@ button {
   background-color: transparent;
   border: none;
   margin: 0 1rem;
+  // [TODO] temporary fix
+  color: var(--color-gray);
 
   &:hover, &:focus {
     outline: none;
