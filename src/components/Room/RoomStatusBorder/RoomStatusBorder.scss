@@ -1,4 +1,6 @@
 .RoomStatusBorder {
+  height: 100%;
+
   &.free {
     background: var(--color-green-primary);
   }

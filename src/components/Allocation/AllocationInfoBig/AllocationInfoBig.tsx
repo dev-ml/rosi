@@ -11,7 +11,7 @@ const allocationInfoBig = (props: any) => {
   return (
     <>
       <div className="AllocationInfoBig">
-        <div>In Progress</div>
+        <div className="text-small text-gray">In Progress</div>
         <div><h2>{props.title}</h2></div>
         <div><span>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</span></div>
         {/* <div><h3>{props.by}</h3><span>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</span></div> */}

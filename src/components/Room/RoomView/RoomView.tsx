@@ -1,66 +1,23 @@
 import React from "react";
-import AllocationInfo from "../../Allocation/AllocationInfo/AllocationInfo";
-import AllocationInfoBig from "../../Allocation/AllocationInfoBig/AllocationInfoBig";
-import AllocationMenu from "../../Allocation/AllocationMenu/AllocationMenu";
-import RoomStatusBorder from "../RoomStatusBorder/RoomStatusBorder";
-import StatusBar from "../../StatusBar/StatusBar";
-import TimeView from "../TimeView/TimeView";
-import "./RoomView.scss";
-import Header from "../../Header/Header";
-import Popup from "../../UI/Popup/Popup";
 import Admin from "../../../containers/Admin/Admin";
+import Header from "../../Header/Header";
+import RoomViewContent from "../RoomViewContent/RoomViewContent";
+import "./RoomView.scss";
+import Footer from "../../Footer/Footer";
+import Popup from "../../UI/Popup/Popup";
 
 const roomView = (props: any) => {
   // console.log("roomView: ", props);
   if (!props.room) {
     console.error("[RoomView] No room provided!");
-    return <Admin/>;
-  }
-
-  let currentAllocationTag;
-  let nextAllocationTag;
-
-  // [TODO] Overlapping events, if current event is overlapping next
-  if (props.currentAllocation) {
-    currentAllocationTag =
-    <AllocationInfoBig time={props.time}
-      {...props.currentAllocation}
-    />;
-  }
-
-  if (props.nextAllocation) {
-    nextAllocationTag = <AllocationInfo time={props.time} {...props.nextAllocation}/>;
+    return <Admin />;
   }
 
   return (
     <div className="RoomView">
-      <RoomStatusBorder roomStatus={props.roomStatus}>
-        <Header time={props.time} {...props}/>
-      </RoomStatusBorder>
-      <div className="Content">
-        <TimeView time={props.time} allocations={props.clockAllocations} />
-        <div className="Separator"/>
-        <div className="RightSection">
-          <div className="Allocations">
-            {currentAllocationTag}
-            {nextAllocationTag}
-          </div>
-          <AllocationMenu
-            roomId={props.room.id}
-            time={props.time}
-            currentAllocation={props.currentAllocation}
-            nextAllocation={props.nextAllocation}
-            roomStatus={props.roomStatus}
-            onFinishEarlyClick={props.onFinishEarlyClick}
-            onExtendMeetingClick={props.onExtendMeetingClick}
-            onConfirmMeetingClick={props.onConfirmMeetingClick}
-            onAddMeetingClick={props.onAddMeetingClick}
-          />
-        </div>
-      </div>
-      <RoomStatusBorder roomStatus={props.roomStatus}>
-        <StatusBar room={props.room} onAdminClicked={props.onAdminClick}/>
-      </RoomStatusBorder>
+      <Header {...props} />
+      <RoomViewContent {...props} />
+      <Footer {...props} />
       <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
         <Admin></Admin>
       </Popup>

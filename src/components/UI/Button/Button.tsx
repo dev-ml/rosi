@@ -2,7 +2,7 @@ import React from "react";
 import icons from "../../../assets/symbol-defs.svg";
 
 const Button = (props: any) => {
-  let buttonElement = <button>Not configured button</button>;
+  let buttonElement = <button onClick={props.onClick} aria-label={props.iconId}>{props.label}</button>;
 
   switch (props.type) {
     case "icon":

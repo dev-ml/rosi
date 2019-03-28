@@ -8,7 +8,7 @@ const allocationInfo = (props: any) => {
 
   return (
     <div className="AllocationInfo">
-      <div>Next Meeting</div>
+      <div className="text-very-small text-gray">Next Meeting</div>
       <div><h4>{props.title}</h4></div>
       <div>{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</div>
       {/* <div>{props.by}{formatTimeStamp(props.from)} - {formatTimeStamp(props.to)}</div> */}

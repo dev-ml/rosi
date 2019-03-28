@@ -1,11 +1,16 @@
 .Header {
   height: 8vh;
-  min-height: 6rem;
-  padding: 0 2vw;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  font-size: var(--font-size-big);
+  min-height: 40px;
+  
+  .HeaderContent {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 0 2rem;
+    font-size: var(--font-size-big);
+  }
 }

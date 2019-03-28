@@ -1,4 +1,9 @@
 .EquipmentBar {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin: 2rem;
+
   display: flex;
 
   > * {
@@ -13,7 +18,7 @@
       .icon { fill: var(--color-gray); }
     }
     &_available {
-      .icon { fill: var(--color-green-primary); }
+      .icon { fill: var(--color-light); }
     }
   }
 }
