@@ -1,7 +1,7 @@
 {
   "main.css": "/rosi/static/css/main.e35b21bc.chunk.css",
-  "main.js": "/rosi/static/js/main.cab7c039.chunk.js",
-  "main.js.map": "/rosi/static/js/main.cab7c039.chunk.js.map",
+  "main.js": "/rosi/static/js/main.6918d619.chunk.js",
+  "main.js.map": "/rosi/static/js/main.6918d619.chunk.js.map",
   "static/js/1.1bfd6b6f.chunk.js": "/rosi/static/js/1.1bfd6b6f.chunk.js",
   "static/js/1.1bfd6b6f.chunk.js.map": "/rosi/static/js/1.1bfd6b6f.chunk.js.map",
   "runtime~main.js": "/rosi/static/js/runtime~main.5dd57311.js",
@@ -9,6 +9,6 @@
   "static/media/symbol-defs.svg": "/rosi/static/media/symbol-defs.119ddbe0.svg",
   "static/css/main.e35b21bc.chunk.css.map": "/rosi/static/css/main.e35b21bc.chunk.css.map",
   "index.html": "/rosi/index.html",
-  "precache-manifest.f7e4b0c36edea847cc672ac3e48fb30c.js": "/rosi/precache-manifest.f7e4b0c36edea847cc672ac3e48fb30c.js",
+  "precache-manifest.6163501e71f67ac87d4a77872027b695.js": "/rosi/precache-manifest.6163501e71f67ac87d4a77872027b695.js",
   "service-worker.js": "/rosi/service-worker.js"
 }
