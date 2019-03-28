@@ -148,7 +148,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
 
     this.setSyncSettings(updatedFormData);
-    this.googleApi.changeConfig(updatedFormData.room.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+    this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
     this.setState({ formData: updatedFormData, formIsValid: formIsValid });
   }
 

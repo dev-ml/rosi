@@ -7,7 +7,7 @@ const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: 
   const mapEquipmentToButton = (e: Equipment) => {
     return <Button
       key={e.type}
-      type="icon"
+      style="icon"
       onClick={() => props.onChangeStatusClick(e)}
       iconId={`icon-${e.type.toLowerCase()}`}
       btnClassName={`btn_${e.status.toLowerCase()}`}

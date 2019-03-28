@@ -6,7 +6,7 @@ const EquipmentAdmin = (props: any) => {
   return (
     <div className="EquipmentAdmin">
       <label>Room Equipment</label>
-      {Object.values(EquipmentType).map((type: any) => <div key={type}><button onClick={() => props.onEquipmentToggleClick(props.roomId, type)}>{type}</button></div>)}
+      {Object.values(EquipmentType).map((type: any) => <div key={type}><button type="button" onClick={() => props.onEquipmentToggleClick(props.roomId, type)}>{type}</button></div>)}
     </div>
   );
 };
