@@ -269,10 +269,11 @@ export class GoogleApi {
    */
   public initClient() {
     // [TODO] client can be null when network connectin issues
+    console.log("[Google API] Begin initClient, Config: ", this.CONFIG);
     this.gapi.client.init(this.CONFIG)
       .then(() => {
         console.log("[Google API] Client init success");
-        // Listen for sign-in state changes.
+        // Listen for sign-in state changes. // [TODO] this fails when config is wrong
         this.gapi.auth2.getAuthInstance().isSignedIn.listen((e: any) => this.updateSigninStatus(e));
         // Handle the initial sign-in state.
         this.updateSigninStatus(this.gapi.auth2.getAuthInstance().isSignedIn.get());

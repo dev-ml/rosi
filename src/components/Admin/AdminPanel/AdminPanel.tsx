@@ -1,7 +1,7 @@
 import React, { ChangeEvent, Component, FormEvent } from "react";
 import Room from "../../../models/Room";
 import Button from "../../UI/Button/Button";
-import EquipmentAdmin from "../../Equipment/EquipmentAdmin/EquipmentAdmin";
+import EquipmentAdmin from "../EquipmentAdmin/EquipmentAdmin";
 import { Equipment } from "../../../models/Equipment";
 import { updateObject, checkValidity } from "../../../shared/utility";
 import Input from "../../UI/Input/Input";
@@ -13,24 +13,24 @@ interface IAdminPanelProps {
   onSettingsSaved: (settings: any) => void;
   onEquipmentToggleClick: ({ }) => void;
   onSettingsClear: () => void;
+  onCancel: () => void;
 }
 
 interface IAdminPanelState {
-  // room: Room;
   formIsValid: Boolean;
-  orderForm: any;
+  formData: any;
 }
 
 class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   state: IAdminPanelState = {
-    // room: new Room(""),
-    orderForm: {
+    formData: {
       roomName: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Room name'
+          placeholder: 'Conference room 1',
         },
+        label: "Room name",
         value: '',
         validation: {
           required: true
@@ -42,8 +42,9 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Client ID'
+          placeholder: 'Client ID from google calendar API',
         },
+        label: "Client ID",
         value: '',
         validation: {
           required: true
@@ -55,8 +56,9 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'API key'
+          placeholder: 'API key from google calendar API'
         },
+        label: "API key",
         value: '',
         validation: {
           required: true,
@@ -68,8 +70,9 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Calendar ID'
+          placeholder: 'Calendar ID can be found in google calendar settings'
         },
+        label: "Calendar ID",
         value: '',
         validation: {
           required: true
@@ -79,7 +82,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
       },
     },
     formIsValid: false
-  }
+  };
 
   private selectedRoom: Room;
   private roomEquipment: Equipment[];
@@ -89,36 +92,28 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   constructor(props: any) {
     super(props)
 
-    
-    
-    this.selectedRoom = {...props.selectedRoom};
-    this.roomEquipment = {...props.roomEquipment};
-    this.syncSettings = {...props.syncSettings};
-    
+    this.selectedRoom = { ...props.selectedRoom };
+    this.roomEquipment = { ...props.roomEquipment };
+    this.syncSettings = { ...props.syncSettings };
+
     if (!this.selectedRoom) {
       this.selectedRoom = { ... new Room("Conference Room 1") };
     }
-    
-    // [TODO] set props to state;
-    this.state.orderForm.roomName.value = this.selectedRoom.name;
-    this.state.orderForm.clientID.value = this.syncSettings.clientID;
-    this.state.orderForm.apiKey.value = this.syncSettings.apiKey;
-    this.state.orderForm.calendarID.value = this.syncSettings.calendarID;
-    
+
+    this.state.formData.roomName.value = this.selectedRoom.name;
+    this.state.formData.clientID.value = this.syncSettings.clientID;
+    this.state.formData.apiKey.value = this.syncSettings.apiKey;
+    this.state.formData.calendarID.value = this.syncSettings.calendarID;
+
     this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
-    // this.setState({
-    //   room: { ... this.selectedRoom },
-    // });
   }
-
-
 
   submitSettings = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData: any = {};
-    for (let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[formElementIdentifier].value;
     }
 
     this.selectedRoom.name = formData.roomName;
@@ -135,18 +130,15 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     console.log("[AdminPanel] settings: ", newSettings);
 
     this.props.onSettingsSaved(newSettings);
-    this.googleApi.changeConfig(newSettings.room.id, newSettings.syncSettings.apiKey, newSettings.syncSettings.clientID, newSettings.syncSettings.calendarID);
-    // this.props.onOrderBurger(order, this.props.token);
   }
 
   inputChangedHandler = (event: ChangeEvent<HTMLInputElement>, inputIdentifier: any) => {
-
-    const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+    const updatedFormElement = updateObject(this.state.formData[inputIdentifier], {
       value: event.target.value,
-      valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+      valid: checkValidity(event.target.value, this.state.formData[inputIdentifier].validation),
       touched: true
     });
-    const updatedFormData = updateObject(this.state.orderForm, {
+    const updatedFormData = updateObject(this.state.formData, {
       [inputIdentifier]: updatedFormElement
     });
 
@@ -156,7 +148,8 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
 
     this.setSyncSettings(updatedFormData);
-    this.setState({ orderForm: updatedFormData, formIsValid: formIsValid });
+    this.googleApi.changeConfig(updatedFormData.room.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+    this.setState({ formData: updatedFormData, formIsValid: formIsValid });
   }
 
   setSyncSettings(data: any) {
@@ -167,30 +160,20 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
   }
 
-  // submitSettings(event: FormEvent<HTMLFormElement>) {
-  //   event.preventDefault();
-
-  // };
-
   clearSettings() {
     this.props.onSettingsClear();
   }
 
-  // inputChangedHandler(event: ChangeEvent<HTMLInputElement>) {
-  //   console.log(event);
-  //   const newState = { ...this.state };
-  //   if (newState.room) {
-  //     newState.room.name = event.target.value;
-  //   }
-  //   this.setState(newState);
-  // }
+  cancel() {
+    this.props.onCancel();
+  }
 
   render() {
     const formElementsArray = [];
-    for (let key in this.state.orderForm) {
+    for (let key in this.state.formData) {
       formElementsArray.push({
         id: key,
-        config: this.state.orderForm[key]
+        config: this.state.formData[key]
       });
     }
     let form = (
@@ -198,6 +181,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         {formElementsArray.map(formElement => (
           <Input
             key={formElement.id}
+            label={formElement.config.label}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
             value={formElement.config.value}
@@ -210,11 +194,24 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
           <EquipmentAdmin roomId={this.selectedRoom.id} equipment={this.roomEquipment} onEquipmentToggleClick={this.props.onEquipmentToggleClick} />
         </div>
         <SignInButton roomId={this.selectedRoom.id} googleApi={this.googleApi} />
-        <Button
-          type="icon-text"
-          iconId="icon-save"
-          label="Save Settings"
-        />
+        <div className="AdminPanelButtons">
+          <Button
+            // type="text"
+            label="Clear Settings"
+            onClick={() => this.clearSettings()}
+          />
+          <Button
+            // type="text"
+            label="Cancel"
+            onClick={() => this.cancel()}
+          />
+          <Button
+            // type="icon-text"
+            btnType="submit"
+            iconId="icon-save"
+            label="Save Settings"
+          />
+        </div>
 
         {/* <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button> */}
       </form>
@@ -224,78 +221,14 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     //   form = <Spinner />;
     // }
     return (
-      <div className="ContactData">
-        <h4>Enter your Contact Data</h4>
+      <div className="AdminPanel">
+        <h3>Admin Panel</h3>
         {form}
         {/* // [TODO] all buttons are submit buttons */}
-        <Button
-          type="text"
-          label="Clear Settings"
-          onClick={() => this.clearSettings()}
-        />
+
       </div>
     );
   }
-
-
-  // render2() {
-  //   return (
-  //     <div>
-  //       <h3>This is admin panel</h3>
-  //       <form onSubmit={(e) => this.submitSettings(e)}>
-  //         <span>General</span>
-  //         <div>
-  //           <label>Room name</label>
-  //           <input
-  //             type="text"
-  //             placeholder="Room Name"
-  //             value={this.state.room.name}
-  //             onChange={(e) => this.inputChangedHandler(e)}
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>API key</label>
-  //           <input
-  //             type="text"
-  //             placeholder="Room Name"
-  //             value={this.state.room.name}
-  //             onChange={(e) => this.inputChangedHandler(e)}
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Client ID</label>
-  //           <input
-  //             type="text"
-  //             placeholder="Client ID"
-  //             value={this.state.room.name}
-  //             onChange={(e) => this.inputChangedHandler(e)}
-  //           />
-  //         </div>
-  //         <div>
-  //           <label>Calendar ID</label>
-  //           <input
-  //             type="text"
-  //             placeholder="Room Name"
-  //             value={this.state.room.name}
-  //             onChange={(e) => this.inputChangedHandler(e)}
-  //           />
-  //         </div>
-  //         <div>
-  //           <EquipmentAdmin roomId={this.state.room.id} equipment={this.roomEquipment} onEquipmentToggleClick={this.props.onEquipmentToggleClick} />
-  //         </div>
-
-  //         <Button
-  //           type="icon-text"
-  //           iconId="icon-save"
-  //           label="Save Settings"
-  //         />
-
-
-  //       </form>
-
-  //     </div>
-  //   );
-  // }
 }
 
 export default AdminPanel;

@@ -6,7 +6,7 @@ import SignInButton from "../../Google/SignInButton";
 const StatusBar = (props: any) => {
   return (
     <div className="StatusBar">
-      <Button type="" onClick={props.onAdminClicked} iconId="icon-settings" label="Admin" />
+      <Button onClick={props.onAdminClicked} iconId="icon-settings" label="Admin" />
     </div>
   );
 };

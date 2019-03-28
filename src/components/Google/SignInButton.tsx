@@ -28,12 +28,17 @@ export default class SignInButton extends React.Component<{roomId: string, googl
     this.handleItemClick = this.handleItemClick.bind(this);
     this.apiCalendar.onLoadCallback = () => {
       this.setState({signedIn: this.apiCalendar.sign});
+
       this.apiCalendar.listenSign((status: any) => {
         console.log(status);
         this.setState({
           signedIn: status,
         });
       });
+
+      if (!this.apiCalendar.sign) {
+        this.apiCalendar.handleAuthClick();
+      }
     };
   }
   componentDidMount() {
@@ -63,21 +68,21 @@ export default class SignInButton extends React.Component<{roomId: string, googl
 
   public render(): ReactNode {
     const signButton = !this.state.signedIn ?
-      <button onClick={(e) => this.handleItemClick(e, "sign-in")}>
+      <button type="button" onClick={(e) => this.handleItemClick(e, "sign-in")}>
         sign-in
       </button>
       :
-      <button onClick={(e) => this.handleItemClick(e, "sign-out")}>
+      <button type="button" onClick={(e) => this.handleItemClick(e, "sign-out")}>
         sign-out
       </button>;
 
     return (
       <>
-        <button onClick={() => this.initClient()}>
+        <button type="button" onClick={() => this.initClient()}>
           init client
         </button>
         {signButton}
-        <button onClick={() => this.sync()}>
+        <button type="button" onClick={() => this.sync()}>
           sync
         </button>
       </>

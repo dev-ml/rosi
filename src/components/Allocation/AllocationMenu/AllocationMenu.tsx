@@ -14,7 +14,7 @@ const allocationMenu = (props: any) => {
     if (props.roomStatus === RoomStatus.awaiting) {
       confirmCurrentAllocationTag = (
         <Button
-          type="icon-text"
+          style="icon-text"
           onClick={() => props.onConfirmMeetingClick(props.currentAllocation.id, props.time)}
           iconId="icon-calendar-check-o"
           label="Confirm"
@@ -25,13 +25,13 @@ const allocationMenu = (props: any) => {
     meetingButtons = (
       <>
         <Button
-          type="icon-text"
+          style="icon-text"
           onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, props.time, 60000 * 15)}
           iconId="icon-calendar-plus-o"
           label="Extend"
         />
         <Button
-          type="icon-text"
+          style="icon-text"
           onClick={() => props.onFinishEarlyClick(props.currentAllocation.id, props.time)}
           iconId="icon-calendar-times-o"
           label="Finish"
@@ -45,7 +45,7 @@ const allocationMenu = (props: any) => {
     if (props.roomStatus === RoomStatus.awaiting) {
       confirmNextAllocationTag = (
         <Button
-          type="icon-text"
+          style="icon-text"
           onClick={() => props.onConfirmMeetingClick(props.nextAllocation.id, props.time)}
           iconId="icon-calendar-check-o"
           label="Confirm"
@@ -56,7 +56,7 @@ const allocationMenu = (props: any) => {
     meetingButtons = (
       <>
         <Button
-          type="icon-text"
+          style="icon-text"
           onClick={() => props.onAddMeetingClick(props.roomId, props.time)}
           iconId="icon-calendar-o"
           label="Book now"

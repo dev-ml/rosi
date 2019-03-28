@@ -12,9 +12,10 @@ const Popup = (props: any) => {
   return (
     <div className={classes.join(" ")}>
       <Backdrop/>
-      <div className="content">
+      <div className="PopupContent">
         <Button
-          type="icon-text"
+          btnClassName="PopupClose"
+          // style="icon-text"
           onClick={props.onCloseClick}
           iconId="icon-close"
           label="Close"

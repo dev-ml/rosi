@@ -19,7 +19,7 @@ const roomView = (props: any) => {
       <RoomViewContent {...props} />
       <Footer {...props} />
       <Popup open={props.adminPanelOpen} onCloseClick={props.onPopupCloseClick}>
-        <Admin></Admin>
+        <Admin />
       </Popup>
     </div>
   );

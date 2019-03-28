@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch: any) => {
       // [TODO] temporary solution, need to be changed when multiple room management will be added
       dispatch(uiSlice.actions.setSelectedRoomId(settings.room.id));
       dispatch(uiSlice.actions.setSyncSettings(settings.syncSettings));
+      dispatch(uiSlice.actions.hideAdminPanel());
       dispatch(saveState());
     },
     onEquipmentToggleClick: (roomId: string, type: string) => {
@@ -35,6 +36,9 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     onSettingsClear: () => {
       dispatch(removeState());
+    },
+    onCancel: () => {
+      dispatch(uiSlice.actions.hideAdminPanel());
     }
   };
 };
