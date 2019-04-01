@@ -7,9 +7,9 @@ const uiSlice = createSlice({
     selectedRoomId: "",
     time: Date.now(),
     adminPanelOpen: false,
-    syncSettings: {},
-    syncInProgress: false,
-    syncError: ""
+    stateSyncInProgress: false,
+    stateSyncError: "",
+
   },
   reducers: {
     setSelectedRoomId: (state, action) => {
@@ -26,10 +26,6 @@ const uiSlice = createSlice({
     },
     hideAdminPanel: (state) => {
       state.adminPanelOpen = false;
-      return state;
-    },
-    setSyncSettings: (state, action) => {
-      state.syncSettings = action.payload;
       return state;
     }
   },

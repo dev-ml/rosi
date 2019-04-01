@@ -19,13 +19,13 @@ export default class SignInButton extends React.Component<{roomId: string, googl
     // };
 
   // private apiCalendar: GoogleApi;
-  private syncProvider: ISyncProvider;
+  // private syncProvider: ISyncProvider;   
   
   
   constructor(props: any) {
     console.log("[SignInButton] constructor");
     super(props);
-    this.syncProvider = new GoogleSyncProvider();
+    // this.syncProvider = new GoogleSyncProvider();
     
     
     // this.apiCalendar = this.props.googleApi; 

@@ -1,13 +1,23 @@
 import { createSlice } from "redux-starter-kit";
 import Room from "../../models/Room";
 
+const createInitialState = () => {
+  const defaultRoom = new Room("Conference Room 1");
+  const initialState = {
+    entity: {} as {[id: string]: Room },
+    ids: [] as string[],
+  };
+
+  initialState.entity[defaultRoom.id] = { ...defaultRoom};
+  initialState.ids.push(defaultRoom.id);
+
+  return initialState;
+};
+
 // ROOMS ////////////////////////
 const roomSlice = createSlice({
   slice: "room",
-  initialState: {
-    entity: {} as {[id: string]: Room },
-    ids: [] as string[],
-  },
+  initialState: createInitialState(),
   reducers: {
     addRoom: (state, action) => {
       state.entity[action.payload.id] = action.payload;

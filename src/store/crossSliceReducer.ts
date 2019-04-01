@@ -45,39 +45,42 @@ export const crossSliceReducer = (state: any, action: any) => {
   newState.ui = {...newState.ui};
 
   switch (action.type) {
+    case "@@INIT":
+      newState.ui.selectedRoomId = newState.room.ids[0];
+      return newState;
     case removeStateStarted.toString():
-      newState.ui.syncInProgress = true;
+      newState.ui.stateSyncInProgress = true;
       return newState;
     case removeStateSucceeded.toString():
-      newState.ui.syncInProgress = false;
+      newState.ui.stateSyncInProgress = false;
       return newState;
     case removeStateFailed.toString():
-      newState.ui.syncInProgress = false;
-      newState.ui.syncError = action.payload;
+      newState.ui.stateSyncInProgress = false;
+      newState.ui.stateSyncError = action.payload;
       return newState;
     case saveStateStarted.toString():
-      newState.ui.syncInProgress = true;
+      newState.ui.stateSyncInProgress = true;
       return newState;
     case saveStateSucceeded.toString():
-      newState.ui.syncInProgress = false;
+      newState.ui.stateSyncInProgress = false;
       return newState;
     case saveStateFailed.toString():
-      newState.ui.syncInProgress = false;
-      newState.ui.syncError = action.payload;
+      newState.ui.stateSyncInProgress = false;
+      newState.ui.stateSyncError = action.payload;
       return newState;
     case loadStateStarted.toString():
-      newState.ui.syncInProgress = true;
+      newState.ui.stateSyncInProgress = true;
       return newState;
     case loadStateSucceeded.toString():
       // [TODO] if new version arrive, state shuold be cleaned, or retrofitted.
       newState = {...newState, ...action.payload};
-      // newState = {...action.payload};
       newState.ui.time = Date.now();
-      newState.ui.syncInProgress = false;
+      newState.ui.stateSyncInProgress = false;
+
       return newState;
     case loadStateFailed.toString():
-      newState.ui.syncInProgress = false;
-      newState.ui.syncError = action.payload;
+      newState.ui.stateSyncInProgress = false;
+      newState.ui.stateSyncError = action.payload;
       return newState;
     default:
       return state;

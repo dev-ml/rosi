@@ -6,7 +6,9 @@ import {saveState, removeState} from "../../store/crossSliceReducer";
 import uiSlice from "../../store/UI/UISlice";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import equipmentSlice from "../../store/Equipment/EquipmentSlice";
-import { getSyncSettings } from "../../store/UI/UISelectors";
+import { getSyncSettings } from "../../store/SyncProvider/SyncProviderSelectors";
+import syncProviderSlice from "../../store/SyncProvider/SyncProviderSlice";
+import { Connect } from "../../store/SyncProvider/SyncProviderActions";
 
 const mapStateToProps = (state: any) => {
   const selectedRoom = selectors.getSelectedRoom(state);
@@ -26,8 +28,8 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(roomSlice.actions.changeRoomName({...settings.room}));
       // [TODO] temporary solution, need to be changed when multiple room management will be added
       dispatch(uiSlice.actions.setSelectedRoomId(settings.room.id));
-      dispatch(uiSlice.actions.setSyncSettings(settings.syncSettings));
-      dispatch(uiSlice.actions.hideAdminPanel());
+      dispatch(syncProviderSlice.actions.setSyncSettings(settings.syncSettings));
+      // dispatch(uiSlice.actions.hideAdminPanel());
       dispatch(saveState());
     },
     onEquipmentToggleClick: (roomId: string, type: string) => {
@@ -39,6 +41,9 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     onCancel: () => {
       dispatch(uiSlice.actions.hideAdminPanel());
+    },
+    onConnect: () => {
+      dispatch(Connect());
     }
   };
 };

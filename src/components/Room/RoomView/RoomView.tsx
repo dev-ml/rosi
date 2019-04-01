@@ -10,7 +10,7 @@ const roomView = (props: any) => {
   // console.log("roomView: ", props);
   if (!props.room) {
     console.error("[RoomView] No room provided!");
-    return <Admin />;
+    return <span>No room provided</span>;
   }
 
   return (

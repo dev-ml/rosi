@@ -6,6 +6,7 @@ import roomSlice from "./Room/RoomSlice";
 import uiSlice from "./UI/UISlice";
 import reduceReducers from "reduce-reducers";
 import { crossSliceReducer } from "./crossSliceReducer";
+import syncProviderSlice from "./SyncProvider/SyncProviderSlice";
 
 ///////////////////////////////////////////////////////////////
 // Store Config
@@ -16,6 +17,7 @@ const combinedReducers = combineReducers({
   room: roomSlice.reducer,
   allocation: allocationSlice.reducer,
   equipment: equipmentSlice.reducer,
+  syncProvider: syncProviderSlice.reducer,
 });
 
 const rootReducer = reduceReducers(combinedReducers, crossSliceReducer);

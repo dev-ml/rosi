@@ -8,7 +8,7 @@ import Input from "../../UI/Input/Input";
 import "./AdminPanel.scss";
 // import SignInButton from "../../Google/SignInButton";
 // import GoogleApi from "../../../providers/googleApi";
-import ISyncProvider from "../../../providers/ISyncProvider";
+// import ISyncProvider from "../../../providers/ISyncProvider";
 import GoogleSyncProvider from "../../../providers/GoogleSyncProvider";
 import Allocation from "../../../models/Allocation";
 import allocationSlice from "../../../store/Allocation/AllocationSlice";
@@ -20,6 +20,7 @@ interface IAdminPanelProps {
   onEquipmentToggleClick: ({ }) => void;
   onSettingsClear: () => void;
   onCancel: () => void;
+  onConnect: () => void;
 }
 
 interface IAdminPanelState {
@@ -44,7 +45,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         valid: false,
         touched: false
       },
-      clientID: {
+      clientId: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
@@ -72,7 +73,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         valid: false,
         touched: false
       },
-      calendarID: {
+      calendarId: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
@@ -94,13 +95,13 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   private roomEquipment: Equipment[];
   private syncSettings: any;
   // private googleApi: any;
-  
-  private syncProvider: ISyncProvider;
+
+  // private syncProvider: ISyncProvider;
 
   constructor(props: any) {
     super(props)
 
-    this.syncProvider = new GoogleSyncProvider();
+    // this.syncProvider = new GoogleSyncProvider();
 
     this.selectedRoom = { ...props.selectedRoom };
     this.roomEquipment = { ...props.roomEquipment };
@@ -111,36 +112,45 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
 
     this.state.formData.roomName.value = this.selectedRoom.name;
-    this.state.formData.clientID.value = this.syncSettings.clientID;
+    this.state.formData.clientId.value = this.syncSettings.clientId;
     this.state.formData.apiKey.value = this.syncSettings.apiKey;
-    this.state.formData.calendarID.value = this.syncSettings.calendarID;
+    this.state.formData.calendarId.value = this.syncSettings.calendarId;
 
-    // this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+
+    // this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientId, this.syncSettings.calendarId);
   }
 
-  submitSettings = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  static getDerivedStateFromProps(props: any, state: any) {
+    return {
+      formData: {
+        ...state.formData,
+        clientId: { ...state.formData.clientId, value: props.syncSettings.clientId },
+        apiKey: { ...state.formData.apiKey, value: props.syncSettings.apiKey },
+        calendarId: { ...state.formData.calendarId, value: props.syncSettings.calendarId },
+      }
+    };
 
-    const formData: any = {};
-    for (let formElementIdentifier in this.state.formData) {
-      formData[formElementIdentifier] = this.state.formData[formElementIdentifier].value;
-    }
-
-    this.selectedRoom.name = formData.roomName;
-    const newSettings = {
-      syncSettings: {
-        clientID: formData.clientID,
-        apiKey: formData.apiKey,
-        calendarID: formData.calendarID,
-      },
-      room: this.selectedRoom,
-    }
-
-    console.log("[AdminPanel] selectedroom:", this.selectedRoom);
-    console.log("[AdminPanel] settings: ", newSettings);
-
-    this.props.onSettingsSaved(newSettings);
+    // return state;
   }
+  // submitSettings = (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+
+  //   const formData: any = {};
+  //   for (let formElementIdentifier in this.state.formData) {
+  //     formData[formElementIdentifier] = this.state.formData[formElementIdentifier].value;
+  //   }
+
+  //   this.selectedRoom.name = formData.roomName;
+  //   const newSettings = {
+  //     syncSettings: this.syncSettings,
+  //     room: this.selectedRoom,
+  //   }
+
+  //   console.log("[AdminPanel] selectedroom:", this.selectedRoom);
+  //   console.log("[AdminPanel] settings: ", newSettings);
+
+  //   this.props.onSettingsSaved(newSettings);
+  // }
 
   inputChangedHandler = (event: ChangeEvent<HTMLInputElement>, inputIdentifier: any) => {
     const updatedFormElement = updateObject(this.state.formData[inputIdentifier], {
@@ -158,15 +168,23 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
 
     this.setSyncSettings(updatedFormData);
-    // this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+    // this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientId, this.syncSettings.calendarId);
     this.setState({ formData: updatedFormData, formIsValid: formIsValid });
+
+    this.selectedRoom.name = updatedFormData.roomName.value;
+    const newSettings = {
+      syncSettings: this.syncSettings,
+      room: this.selectedRoom,
+    }
+
+    this.props.onSettingsSaved(newSettings);
   }
 
   setSyncSettings(data: any) {
     this.syncSettings = {
-      clientID: data.clientID.value,
+      clientId: data.clientId.value,
       apiKey: data.apiKey.value,
-      calendarID: data.calendarID.value,
+      calendarId: data.calendarId.value,
     }
 
     console.log("[AdminPanel] setSyncSettings: ", this.syncSettings);
@@ -181,13 +199,14 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   }
 
   connect() {
-    console.log(`[AdminPanel] connect with clientId ${this.syncSettings.clientID} apiKey: ${this.syncSettings.apiKey}`);
-    Connect(this.syncSettings.clientID, this.syncSettings.apiKey);
+    console.log(`[AdminPanel] connect with clientId ${this.syncSettings.clientId} apiKey: ${this.syncSettings.apiKey}`);
+    this.props.onConnect();
+    // Connect(this.syncSettings.clientId, this.syncSettings.apiKey);
   }
-  
+
   // sync() {
-  //   console.log(`[AdminPanel] sync with roomid ${this.selectedRoom.id} calendarID: ${this.syncSettings.calendarID}`);
-  //   this.syncProvider.getAllocations(this.selectedRoom.id, this.syncSettings.calendarID)
+  //   console.log(`[AdminPanel] sync with roomid ${this.selectedRoom.id} calendarId: ${this.syncSettings.calendarId}`);
+  //   this.syncProvider.getAllocations(this.selectedRoom.id, this.syncSettings.calendarId)
   //     .then((allocations: Allocation[]) => {
   //       store.dispatch(allocationSlice.actions.syncExternalAllocations(allocations));
   //     });
@@ -202,7 +221,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
       });
     }
     let form = (
-      <form onSubmit={this.submitSettings}>
+      <form>
         {formElementsArray.map(formElement => (
           <Input
             key={formElement.id}
@@ -234,12 +253,12 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
             label="Cancel"
             onClick={() => this.cancel()}
           />
-          <Button
+          {/* <Button
             // type="icon-text"
             btnType="submit"
             iconId="icon-save"
             label="Save Settings"
-          />
+          /> */}
         </div>
 
         {/* <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button> */}
