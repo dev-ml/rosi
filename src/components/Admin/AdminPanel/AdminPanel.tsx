@@ -6,8 +6,14 @@ import { Equipment } from "../../../models/Equipment";
 import { updateObject, checkValidity } from "../../../shared/utility";
 import Input from "../../UI/Input/Input";
 import "./AdminPanel.scss";
-import SignInButton from "../../Google/SignInButton";
-import GoogleApi from "../../../providers/googleApi";
+// import SignInButton from "../../Google/SignInButton";
+// import GoogleApi from "../../../providers/googleApi";
+import ISyncProvider from "../../../providers/ISyncProvider";
+import GoogleSyncProvider from "../../../providers/GoogleSyncProvider";
+import Allocation from "../../../models/Allocation";
+import allocationSlice from "../../../store/Allocation/AllocationSlice";
+import store from "../../../store/store";
+import { Connect } from "../../../providers/SyncProvider";
 
 interface IAdminPanelProps {
   onSettingsSaved: (settings: any) => void;
@@ -87,16 +93,20 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   private selectedRoom: Room;
   private roomEquipment: Equipment[];
   private syncSettings: any;
-  private googleApi: any;
+  // private googleApi: any;
+  
+  private syncProvider: ISyncProvider;
 
   constructor(props: any) {
     super(props)
+
+    this.syncProvider = new GoogleSyncProvider();
 
     this.selectedRoom = { ...props.selectedRoom };
     this.roomEquipment = { ...props.roomEquipment };
     this.syncSettings = { ...props.syncSettings };
 
-    if (!this.selectedRoom) {
+    if (!this.selectedRoom.id) {
       this.selectedRoom = { ... new Room("Conference Room 1") };
     }
 
@@ -105,7 +115,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     this.state.formData.apiKey.value = this.syncSettings.apiKey;
     this.state.formData.calendarID.value = this.syncSettings.calendarID;
 
-    this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+    // this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
   }
 
   submitSettings = (event: FormEvent<HTMLFormElement>) => {
@@ -148,16 +158,18 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     }
 
     this.setSyncSettings(updatedFormData);
-    this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
+    // this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientID, this.syncSettings.calendarID);
     this.setState({ formData: updatedFormData, formIsValid: formIsValid });
   }
 
   setSyncSettings(data: any) {
     this.syncSettings = {
-      clientID: data.clientID,
-      apiKey: data.apiKey,
-      calendarID: data.calendarID,
+      clientID: data.clientID.value,
+      apiKey: data.apiKey.value,
+      calendarID: data.calendarID.value,
     }
+
+    console.log("[AdminPanel] setSyncSettings: ", this.syncSettings);
   }
 
   clearSettings() {
@@ -167,6 +179,19 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   cancel() {
     this.props.onCancel();
   }
+
+  connect() {
+    console.log(`[AdminPanel] connect with clientId ${this.syncSettings.clientID} apiKey: ${this.syncSettings.apiKey}`);
+    Connect(this.syncSettings.clientID, this.syncSettings.apiKey);
+  }
+  
+  // sync() {
+  //   console.log(`[AdminPanel] sync with roomid ${this.selectedRoom.id} calendarID: ${this.syncSettings.calendarID}`);
+  //   this.syncProvider.getAllocations(this.selectedRoom.id, this.syncSettings.calendarID)
+  //     .then((allocations: Allocation[]) => {
+  //       store.dispatch(allocationSlice.actions.syncExternalAllocations(allocations));
+  //     });
+  // }
 
   render() {
     const formElementsArray = [];
@@ -193,7 +218,11 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         <div>
           <EquipmentAdmin roomId={this.selectedRoom.id} equipment={this.roomEquipment} onEquipmentToggleClick={this.props.onEquipmentToggleClick} />
         </div>
-        <SignInButton roomId={this.selectedRoom.id} googleApi={this.googleApi} />
+        <div>
+          <button type="button" onClick={() => this.connect()}>Connect</button>
+          {/* <button type="button" onClick={() => this.sync()}>Sync</button> */}
+        </div>
+        {/* <SignInButton roomId={this.selectedRoom.id} googleApi={this.googleApi} /> */}
         <div className="AdminPanelButtons">
           <Button
             // type="text"

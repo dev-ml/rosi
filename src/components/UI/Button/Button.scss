@@ -1,7 +1,9 @@
 button {
   background-color: transparent;
   border: none;
+  // [TODO] margin should be removed
   margin: 0 1rem;
+  font-size: var(--font-size-normal);
   // [TODO] temporary fix
   color: var(--color-gray);
 

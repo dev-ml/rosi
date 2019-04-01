@@ -1,5 +1,6 @@
 .AllocationMenu {
   display: flex;
+  flex-wrap: wrap;
 
   &.free > * {
     // background: var(--color-green-secondary);
@@ -15,6 +16,7 @@
   }
 
   > * {
+    margin-top: 1rem;
     margin-right: 1rem;
   }
 }

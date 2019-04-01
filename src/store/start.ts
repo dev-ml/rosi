@@ -16,6 +16,7 @@ import { getSelectedRoomId } from "./UI/UISelectors";
 import uiSlice from "./UI/UISlice";
 import { loadState, saveState } from "./crossSliceReducer";
 import { roundEpochToMinutes } from "../shared/utility";
+import { Sync, SyncDefault } from "../providers/SyncProvider";
 
 ///////////////////////////////////////////////////////////////
 // Starting init
@@ -30,7 +31,13 @@ const start = () => {
     console.log("[Start] Interval");
     // Set time to be alway 1 milliesecond after full minute
     store.dispatch(uiSlice.actions.setTime(roundEpochToMinutes(Date.now()) + 1));
+
+    // [TODO] save state interval
     store.dispatch(saveState());
+
+    // [TODO] sync interval
+    // [TODO] check if connected, can also be done in syncdefault
+    SyncDefault().catch((error: any) => console.log("[Start.ts] SyncDefault error: ", error));
   }, 60 * 1000);
 
 

@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  padding: 4rem;
+  padding: 2.5rem;
   
   .Allocations {
     height: 100%;
@@ -19,6 +19,7 @@
     }
   }
 
+  // [TODO] mixin here
   @media only screen and (max-width: 37.5em) { 
     padding-top: 0;
   }

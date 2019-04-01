@@ -2,7 +2,7 @@ import React from "react";
 import { formatTimeStamp } from "../../../shared/utility";
 import "./TimeView.scss";
 
-// [TODO] show overlapping events with different color
+// [TODO] show overlapping events with different color, in general overlapping events should be tested if they work correctly
 const timeView = (props: any) => {
 
   const mainRadius = 240;
@@ -47,30 +47,30 @@ const timeView = (props: any) => {
 
   function drawCurrentTime(ctx: any) {
     const minutes = UTCToClockTime(props.time);
-    // Draw circle background
-    drawCircleStroke(ctx, minutes + 1, minutes, "#000", 200, 22);
-    
     // Draw available slots for whole day
-    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 203, 5);
+    drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 200, 10);
     
     // Draw busy slots for given allocations
-    // [TODO] The busy slots drawing should have min and max value so it shouldn't exceed 11 hours threshold
     props.allocations
     .map((a: any) => ({from: capLimitMin(props.time, a.from, 1), to: capLimitMax(props.time, a.to, 10)}))
     .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
-    .forEach((e: any) => drawCircleStroke(ctx, e.from, e.to, redColor, 200, 12));
+    .forEach((e: any) => {
+      drawCircleStroke(ctx, e.from, e.from + 1, redColor, 190, 30)
+      drawCircleStroke(ctx, e.from, e.to, redColor, 195, 20)
+      drawCircleStroke(ctx, e.to, e.to + 1, redColor, 190, 30)
+    });
     
     // Draw current time
-    drawCircleStroke(ctx, minutes - 2, minutes + 3, "#FFF", 170, 30);
-    drawCircleStroke(ctx, minutes, minutes + 1, "#000", 196, 20);
+    drawCircleStroke(ctx, minutes - 2, minutes + 3, "#FFF", 170, 25);
+    drawCircleStroke(ctx, minutes, minutes + 1, "#000", 195, 20);
 
     // draw 30 min slots
     for (let i = 0; i < 24; i++) {
       // long line on each full hour and short on not full hour
       if (i % 2) {
-        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 200, 12);
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 198, 12);
       } else {
-        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 196, 20);
+        drawCircleStroke(ctx, i * 30, i * 30 + 1, "#FFF", 195, 20);
       }
     }
     
