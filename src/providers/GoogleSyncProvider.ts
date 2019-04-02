@@ -1,5 +1,6 @@
 import Allocation from "../models/Allocation";
 import ISyncProvider from "./ISyncProvider";
+import { maxSyncResults } from "../shared/consts";
 
 export class GoogleSyncProvider implements ISyncProvider {
 
@@ -83,7 +84,7 @@ export class GoogleSyncProvider implements ISyncProvider {
     return this.gapi.client.calendar.events.list({
       calendarId,
       orderBy: "startTime",
-      maxResults: 1000,
+      maxResults: maxSyncResults,
       showDeleted: true,
       singleEvents: true,
       timeMin: today.toISOString(),

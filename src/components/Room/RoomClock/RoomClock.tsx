@@ -1,7 +1,7 @@
 import React from "react";
 import { formatTimeStamp, dayMinuteToRadian } from "../../../shared/utility";
 import "./RoomClock.scss";
-import { minutesInDay, minutesInHour, oneHour } from "../../../shared/consts";
+import { minutesInDay, minutesInHour, oneHour, clockHoursBackwards, clockHoursForward } from "../../../shared/consts";
 import Allocation from "../../../models/Allocation";
 
 interface IProps {
@@ -12,9 +12,6 @@ interface IProps {
 // [TODO] show overlapping events with different color,
 // in general overlapping events should be tested if they work correctly
 export const RoomClock: React.FC<IProps> = (props: IProps) => {
-  const allocationsFromHoursBack = 1;
-  const allocationsToHours = 10;
-
   const defaultLineWidth = 10;
   const mainRadius = 200;
 
@@ -62,22 +59,22 @@ export const RoomClock: React.FC<IProps> = (props: IProps) => {
 
     // Draw available slots for whole day
     drawCircleStroke(ctx,
-      minutes - allocationsFromHoursBack * minutesInHour,
-      minutes + allocationsToHours * minutesInHour,
+      minutes - clockHoursBackwards * minutesInHour,
+      minutes + clockHoursForward * minutesInHour,
       colorGreen, mainRadius, defaultLineWidth, "round");
 
     // Draw busy slots for given allocations
     const mappedAllocations = props.allocations
-    .map((a: any) => ({from: UTCToClockTime(capLimitMin(props.time, a.from, allocationsFromHoursBack)),
-                       to: UTCToClockTime(capLimitMax(props.time, a.to, allocationsToHours))}));
+    .map((a: Allocation) => ({from: UTCToClockTime(capLimitMin(props.time, a.from, clockHoursBackwards)),
+                       to: UTCToClockTime(capLimitMax(props.time, a.to, clockHoursForward))}));
 
     mappedAllocations
-    .forEach((e: any) => {
+    .forEach((e: {from: number, to: number}) => {
       drawCircleStroke(ctx, e.from, e.to, colorBlack, mainRadius - defaultLineWidth / 2, 2 * defaultLineWidth);
     });
 
     mappedAllocations
-    .forEach((e: any) => {
+    .forEach((e: {from: number, to: number}) => {
       drawCircleStroke(ctx, e.from, e.from + 1, colorRed, mainRadius - defaultLineWidth, 3 * defaultLineWidth);
       drawCircleStroke(ctx, e.from, e.to, colorRed, mainRadius - defaultLineWidth / 2, 2 * defaultLineWidth);
       drawCircleStroke(ctx, e.to, e.to + 1, colorRed, mainRadius - defaultLineWidth , 3 * defaultLineWidth);

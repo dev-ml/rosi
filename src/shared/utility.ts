@@ -1,15 +1,15 @@
-import { minutesInDay } from "./consts";
+import { minutesInDay, oneMinute, minutesInHour } from "./consts";
 
 export const formatTimeStamp = (timeStamp: number): string => {
   return new Date(timeStamp).toLocaleTimeString("en-US", {hour: "2-digit", minute: "2-digit", hour12: false});
 };
 
 export const millisecondsToMinutes = (milliseconds: number): number => {
-  return Math.ceil((milliseconds / 1000) / 60);
+  return Math.ceil(milliseconds / oneMinute);
 };
 
 export const roundEpochToMinutes = (epoch: number): number => {
-  return epoch - (epoch % (1000 * 60));
+  return epoch - (epoch % oneMinute);
 };
 
 export const updateObject = (oldObject: any, updatedProperties: any) => {
@@ -26,8 +26,8 @@ export const dayMinuteToRadian = (minute: number) => {
 };
 
 export const formatHoursMinutes = (timeInMinutes: number) => {
-  const hours = Math.floor(timeInMinutes / 60) ? `${Math.floor(timeInMinutes / 60)} h` : "";
-  const minutes = `${timeInMinutes % 60} min`;
+  const hours = Math.floor(timeInMinutes / minutesInHour) ? `${Math.floor(timeInMinutes / minutesInHour)} h` : "";
+  const minutes = `${timeInMinutes % minutesInHour} min`;
   return `${hours} ${minutes}`;
 };
 

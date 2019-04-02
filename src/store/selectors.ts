@@ -4,6 +4,7 @@ import { Equipment } from "../models/Equipment";
 import { RoomStatus } from "../models/RoomStatus";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
+import { clockMinTime, clockMaxTime, oneMinute } from "../shared/consts";
 
 // General
 export const isRoomOccupied = (name: string) => createSelector(
@@ -53,13 +54,19 @@ export const getSelectedRoomFutureNAllocations = (n: number) => createSelector(
 // [TODO] not only future meeting should be given but also meetings date - 60 min
 export const getSelectedRoomFutureAllocationsForNextNMinutes = (n: number) => createSelector(
   [getSelectedRoomFutureAllocationsSorted, getDate],
-  (allocations: Allocation[], time: number) => allocations.filter((a: Allocation) => a.to < time + n * 60 * 1000),
+  (allocations: Allocation[], time: number) => allocations.filter((a: Allocation) => a.to < time + n * oneMinute),
 );
 
 // Gives allocations that end after from, but also end before to
 export const getSelectedRoomAllocationsFromTo = (from: number, to: number) => createSelector(
   [getSelectedRoomAllocations],
   (allocations: Allocation[]) => allocations.filter((a: Allocation) => a.to > from && a.from < to),
+);
+
+export const getRoomClockAllocations = createSelector(
+  [getDate, getSelectedRoomAllocations],
+  (date: number, allocations: Allocation[]) =>
+    allocations.filter((a: Allocation) => a.to > date - clockMinTime && a.from < date + clockMaxTime),
 );
 
 export const getSelectedRoomNextAllocation = createSelector(

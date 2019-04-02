@@ -2,13 +2,14 @@ import { connect } from "react-redux";
 import RoomView from "../../components/Room/RoomView/RoomView";
 import Allocation from "../../models/Allocation";
 import { Equipment } from "../../models/Equipment";
+import { defaultConfirmationThreshold, defaultMeetingDuration } from "../../shared/consts";
 import allocationSlice from "../../store/Allocation/AllocationSlice";
 import equipmentSlice from "../../store/Equipment/EquipmentSlice";
 import * as selectors from "../../store/selectors";
-import { getDate, getAdminPanelOpen } from "../../store/UI/UISelectors";
+import { getAdminPanelOpen, getDate } from "../../store/UI/UISelectors";
 import uiSlice from "../../store/UI/UISlice";
 
-const mapStateToProps = (state: any, ownProps: any) => {
+const mapStateToProps = (state: any) => {
   // console.log("mapState: ", state);
   const time = getDate(state);
   const adminPanelOpen = getAdminPanelOpen(state);
@@ -17,16 +18,14 @@ const mapStateToProps = (state: any, ownProps: any) => {
 
   // [TODO] move all magin numbers to a config const file
   // [TODO] set proper threshold for confirmation 5 min
-  const roomStatus = selectors.getSelectedRoomStatus(5 * 60 * 1000)(state);
+  const roomStatus = selectors.getSelectedRoomStatus(defaultConfirmationThreshold)(state);
 
   // [TODO] If there are more then two allocations it should be marked in allocationinfobig
   const currentAllocation = selectors.getSelectedRoomCurrentAllocation(state);
   const nextAllocation = selectors.getSelectedRoomNextAllocation(state);
 
-  // get allocations for next 10 hours
-  const clockMaxTime = time + 10 * 60 * 60 * 1000;
-  const clockMinTime = time - 1 * 60 * 60 * 1000;
-  const clockAllocations = selectors.getSelectedRoomAllocationsFromTo(clockMinTime, clockMaxTime)(state);
+  // get allocations for clock
+  const clockAllocations = selectors.getRoomClockAllocations(state);
 
   return {
     currentAllocation,
@@ -50,7 +49,7 @@ const mapDispatchToProps = (dispatch: any) => {
     },
     onAddMeetingClick: (roomId: string, time: number) => {
       dispatch(allocationSlice.actions.addAllocation({
-        ...new Allocation("Ad hoc meeting", roomId, time, time + 60 * 1000 * 30), confirmed: true}));
+        ...new Allocation("Ad hoc meeting", roomId, time, time + defaultMeetingDuration), confirmed: true}));
     },
     onChangeStatusClick: (e: Equipment) => {
       dispatch(equipmentSlice.actions.changeStatus(e));
