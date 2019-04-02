@@ -14,11 +14,10 @@ const Popup = (props: any) => {
       <Backdrop/>
       <div className="PopupContent">
         <Button
-          btnClassName="PopupClose"
-          // style="icon-text"
+          btnClassName="PopupClose btn_dark"
+          style="text"
           onClick={props.onCloseClick}
-          iconId="icon-close"
-          label="Close"
+          label="x"
         />
         {props.children}
       </div>

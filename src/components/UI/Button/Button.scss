@@ -1,14 +1,83 @@
 button {
   background-color: transparent;
   border: none;
-  // [TODO] margin should be removed
-  margin: 0 1rem;
   font-size: var(--font-size-normal);
-  // [TODO] temporary fix
-  color: var(--color-gray);
-
+  color: var(--color-dark);
+  
   &:hover, &:focus {
     outline: none;
   }
+}
 
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--font-size-normal);
+  min-width: 3rem;
+  min-height: 3rem;
+  color: var(--color-light);
+  border: 1px solid var(--color-light);
+  border: none;
+  background: none;
+  outline: none;
+
+  // &:hover {
+  //   color: var(--color-gray);
+  // }
+
+  // &.btn_red {
+  //   background: var(--color-red-secondary);
+  //   border: 1px solid var(--color-red-alt);
+  // }
+
+  // &.btn_green {
+  //   background: var(--color-green-secondary);
+  //   border: 1px solid var(--color-green-alt);
+  // }
+
+  // &.btn_yellow {
+  //   background: var(--color-orange-secondary);
+  //   border: 1px solid var(--color-orange-alt);
+  // }
+
+  &.btn_dark {
+    color: var(--color-dark);
+    
+    .icon {
+      stroke: var(--color-dark);
+      fill: var(--color-dark);
+      margin: 0 1rem 0 0;
+    }
+
+    &:hover {
+      color: var(--color-light-gray);
+
+      .icon {
+        stroke: var(--color-light-gray);
+        fill: var(--color-light-gray);
+      }
+    }
+  }
+  
+  &.btn_flat {
+    border: 1px solid var(--color-dark);
+    padding: 1.5rem 2rem;
+    > * {
+      margin: 0 0.6rem;
+    }
+
+    &:hover {
+      background-color: var(--color-dark-gray);
+    }
+  }
+}
+
+.icon {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  stroke-width: 0;
+  stroke: var(--color-light);
+  fill: var(--color-light);
 }

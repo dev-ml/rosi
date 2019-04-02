@@ -3,16 +3,13 @@
   flex-wrap: wrap;
 
   &.free > * {
-    // background: var(--color-green-secondary);
-    border: 1px solid var(--color-green-alt);
+    border: 1px solid var(--color-green-primary);
   }
   &.occupied > * {
-    // background: var(--color-red-secondary);
-    border: 1px solid var(--color-red-alt);
+    border: 1px solid var(--color-red-primary);
   }
   &.awaiting > * {
-    // background: var(--color-orange-secondary);
-    border: 1px solid var(--color-orange-alt);
+    border: 1px solid var(--color-orange-primary);
   }
 
   > * {

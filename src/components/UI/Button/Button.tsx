@@ -28,7 +28,7 @@ export const Button: React.FC<IProps> = (props: IProps) => {
   switch (props.style) {
     case "icon":
       buttonElement = (
-// tslint:disable-next-line: max-line-length
+        // tslint:disable-next-line: max-line-length
         <button type={getButtonType()} className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.iconId}>
           <svg className={`icon`}>
             <use xlinkHref={`${icons}#${props.iconId}`} />
@@ -38,7 +38,17 @@ export const Button: React.FC<IProps> = (props: IProps) => {
       break;
     case "icon-text":
       buttonElement = (
-        <button type={getButtonType()} className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
+        <button type={getButtonType()} className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
+          <svg className="icon">
+            <use xlinkHref={`${icons}#${props.iconId}`} />
+          </svg>
+          <span>{props.label}</span>
+        </button>
+      );
+      break;
+    case "icon-text-large":
+      buttonElement = (
+        <button type={getButtonType()} className={`btn btn_flat ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
             <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>
@@ -48,7 +58,7 @@ export const Button: React.FC<IProps> = (props: IProps) => {
       break;
     case "text":
       buttonElement = (
-        <button type={getButtonType()} className="btn btn_flat" onClick={props.onClick} aria-label={props.label}>
+        <button type={getButtonType()} className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
           <span>{props.label}</span>
         </button>
       );

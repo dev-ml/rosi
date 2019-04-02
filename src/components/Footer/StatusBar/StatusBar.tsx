@@ -10,7 +10,7 @@ interface IProps {
 export const StatusBar: React.FC<IProps> = (props: IProps) => {
   return (
     <div className="StatusBar">
-      <Button onClick={props.onAdminClick} iconId="icon-settings" label="Admin" />
+      <Button style="icon-text" btnClassName="btn_dark" onClick={props.onAdminClick} iconId="icon-settings" label="Admin" />
     </div>
   );
 };

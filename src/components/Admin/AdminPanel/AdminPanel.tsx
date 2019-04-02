@@ -11,7 +11,6 @@ import { EquipmentType } from "../../../models/EquipmentType";
 interface IAdminPanelProps {
   onSettingsSaved: (settings: any) => void;
   onEquipmentToggleClick: (roomId: string, type: EquipmentType) => void;
-  onSettingsClear: () => void;
   onCancel: () => void;
   onConnect: () => void;
 }
@@ -154,10 +153,6 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     console.log("[AdminPanel] setSyncSettings: ", this.syncSettings);
   }
 
-  clearSettings() {
-    this.props.onSettingsClear();
-  }
-
   cancel() {
     this.props.onCancel();
   }
@@ -203,13 +198,11 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         </div>
         <div className="AdminPanelButtons">
           <Button
-            // type="text"
-            label="Clear Settings"
-            onClick={() => this.clearSettings()}
-          />
-          <Button
-            // type="text"
-            label="Cancel"
+            style="icon-text-large"
+            btnClassName="btn_dark"
+            label="Close"
+            // [TODO] change icon
+            iconId="icon-exit"
             onClick={() => this.cancel()}
           />
         </div>
