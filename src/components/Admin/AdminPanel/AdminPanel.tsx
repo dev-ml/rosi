@@ -1,107 +1,106 @@
-import React, { ChangeEvent, Component, FormEvent } from "react";
-import Room from "../../../models/Room";
-import Button from "../../UI/Button/Button";
-import EquipmentAdmin from "../EquipmentAdmin/EquipmentAdmin";
+import React, { ChangeEvent, Component } from "react";
 import { Equipment } from "../../../models/Equipment";
-import { updateObject, checkValidity } from "../../../shared/utility";
+import Room from "../../../models/Room";
+import { checkValidity, updateObject } from "../../../shared/utility";
+import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
+import EquipmentAdmin from "../EquipmentAdmin/EquipmentAdmin";
 import "./AdminPanel.scss";
-// import SignInButton from "../../Google/SignInButton";
-// import GoogleApi from "../../../providers/googleApi";
-// import ISyncProvider from "../../../providers/ISyncProvider";
-import GoogleSyncProvider from "../../../providers/GoogleSyncProvider";
-import Allocation from "../../../models/Allocation";
-import allocationSlice from "../../../store/Allocation/AllocationSlice";
-import store from "../../../store/store";
-import { Connect } from "../../../providers/SyncProvider";
+import { EquipmentType } from "../../../models/EquipmentType";
 
 interface IAdminPanelProps {
   onSettingsSaved: (settings: any) => void;
-  onEquipmentToggleClick: ({ }) => void;
+  onEquipmentToggleClick: (roomId: string, type: EquipmentType) => void;
   onSettingsClear: () => void;
   onCancel: () => void;
   onConnect: () => void;
 }
 
 interface IAdminPanelState {
-  formIsValid: Boolean;
+  formIsValid: boolean;
   formData: any;
 }
 
 class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
+  static getDerivedStateFromProps(props: any, state: any) {
+    return {
+      formData: {
+        ...state.formData,
+        clientId: { ...state.formData.clientId, value: props.syncSettings.clientId },
+        apiKey: { ...state.formData.apiKey, value: props.syncSettings.apiKey },
+        calendarId: { ...state.formData.calendarId, value: props.syncSettings.calendarId },
+      },
+    };
+  }
+
   state: IAdminPanelState = {
     formData: {
       roomName: {
-        elementType: 'input',
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Conference room 1',
+          type: "text",
+          placeholder: "Conference room 1",
         },
         label: "Room name",
-        value: '',
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      clientId: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'Client ID from google calendar API',
-        },
-        label: "Client ID",
-        value: '',
-        validation: {
-          required: true
-        },
-        valid: false,
-        touched: false
-      },
-      apiKey: {
-        elementType: 'input',
-        elementConfig: {
-          type: 'text',
-          placeholder: 'API key from google calendar API'
-        },
-        label: "API key",
-        value: '',
+        value: "",
         validation: {
           required: true,
         },
         valid: false,
-        touched: false
+        touched: false,
       },
-      calendarId: {
-        elementType: 'input',
+      clientId: {
+        elementType: "input",
         elementConfig: {
-          type: 'text',
-          placeholder: 'Calendar ID can be found in google calendar settings'
+          type: "text",
+          placeholder: "Client ID from google calendar API",
         },
-        label: "Calendar ID",
-        value: '',
+        label: "Client ID",
+        value: "",
         validation: {
-          required: true
+          required: true,
         },
         valid: false,
-        touched: false
+        touched: false,
+      },
+      apiKey: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "API key from google calendar API",
+        },
+        label: "API key",
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
+      },
+      calendarId: {
+        elementType: "input",
+        elementConfig: {
+          type: "text",
+          placeholder: "Calendar ID can be found in google calendar settings",
+        },
+        label: "Calendar ID",
+        value: "",
+        validation: {
+          required: true,
+        },
+        valid: false,
+        touched: false,
       },
     },
-    formIsValid: false
+    formIsValid: false,
   };
 
   private selectedRoom: Room;
   private roomEquipment: Equipment[];
   private syncSettings: any;
-  // private googleApi: any;
-
-  // private syncProvider: ISyncProvider;
 
   constructor(props: any) {
-    super(props)
-
-    // this.syncProvider = new GoogleSyncProvider();
+    super(props);
 
     this.selectedRoom = { ...props.selectedRoom };
     this.roomEquipment = { ...props.roomEquipment };
@@ -115,67 +114,32 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     this.state.formData.clientId.value = this.syncSettings.clientId;
     this.state.formData.apiKey.value = this.syncSettings.apiKey;
     this.state.formData.calendarId.value = this.syncSettings.calendarId;
-
-
-    // this.googleApi = new GoogleApi(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientId, this.syncSettings.calendarId);
   }
-
-  static getDerivedStateFromProps(props: any, state: any) {
-    return {
-      formData: {
-        ...state.formData,
-        clientId: { ...state.formData.clientId, value: props.syncSettings.clientId },
-        apiKey: { ...state.formData.apiKey, value: props.syncSettings.apiKey },
-        calendarId: { ...state.formData.calendarId, value: props.syncSettings.calendarId },
-      }
-    };
-
-    // return state;
-  }
-  // submitSettings = (event: FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault();
-
-  //   const formData: any = {};
-  //   for (let formElementIdentifier in this.state.formData) {
-  //     formData[formElementIdentifier] = this.state.formData[formElementIdentifier].value;
-  //   }
-
-  //   this.selectedRoom.name = formData.roomName;
-  //   const newSettings = {
-  //     syncSettings: this.syncSettings,
-  //     room: this.selectedRoom,
-  //   }
-
-  //   console.log("[AdminPanel] selectedroom:", this.selectedRoom);
-  //   console.log("[AdminPanel] settings: ", newSettings);
-
-  //   this.props.onSettingsSaved(newSettings);
-  // }
 
   inputChangedHandler = (event: ChangeEvent<HTMLInputElement>, inputIdentifier: any) => {
     const updatedFormElement = updateObject(this.state.formData[inputIdentifier], {
       value: event.target.value,
       valid: checkValidity(event.target.value, this.state.formData[inputIdentifier].validation),
-      touched: true
+      touched: true,
     });
     const updatedFormData = updateObject(this.state.formData, {
-      [inputIdentifier]: updatedFormElement
+      [inputIdentifier]: updatedFormElement,
     });
 
     let formIsValid = true;
-    for (let inputIdentifier in updatedFormData) {
-      formIsValid = updatedFormData[inputIdentifier].valid && formIsValid;
+    // tslint:disable-next-line: forin
+    for (const inputId in updatedFormData) {
+      formIsValid = updatedFormData[inputId].valid && formIsValid;
     }
 
     this.setSyncSettings(updatedFormData);
-    // this.googleApi.changeConfig(this.selectedRoom.id, this.syncSettings.apiKey, this.syncSettings.clientId, this.syncSettings.calendarId);
-    this.setState({ formData: updatedFormData, formIsValid: formIsValid });
+    this.setState({ formData: updatedFormData, formIsValid });
 
     this.selectedRoom.name = updatedFormData.roomName.value;
     const newSettings = {
       syncSettings: this.syncSettings,
       room: this.selectedRoom,
-    }
+    };
 
     this.props.onSettingsSaved(newSettings);
   }
@@ -185,7 +149,7 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
       clientId: data.clientId.value,
       apiKey: data.apiKey.value,
       calendarId: data.calendarId.value,
-    }
+    };
 
     console.log("[AdminPanel] setSyncSettings: ", this.syncSettings);
   }
@@ -201,28 +165,21 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
   connect() {
     console.log(`[AdminPanel] connect with clientId ${this.syncSettings.clientId} apiKey: ${this.syncSettings.apiKey}`);
     this.props.onConnect();
-    // Connect(this.syncSettings.clientId, this.syncSettings.apiKey);
   }
-
-  // sync() {
-  //   console.log(`[AdminPanel] sync with roomid ${this.selectedRoom.id} calendarId: ${this.syncSettings.calendarId}`);
-  //   this.syncProvider.getAllocations(this.selectedRoom.id, this.syncSettings.calendarId)
-  //     .then((allocations: Allocation[]) => {
-  //       store.dispatch(allocationSlice.actions.syncExternalAllocations(allocations));
-  //     });
-  // }
 
   render() {
     const formElementsArray = [];
-    for (let key in this.state.formData) {
+    // tslint:disable-next-line: forin
+    for (const key in this.state.formData) {
       formElementsArray.push({
         id: key,
-        config: this.state.formData[key]
+        config: this.state.formData[key],
       });
     }
-    let form = (
+    const form = (
       <form>
-        {formElementsArray.map(formElement => (
+        {// tslint:disable-next-line: jsx-no-multiline-js
+          formElementsArray.map((formElement) => (
           <Input
             key={formElement.id}
             label={formElement.config.label}
@@ -232,16 +189,18 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
             invalid={!formElement.config.valid}
             shouldValidate={formElement.config.validation}
             touched={formElement.config.touched}
-            changed={(event: any) => this.inputChangedHandler(event, formElement.id)} />
+            changed={(event: any) => this.inputChangedHandler(event, formElement.id)}
+          />
         ))}
         <div>
-          <EquipmentAdmin roomId={this.selectedRoom.id} equipment={this.roomEquipment} onEquipmentToggleClick={this.props.onEquipmentToggleClick} />
+          <EquipmentAdmin
+            roomId={this.selectedRoom.id}
+            onEquipmentToggleClick={this.props.onEquipmentToggleClick}
+          />
         </div>
         <div>
           <button type="button" onClick={() => this.connect()}>Connect</button>
-          {/* <button type="button" onClick={() => this.sync()}>Sync</button> */}
         </div>
-        {/* <SignInButton roomId={this.selectedRoom.id} googleApi={this.googleApi} /> */}
         <div className="AdminPanelButtons">
           <Button
             // type="text"
@@ -253,27 +212,15 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
             label="Cancel"
             onClick={() => this.cancel()}
           />
-          {/* <Button
-            // type="icon-text"
-            btnType="submit"
-            iconId="icon-save"
-            label="Save Settings"
-          /> */}
         </div>
 
-        {/* <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button> */}
       </form>
 
     );
-    // if (this.props.loading) {
-    //   form = <Spinner />;
-    // }
     return (
       <div className="AdminPanel">
         <h3>Admin Panel</h3>
         {form}
-        {/* // [TODO] all buttons are submit buttons */}
-
       </div>
     );
   }

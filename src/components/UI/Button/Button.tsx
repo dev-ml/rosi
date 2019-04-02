@@ -2,15 +2,33 @@ import React from "react";
 import "./Button.scss";
 import icons from "../../../assets/symbol-defs.svg";
 
-const Button = (props: any) => {
+interface IProps {
+  label?: string;
+  onClick?: () => void;
+  btnType?: string;
+  btnClassName?: string;
+  iconId?: string;
+  style?: string;
+}
 
-  const getButtonType = () => props.btnType || "button"
+export const Button: React.FC<IProps> = (props: IProps) => {
 
-  let buttonElement = <button type={getButtonType()} className={props.btnClassName}  onClick={props.onClick} aria-label={props.iconId}>{props.label}</button>;
+  const getButtonType = () => props.btnType || "button";
+
+  let buttonElement =
+  <button
+    type={getButtonType()}
+    className={props.btnClassName}
+    onClick={props.onClick}
+    aria-label={props.iconId}
+  >
+    {props.label}
+  </button>;
 
   switch (props.style) {
     case "icon":
       buttonElement = (
+// tslint:disable-next-line: max-line-length
         <button type={getButtonType()} className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.iconId}>
           <svg className={`icon`}>
             <use xlinkHref={`${icons}#${props.iconId}`} />
@@ -36,7 +54,7 @@ const Button = (props: any) => {
       );
       break;
   }
-  
+
   return buttonElement;
 };
 

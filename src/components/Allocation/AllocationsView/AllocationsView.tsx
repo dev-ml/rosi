@@ -4,9 +4,23 @@ import AllocationInfo from "../../Allocation/AllocationInfo/AllocationInfo";
 import AllocationInfoBig from "../../Allocation/AllocationInfoBig/AllocationInfoBig";
 import AllocationMenu from "../../Allocation/AllocationMenu/AllocationMenu";
 import "./AllocationsView.scss";
+import Room from "../../../models/Room";
+import { RoomStatus } from "../../../models/RoomStatus";
+import Allocation from "../../../models/Allocation";
 
-const AllocationsView = (props: any) => {
-  // console.log("roomView: ", props);
+interface IProps {
+  room: Room;
+  time: number;
+  roomStatus: RoomStatus;
+  currentAllocation: Allocation;
+  nextAllocation: Allocation;
+  onAddMeetingClick: (id: string, time: number) => void;
+  onConfirmMeetingClick: (id: string, time: number) => void;
+  onExtendMeetingClick: (id: string, time: number, duration: number) => void;
+  onFinishEarlyClick: (id: string, time: number) => void;
+}
+
+export const AllocationsView: React.FC<IProps> = (props: IProps) => {
   if (!props.room) {
     console.error("[RoomView] No room provided!");
     return <Admin />;
@@ -18,7 +32,8 @@ const AllocationsView = (props: any) => {
   // [TODO] Overlapping events, if current event is overlapping next
   if (props.currentAllocation) {
     currentAllocationTag =
-      <AllocationInfoBig time={props.time}
+      <AllocationInfoBig
+        time={props.time}
         {...props.currentAllocation}
       />;
   }

@@ -1,12 +1,9 @@
 import { createSelector } from "redux-starter-kit";
 import Allocation from "../models/Allocation";
 import { Equipment } from "../models/Equipment";
-import Room from "../models/Room";
 import { RoomStatus } from "../models/RoomStatus";
 import { getRoomAllocations } from "./Allocation/AllocationSelectors";
 import { getDate, getSelectedRoomId } from "./UI/UISelectors";
-import timeView from "../components/Room/TimeView/TimeView";
-import { getRoomEquipment } from "./Equipment/EquipmentSelectors";
 
 // General
 export const isRoomOccupied = (name: string) => createSelector(

@@ -3,7 +3,12 @@ import { Equipment } from "../../../models/Equipment";
 import "./EquipmentBar.scss";
 import Button from "../../UI/Button/Button";
 
-const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: Equipment) => void }) => {
+interface IProps {
+  equipment: Equipment[];
+  onChangeStatusClick: (e: Equipment) => void;
+}
+
+export const EquipmentBar: React.FC<IProps> = (props: IProps) => {
   const mapEquipmentToButton = (e: Equipment) => {
     return <Button
       key={e.type}
@@ -21,4 +26,4 @@ const equipmentBar = (props: { equipment: Equipment[], onChangeStatusClick: (e: 
   );
 };
 
-export default equipmentBar;
+export default EquipmentBar;

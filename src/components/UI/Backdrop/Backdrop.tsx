@@ -2,10 +2,10 @@ import React from "react";
 
 import "./Backdrop.scss";
 
-const Backdrop = () => {
+export const Backdrop: React.FC = () => {
   return (
     <div className="Backdrop"/>
-  )
-}
+  );
+};
 
 export default Backdrop;

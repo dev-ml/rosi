@@ -2,10 +2,22 @@ import React from "react";
 import { RoomStatus } from "../../../models/RoomStatus";
 import "./AllocationMenu.scss";
 import Button from "../../UI/Button/Button";
+import Allocation from "../../../models/Allocation";
+import { defaultExtendDuration } from "../../../shared/consts";
 
-const allocationMenu = (props: any) => {
-  // console.log("Allocation menu:", props.id);
-  // console.log("Props: ", props);
+interface IProps {
+  roomId: string;
+  time: number;
+  roomStatus: RoomStatus;
+  currentAllocation: Allocation;
+  nextAllocation: Allocation;
+  onAddMeetingClick: (id: string, time: number) => void;
+  onConfirmMeetingClick: (id: string, time: number) => void;
+  onExtendMeetingClick: (id: string, time: number, duration: number) => void;
+  onFinishEarlyClick: (id: string, time: number) => void;
+}
+
+export const AllocationMenu: React.FC<IProps> = (props: IProps) => {
   let meetingButtons;
 
   if (props.currentAllocation) {
@@ -26,7 +38,7 @@ const allocationMenu = (props: any) => {
       <>
         <Button
           style="icon-text"
-          onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, props.time, 60000 * 15)}
+          onClick={() => props.onExtendMeetingClick(props.currentAllocation.id, props.time, defaultExtendDuration)}
           iconId="icon-calendar-plus-o"
           label="Extend"
         />
@@ -73,4 +85,4 @@ const allocationMenu = (props: any) => {
   );
 };
 
-export default allocationMenu;
+export default AllocationMenu;

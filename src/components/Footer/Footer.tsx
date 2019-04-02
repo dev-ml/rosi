@@ -1,16 +1,22 @@
 import React from "react";
-import "./Footer.scss";
+import { RoomStatus } from "../../models/RoomStatus";
 import RoomStatusBorder from "../Room/RoomStatusBorder/RoomStatusBorder";
+import "./Footer.scss";
 import StatusBar from "./StatusBar/StatusBar";
 
-const Footer = (props: any) => {
+interface IProps {
+  roomStatus: RoomStatus;
+  onAdminClick: () => void;
+}
+
+export const Footer: React.FC<IProps> = (props: IProps) => {
   return (
     <div className="Footer">
       <RoomStatusBorder roomStatus={props.roomStatus}>
-        <StatusBar room={props.room} onAdminClicked={props.onAdminClick}/>
+        <StatusBar onAdminClick={props.onAdminClick}/>
       </RoomStatusBorder>
     </div>
-  )
+  );
 };
 
 export default Footer;

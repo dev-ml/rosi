@@ -2,8 +2,18 @@ import React from "react";
 import EquipmentBar from "./EquipmentBar/EquipmentBar";
 import "./Header.scss";
 import RoomStatusBorder from "../Room/RoomStatusBorder/RoomStatusBorder";
+import { RoomStatus } from "../../models/RoomStatus";
+import Room from "../../models/Room";
+import { Equipment } from "../../models/Equipment";
 
-const Header = (props: any) => {
+interface IProps {
+  room: Room;
+  roomStatus: RoomStatus;
+  equipment: Equipment[];
+  onChangeStatusClick: (e: Equipment) => void;
+}
+
+export const Header: React.FC<IProps> = (props: IProps) => {
   return (
     <div className="Header">
       <RoomStatusBorder roomStatus={props.roomStatus}>

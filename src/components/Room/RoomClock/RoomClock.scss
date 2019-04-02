@@ -1,4 +1,4 @@
-.TimeView {
+.RoomClock {
   position: relative;
   font-size: var(--font-size-huge);
   min-height: 220px;
@@ -13,7 +13,7 @@
   justify-content: center;
 }
 
-.TimeViewCanvas {
+.RoomClockCanvas {
   position: absolute;
   min-width: 38rem;
   max-width: 80vh;
