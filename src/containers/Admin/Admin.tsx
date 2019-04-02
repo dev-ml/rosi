@@ -2,13 +2,13 @@ import { connect } from "react-redux";
 import * as selectors from "../../store/selectors";
 import roomSlice from "../../store/Room/RoomSlice";
 import Room from "../../models/Room";
-import {saveState, removeState} from "../../store/crossSliceReducer";
+import {saveState, removeState} from "../../store/CrossSlice/CrossSliceActions";
 import uiSlice from "../../store/UI/UISlice";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
 import equipmentSlice from "../../store/Equipment/EquipmentSlice";
 import { getSyncSettings } from "../../store/SyncProvider/SyncProviderSelectors";
 import syncProviderSlice from "../../store/SyncProvider/SyncProviderSlice";
-import { Connect } from "../../store/SyncProvider/SyncProviderActions";
+import { connect as syncConnect } from "../../store/SyncProvider/SyncProviderActions";
 
 const mapStateToProps = (state: any) => {
   const selectedRoom = selectors.getSelectedRoom(state);
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: any) => {
       dispatch(uiSlice.actions.hideAdminPanel());
     },
     onConnect: () => {
-      dispatch(Connect());
+      dispatch(syncConnect());
     }
   };
 };

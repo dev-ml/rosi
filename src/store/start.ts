@@ -1,7 +1,7 @@
 import { roundEpochToMinutes } from "../shared/utility";
-import { loadState, saveState } from "./crossSliceReducer";
+import { loadState, saveState } from "./CrossSlice/CrossSliceActions";
 import store from "./store";
-import { Sync } from "./SyncProvider/SyncProviderActions";
+import { sync } from "./SyncProvider/SyncProviderActions";
 import { hasAutoSync } from "./SyncProvider/SyncProviderSelectors";
 import uiSlice from "./UI/UISlice";
 
@@ -29,7 +29,7 @@ const start = () => {
     // [TODO] check if connected, can also be done in syncdefault
 
     if (hasAutoSync(store.getState())) {
-      store.dispatch(Sync());
+      store.dispatch(sync());
     }
 
   }, refreshInterval);

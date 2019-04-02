@@ -9,7 +9,7 @@ const timeView = (props: any) => {
   const timeRadius = 225;
   const canvasSize = 500;
   const greenColor = "#4CAF50"; //"rgb(139, 195, 74)";
-  const redColor = "#F44336"; // "rgb(255, 87, 34)";
+  const redColor = "rgba(244, 67, 54, 0.5)"; //"rgba(255, 87, 34, 0.5)" // "#F44336"; // ;
 
   function drawCircleStroke(ctx: any, fromMinute: number, toMinute: number, color: string, radius?: number, lineWidth?: number) {
     const clockRadius = radius || mainRadius;
@@ -48,12 +48,21 @@ const timeView = (props: any) => {
   function drawCurrentTime(ctx: any) {
     const minutes = UTCToClockTime(props.time);
     // Draw available slots for whole day
+    ctx.lineCap = "round";
     drawCircleStroke(ctx, minutes - 60, minutes - 120, greenColor, 200, 10);
     
+    ctx.lineCap = "butt";
     // Draw busy slots for given allocations
-    props.allocations
+    const mappedAllocations = props.allocations
     .map((a: any) => ({from: capLimitMin(props.time, a.from, 1), to: capLimitMax(props.time, a.to, 10)}))
-    .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}))
+    .map((a: any) => ({from: UTCToClockTime(a.from), to: UTCToClockTime(a.to)}));
+    
+    mappedAllocations
+    .forEach((e: any) => {
+      drawCircleStroke(ctx, e.from, e.to, "#000", 195, 20)
+    });
+
+    mappedAllocations
     .forEach((e: any) => {
       drawCircleStroke(ctx, e.from, e.from + 1, redColor, 190, 30)
       drawCircleStroke(ctx, e.from, e.to, redColor, 195, 20)

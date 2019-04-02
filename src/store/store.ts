@@ -5,7 +5,7 @@ import equipmentSlice from "./Equipment/EquipmentSlice";
 import roomSlice from "./Room/RoomSlice";
 import uiSlice from "./UI/UISlice";
 import reduceReducers from "reduce-reducers";
-import { crossSliceReducer } from "./crossSliceReducer";
+import { crossSliceReducer } from "./CrossSlice/CrossSliceReducer";
 import syncProviderSlice from "./SyncProvider/SyncProviderSlice";
 
 ///////////////////////////////////////////////////////////////

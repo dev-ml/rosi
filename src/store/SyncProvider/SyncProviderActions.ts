@@ -3,7 +3,7 @@ import * as syncProvider from "../../providers/SyncProvider";
 import { getSelectedRoomId } from "../UI/UISelectors";
 import { getSyncSettings } from "./SyncProviderSelectors";
 
-export const Connect = () => (dispatch: any, getState: any) => {
+export const connect = () => (dispatch: any, getState: any) => {
   dispatch(syncProviderSlice.actions.connectionStarted());
 
   const syncSettings = getSyncSettings(getState());
@@ -14,11 +14,11 @@ export const Connect = () => (dispatch: any, getState: any) => {
   );
 };
 
-export const Disconnect = () => (dispatch: any) => {
+export const disconnect = () => (dispatch: any) => {
   // [TODO];
 };
 
-export const Sync = () => (dispatch: any, getState: any) => {
+export const sync = () => (dispatch: any, getState: any) => {
   dispatch(syncProviderSlice.actions.syncStarted());
 
   const roomId = getSelectedRoomId(getState());
