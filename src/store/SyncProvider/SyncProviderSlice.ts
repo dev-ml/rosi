@@ -10,7 +10,7 @@ const syncProviderSlice = createSlice({
     autoSync: false,
     syncSettings: {},
     syncing: false,
-    lastSynced: 0 as number,
+    lastSynced: 0,
     syncMessage: ""
   },
   reducers: {

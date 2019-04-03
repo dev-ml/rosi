@@ -8,16 +8,16 @@ import equipmentSlice from "../../store/Equipment/EquipmentSlice";
 import * as selectors from "../../store/selectors";
 import { getAdminPanelOpen, getDate } from "../../store/UI/UISelectors";
 import uiSlice from "../../store/UI/UISlice";
+import { Dispatch } from "react";
+import { Action } from "redux";
 
+// [TODO] state is any
 const mapStateToProps = (state: any) => {
-  // console.log("mapState: ", state);
   const time = getDate(state);
   const adminPanelOpen = getAdminPanelOpen(state);
   const room = selectors.getSelectedRoom(state);
   const equipment = selectors.getSelectedRoomEquipment(state);
 
-  // [TODO] move all magin numbers to a config const file
-  // [TODO] set proper threshold for confirmation 5 min
   const roomStatus = selectors.getSelectedRoomStatus(defaultConfirmationThreshold)(state);
 
   // [TODO] If there are more then two allocations it should be marked in allocationinfobig
@@ -26,6 +26,8 @@ const mapStateToProps = (state: any) => {
 
   // get allocations for clock
   const clockAllocations = selectors.getRoomClockAllocations(state);
+
+  const syncInformation = state.syncProvider;
 
   return {
     currentAllocation,
@@ -36,10 +38,11 @@ const mapStateToProps = (state: any) => {
     time,
     adminPanelOpen,
     clockAllocations,
+    syncInformation,
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
   return {
     onAdminClick: () => {
       dispatch(uiSlice.actions.showAdminPanel());

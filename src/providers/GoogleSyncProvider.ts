@@ -17,6 +17,7 @@ export class GoogleSyncProvider implements ISyncProvider {
   private readonly CONFIG = {
     apiKey: "[googleApi] apiKey not provided!!",
     clientId: "[googleApi] clientId not provided!!",
+    client_id: "[googleApi] clientId not provided!!",
     discoveryDocs: this.DISCOVERY_DOCS,
     scope: this.SCOPES,
   };
@@ -33,17 +34,19 @@ export class GoogleSyncProvider implements ISyncProvider {
       }
 
       this.CONFIG.clientId = clientId;
+      this.CONFIG.client_id = clientId;
       this.CONFIG.apiKey = apiKey;
 
       if (this.gapi && this.gapi.client) {
-        console.log("[GoogleSyncProvider] Begin initClient, Config: ", this.CONFIG);
+        console.log("[GoogleSyncProvider] Begin initClient, Config: ", JSON.stringify(this.CONFIG));
 
+        // Creating copy as gapi client was adding fields to config like client_id instead of clientId
         return this.initClient(this.CONFIG);
       } else {
         return Promise.reject(new Error(`[GoogleSyncProvider] Connect gapi client not loaded error`));
       }
     } catch (error) {
-      return Promise.reject(new Error(`[GoogleSyncProvider] Connect unknown error: ${error}`));
+      return Promise.reject(new Error(`[GoogleSyncProvider] Connect unknown error: ${JSON.stringify(error)}`));
     }
 
   };
@@ -72,7 +75,7 @@ export class GoogleSyncProvider implements ISyncProvider {
       }
     } catch (error) {
       console.log("[GoogleSyncProvider] Error: unknown error", error);
-      return Promise.reject(new Error(`[GoogleSyncProvider] Connect unknown error: ${error}`));
+      return Promise.reject(new Error(`[GoogleSyncProvider] Connect unknown error: ${JSON.stringify(error)}`));
     }
   }
 
@@ -94,7 +97,7 @@ export class GoogleSyncProvider implements ISyncProvider {
       return this.syncEvents(roomId, response.result.items);
     }).catch((error: any) => {
       console.log("[GoogleSyncProvider] error while events retrievel: ", error);
-      return Promise.reject(new Error(`[GoogleSyncProvider] error while events retrievel:", ${error}`));
+      return Promise.reject(new Error(`[GoogleSyncProvider] error while events retrievel:", ${JSON.stringify(error)}`));
     });
   }
 
@@ -120,11 +123,12 @@ export class GoogleSyncProvider implements ISyncProvider {
           })
           .catch((error: any) => {
             console.log(`[GoogleSyncProvider] Authorization error`, error);
+            return Promise.reject(new Error(`[GoogleSyncProvider] Authorization error:", ${JSON.stringify(error)}`));
           });
       })
       .catch((error: any) => {
         console.log("[GoogleSyncProvider] Client init error:", error);
-        return Promise.reject(new Error(`[GoogleSyncProvider] Client init error:", ${error}`));
+        return Promise.reject(new Error(`[GoogleSyncProvider] Client init error:", ${JSON.stringify(error)}`));
       });
   }
 

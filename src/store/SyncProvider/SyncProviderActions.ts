@@ -7,6 +7,7 @@ export const connect = () => (dispatch: any, getState: any) => {
   dispatch(syncProviderSlice.actions.connectionStarted());
 
   const syncSettings = getSyncSettings(getState());
+  console.log(`[SyncProviderActions] connect with clientId ${syncSettings.clientId} apiKey: ${syncSettings.apiKey}`);
 
   return syncProvider.Connect(syncSettings.clientId, syncSettings.apiKey).then(
     () => dispatch(syncProviderSlice.actions.connectionSucceeded()),

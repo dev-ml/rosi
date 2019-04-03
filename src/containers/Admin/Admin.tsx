@@ -14,23 +14,26 @@ const mapStateToProps = (state: any) => {
   const selectedRoom = selectors.getSelectedRoom(state);
   const roomEquipment = selectors.getSelectedRoomEquipment(state);
   const syncSettings = getSyncSettings(state);
+  const syncProvider = state.syncProvider;
 
   return {
     selectedRoom,
     roomEquipment,
     syncSettings,
+    syncProvider,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
     onSettingsSaved: (settings: any) => {
+      console.log("[Admin] onSettingsSaved");
       dispatch(roomSlice.actions.changeRoomName({...settings.room}));
       // [TODO] temporary solution, need to be changed when multiple room management will be added
       dispatch(uiSlice.actions.setSelectedRoomId(settings.room.id));
       dispatch(syncProviderSlice.actions.setSyncSettings(settings.syncSettings));
       // dispatch(uiSlice.actions.hideAdminPanel());
-      dispatch(saveState());
+      // dispatch(saveState());
     },
     onEquipmentToggleClick: (roomId: string, type: string) => {
       console.log("onEquipmentToggleClick");

@@ -7,8 +7,14 @@ import Input from "../../UI/Input/Input";
 import EquipmentAdmin from "../EquipmentAdmin/EquipmentAdmin";
 import "./AdminPanel.scss";
 import { EquipmentType } from "../../../models/EquipmentType";
+import SyncProviderAdmin from "../SyncProviderAdmin/SyncProviderAdmin";
+
 
 interface IAdminPanelProps {
+  syncProvider: any;
+  syncSettings: any;
+  roomEquipment: Equipment[];
+  selectedRoom: Room;
   onSettingsSaved: (settings: any) => void;
   onEquipmentToggleClick: (roomId: string, type: EquipmentType) => void;
   onCancel: () => void;
@@ -21,14 +27,19 @@ interface IAdminPanelState {
 }
 
 class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
-  static getDerivedStateFromProps(props: any, state: any) {
+  static getDerivedStateFromProps(props: IAdminPanelProps, state: any) {
+    // selected room
     return {
       formData: {
         ...state.formData,
+        roomName: { ...state.formData.roomName, value: props.selectedRoom.name },
         clientId: { ...state.formData.clientId, value: props.syncSettings.clientId },
         apiKey: { ...state.formData.apiKey, value: props.syncSettings.apiKey },
         calendarId: { ...state.formData.calendarId, value: props.syncSettings.calendarId },
       },
+      selectedRoom: props.selectedRoom,
+      syncSettings: props.syncSettings,
+      syncProvider: props.syncProvider,
     };
   }
 
@@ -92,27 +103,11 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
       },
     },
     formIsValid: false,
+    // [TODO] this initialization should be removed
   };
-
-  private selectedRoom: Room;
-  private roomEquipment: Equipment[];
-  private syncSettings: any;
 
   constructor(props: any) {
     super(props);
-
-    this.selectedRoom = { ...props.selectedRoom };
-    this.roomEquipment = { ...props.roomEquipment };
-    this.syncSettings = { ...props.syncSettings };
-
-    if (!this.selectedRoom.id) {
-      this.selectedRoom = { ... new Room("Conference Room 1") };
-    }
-
-    this.state.formData.roomName.value = this.selectedRoom.name;
-    this.state.formData.clientId.value = this.syncSettings.clientId;
-    this.state.formData.apiKey.value = this.syncSettings.apiKey;
-    this.state.formData.calendarId.value = this.syncSettings.calendarId;
   }
 
   inputChangedHandler = (event: ChangeEvent<HTMLInputElement>, inputIdentifier: any) => {
@@ -131,36 +126,29 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
       formIsValid = updatedFormData[inputId].valid && formIsValid;
     }
 
-    this.setSyncSettings(updatedFormData);
     this.setState({ formData: updatedFormData, formIsValid });
 
-    this.selectedRoom.name = updatedFormData.roomName.value;
+    const newSelectedRoom = { ...this.props.selectedRoom, name: updatedFormData.roomName.value};
     const newSettings = {
-      syncSettings: this.syncSettings,
-      room: this.selectedRoom,
+      syncSettings: {
+        clientId: updatedFormData.clientId.value,
+        apiKey: updatedFormData.apiKey.value,
+        calendarId: updatedFormData.calendarId.value,
+      },
+      room: newSelectedRoom,
     };
 
     this.props.onSettingsSaved(newSettings);
-  }
-
-  setSyncSettings(data: any) {
-    this.syncSettings = {
-      clientId: data.clientId.value,
-      apiKey: data.apiKey.value,
-      calendarId: data.calendarId.value,
-    };
-
-    console.log("[AdminPanel] setSyncSettings: ", this.syncSettings);
   }
 
   cancel() {
     this.props.onCancel();
   }
 
-  connect() {
-    console.log(`[AdminPanel] connect with clientId ${this.syncSettings.clientId} apiKey: ${this.syncSettings.apiKey}`);
-    this.props.onConnect();
-  }
+  // connect() {
+  //   console.log(`[AdminPanel] connect with clientId ${this.state.syncSettings.clientId} apiKey: ${this.state.syncSettings.apiKey}`);
+  //   this.props.onConnect();
+  // }
 
   render() {
     const formElementsArray = [];
@@ -189,12 +177,16 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
         ))}
         <div>
           <EquipmentAdmin
-            roomId={this.selectedRoom.id}
+            roomId={this.props.selectedRoom.id}
+            equipment={this.props.roomEquipment}
             onEquipmentToggleClick={this.props.onEquipmentToggleClick}
           />
         </div>
         <div>
-          <button type="button" onClick={() => this.connect()}>Connect</button>
+          <SyncProviderAdmin
+            onConnect={this.props.onConnect}
+            data={this.props.syncProvider}
+          />
         </div>
         <div className="AdminPanelButtons">
           <Button

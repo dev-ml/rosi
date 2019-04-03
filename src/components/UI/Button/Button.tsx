@@ -9,6 +9,7 @@ interface IProps {
   btnClassName?: string;
   iconId?: string;
   style?: string;
+  disabled?: boolean
 }
 
 export const Button: React.FC<IProps> = (props: IProps) => {
@@ -21,6 +22,7 @@ export const Button: React.FC<IProps> = (props: IProps) => {
     className={props.btnClassName}
     onClick={props.onClick}
     aria-label={props.iconId}
+    disabled={props.disabled}
   >
     {props.label}
   </button>;
@@ -38,7 +40,7 @@ export const Button: React.FC<IProps> = (props: IProps) => {
       break;
     case "icon-text":
       buttonElement = (
-        <button type={getButtonType()} className={`btn ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
+        <button type={getButtonType()} className={`btn btn_icon-text ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
             <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>
@@ -48,7 +50,7 @@ export const Button: React.FC<IProps> = (props: IProps) => {
       break;
     case "icon-text-large":
       buttonElement = (
-        <button type={getButtonType()} className={`btn btn_flat ${props.btnClassName}`} onClick={props.onClick} aria-label={props.label}>
+        <button type={getButtonType()} className={`btn btn_icon-text btn_flat ${props.btnClassName || ""}`} onClick={props.onClick} aria-label={props.label}>
           <svg className="icon">
             <use xlinkHref={`${icons}#${props.iconId}`} />
           </svg>

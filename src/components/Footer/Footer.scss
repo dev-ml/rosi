@@ -1,4 +1,15 @@
 .Footer {
   height: 4vh;
   min-height: 3rem;
+
+  &Content {
+    height: 100%;
+    padding: 0 2vw;
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    font-size: var(--font-size-normal);
+  }
 }

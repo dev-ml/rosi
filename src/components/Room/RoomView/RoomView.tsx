@@ -19,6 +19,7 @@ interface IProps {
   clockAllocations: Allocation[];
   currentAllocation: Allocation;
   nextAllocation: Allocation;
+  syncInformation: any;
   onChangeStatusClick: (e: Equipment) => void;
   onAdminClick: () => void;
   onPopupCloseClick: () => void;

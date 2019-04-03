@@ -17,3 +17,5 @@ export const clockMaxTime = clockHoursForward * oneHour;
 export const clockMinTime = clockHoursBackwards * oneHour;
 
 export const maxSyncResults = 1000;
+export const syncInterval = 5 * oneMinute;
+export const uiTimeOffset = 1;

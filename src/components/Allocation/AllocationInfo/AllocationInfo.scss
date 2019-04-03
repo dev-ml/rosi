@@ -9,6 +9,8 @@
 
   margin: 0 20rem;
 
+  // [TODO] when there is no current meeting and next meeting is in confirmation phase,
+  // it should be displayed. So this way of hiding it is too naive to work properly
   @include changeAt(tab-port) {
     display: none;
   }

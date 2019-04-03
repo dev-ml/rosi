@@ -1,5 +1,8 @@
 .EquipmentAdmin {
   font-weight: 700;
   margin: 1rem;
-  display: flex;
+
+  &Icons {
+    display: flex;
+  }
 }
