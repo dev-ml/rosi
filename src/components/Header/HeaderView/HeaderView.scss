@@ -1,8 +1,8 @@
-.Header {
+.HeaderView {
   height: 8vh;
   min-height: 40px;
   
-  .HeaderContent {
+  &Content {
     position: relative;
     height: 100%;
     display: flex;

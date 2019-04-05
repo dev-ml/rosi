@@ -1,8 +1,8 @@
 import React from "react";
 import Admin from "../../../containers/Admin/Admin";
-import AllocationInfo from "../../Allocation/AllocationInfo/AllocationInfo";
-import AllocationInfoBig from "../../Allocation/AllocationInfoBig/AllocationInfoBig";
-import AllocationMenu from "../../Allocation/AllocationMenu/AllocationMenu";
+import AllocationInfo from "../AllocationInfo/AllocationInfo";
+import AllocationInfoBig from "../AllocationInfoBig/AllocationInfoBig";
+import AllocationMenu from "../AllocationMenu/AllocationMenu";
 import "./AllocationsView.scss";
 import Room from "../../../models/Room";
 import { RoomStatus } from "../../../models/RoomStatus";

@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
-import * as selectors from "../../store/selectors";
-import roomSlice from "../../store/Room/RoomSlice";
-import Room from "../../models/Room";
-import {saveState, removeState} from "../../store/CrossSlice/CrossSliceActions";
-import uiSlice from "../../store/UI/UISlice";
 import AdminPanel from "../../components/Admin/AdminPanel/AdminPanel";
+import { removeState } from "../../store/CrossSlice/CrossSliceActions";
 import equipmentSlice from "../../store/Equipment/EquipmentSlice";
+import roomSlice from "../../store/Room/RoomSlice";
+import * as selectors from "../../store/selectors";
+import { connect as syncConnect } from "../../store/SyncProvider/SyncProviderActions";
 import { getSyncSettings } from "../../store/SyncProvider/SyncProviderSelectors";
 import syncProviderSlice from "../../store/SyncProvider/SyncProviderSlice";
-import { connect as syncConnect } from "../../store/SyncProvider/SyncProviderActions";
+import uiSlice from "../../store/UI/UISlice";
 
 const mapStateToProps = (state: any) => {
   const selectedRoom = selectors.getSelectedRoom(state);

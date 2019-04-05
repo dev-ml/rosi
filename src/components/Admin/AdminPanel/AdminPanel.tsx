@@ -145,11 +145,6 @@ class AdminPanel extends Component<IAdminPanelProps, IAdminPanelState> {
     this.props.onCancel();
   }
 
-  // connect() {
-  //   console.log(`[AdminPanel] connect with clientId ${this.state.syncSettings.clientId} apiKey: ${this.state.syncSettings.apiKey}`);
-  //   this.props.onConnect();
-  // }
-
   render() {
     const formElementsArray = [];
     // tslint:disable-next-line: forin

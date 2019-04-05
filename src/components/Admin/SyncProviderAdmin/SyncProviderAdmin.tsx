@@ -39,7 +39,6 @@ const SyncProviderAdmin = (props: IProps) => {
       <label className="Label">Sync</label>
       {button}
       <span>{props.data.connectionMessage}</span>
-      {/* <button type="button" onClick={() => props.onConnect()}>{button}</button> */}
     </div>
   )
 }

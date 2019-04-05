@@ -1,9 +1,9 @@
 import React from "react";
-import { RoomStatus } from "../../models/RoomStatus";
-import RoomStatusBorder from "../Room/RoomStatusBorder/RoomStatusBorder";
-import "./Footer.scss";
-import SyncStatusBar from "./SyncStatusBar/SyncStatusBar";
-import Button from "../UI/Button/Button";
+import { RoomStatus } from "../../../models/RoomStatus";
+import RoomStatusBorder from "../../Room/RoomStatusBorder/RoomStatusBorder";
+import "./FooterView.scss";
+import SyncStatusBar from "../SyncStatusBar/SyncStatusBar";
+import Button from "../../UI/Button/Button";
 
 interface IProps {
   roomStatus: RoomStatus;
@@ -11,11 +11,11 @@ interface IProps {
   onAdminClick: () => void;
 }
 
-export const Footer: React.FC<IProps> = (props: IProps) => {
+export const FooterView: React.FC<IProps> = (props: IProps) => {
   return (
-    <div className="Footer">
+    <div className="FooterView">
       <RoomStatusBorder roomStatus={props.roomStatus}>
-        <div className="FooterContent">
+        <div className="FooterViewContent">
           <SyncStatusBar syncInformation={props.syncInformation}/>
           <Button
             style="icon-text"
@@ -30,4 +30,4 @@ export const Footer: React.FC<IProps> = (props: IProps) => {
   );
 };
 
-export default Footer;
+export default FooterView;

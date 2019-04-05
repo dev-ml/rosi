@@ -1,10 +1,10 @@
 import React from "react";
-import EquipmentBar from "./EquipmentBar/EquipmentBar";
-import "./Header.scss";
-import RoomStatusBorder from "../Room/RoomStatusBorder/RoomStatusBorder";
-import { RoomStatus } from "../../models/RoomStatus";
-import Room from "../../models/Room";
-import { Equipment } from "../../models/Equipment";
+import EquipmentBar from "../EquipmentBar/EquipmentBar";
+import "./HeaderView.scss";
+import RoomStatusBorder from "../../Room/RoomStatusBorder/RoomStatusBorder";
+import { RoomStatus } from "../../../models/RoomStatus";
+import Room from "../../../models/Room";
+import { Equipment } from "../../../models/Equipment";
 
 interface IProps {
   room: Room;
@@ -13,11 +13,11 @@ interface IProps {
   onChangeStatusClick: (e: Equipment) => void;
 }
 
-export const Header: React.FC<IProps> = (props: IProps) => {
+export const HeaderView: React.FC<IProps> = (props: IProps) => {
   return (
-    <div className="Header">
+    <div className="HeaderView">
       <RoomStatusBorder roomStatus={props.roomStatus}>
-        <div className="HeaderContent">
+        <div className="HeaderViewContent">
           <div><h1>{props.room.name}</h1></div>
           <div>{new Date().toLocaleDateString()}</div>
           <EquipmentBar equipment={props.equipment} onChangeStatusClick={props.onChangeStatusClick} />
@@ -27,4 +27,4 @@ export const Header: React.FC<IProps> = (props: IProps) => {
   );
 };
 
-export default Header;
+export default HeaderView;

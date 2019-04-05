@@ -1,6 +1,6 @@
 import React from "react";
 import { formatTimeStamp, dayMinuteToRadian } from "../../../shared/utility";
-import "./RoomClock.scss";
+import "./ClockView.scss";
 import { minutesInDay, minutesInHour, oneHour, clockHoursBackwards, clockHoursForward } from "../../../shared/consts";
 import Allocation from "../../../models/Allocation";
 
@@ -11,7 +11,7 @@ interface IProps {
 
 // [TODO] show overlapping events with different color,
 // in general overlapping events should be tested if they work correctly
-export const RoomClock: React.FC<IProps> = (props: IProps) => {
+export const ClockView: React.FC<IProps> = (props: IProps) => {
   const defaultLineWidth = 10;
   const mainRadius = 200;
 
@@ -54,16 +54,15 @@ export const RoomClock: React.FC<IProps> = (props: IProps) => {
     return Math.min(limitTime, currentTime + maxHourRange * oneHour);
   };
 
-  const drawCurrentTime = (ctx: any) => {
+  const drawAvailavleSlots = (ctx: any) => {
     const minutes = UTCToClockTime(props.time);
-
-    // Draw available slots for whole day
     drawCircleStroke(ctx,
       minutes - clockHoursBackwards * minutesInHour,
       minutes + clockHoursForward * minutesInHour,
       colorGreen, mainRadius, defaultLineWidth, "round");
+  };
 
-    // Draw busy slots for given allocations
+  const drawBusySlots = (ctx: any) => {
     const mappedAllocations = props.allocations
     .map((a: Allocation) => ({from: UTCToClockTime(capLimitMin(props.time, a.from, clockHoursBackwards)),
                        to: UTCToClockTime(capLimitMax(props.time, a.to, clockHoursForward))}));
@@ -79,8 +78,11 @@ export const RoomClock: React.FC<IProps> = (props: IProps) => {
       drawCircleStroke(ctx, e.from, e.to, colorRed, mainRadius - defaultLineWidth / 2, 2 * defaultLineWidth);
       drawCircleStroke(ctx, e.to, e.to + 1, colorRed, mainRadius - defaultLineWidth , 3 * defaultLineWidth);
     });
+  };
 
-    // Draw current time
+  const drawClock = (ctx: any) => {
+    const minutes = UTCToClockTime(props.time);
+
     drawCircleStroke(ctx, minutes - (tickWidth / 2 - 1), minutes + tickWidth / 2, colorWhite, tickRadius, tickLength);
     drawCircleStroke(ctx, minutes, minutes + 1, colorBlack, mainRadius - defaultLineWidth / 2, 2 * defaultLineWidth);
 
@@ -97,6 +99,17 @@ export const RoomClock: React.FC<IProps> = (props: IProps) => {
     }
   };
 
+  const draw = (ctx: any) => {
+    // Draw available slots for whole day
+    drawAvailavleSlots(ctx);
+
+    // Draw busy slots for given allocations
+    drawBusySlots(ctx);
+
+    // Draw current time
+    drawClock(ctx);
+  };
+
   const canvas: any = React.createRef();
   // [TODO] This component need to be smart component and this timeout then can be removed
   setTimeout(() => {
@@ -105,16 +118,16 @@ export const RoomClock: React.FC<IProps> = (props: IProps) => {
 
       canvas.current.width = canvasSize;
       canvas.current.height = canvasSize;
-      drawCurrentTime(ctx);
+      draw(ctx);
     }
   }, 10);
 
   return (
-    <div className="RoomClock">
+    <div className="ClockView">
       <span>{formatTimeStamp(props.time)}</span>
-      <canvas className="RoomClockCanvas" id="canvas" ref={canvas} />
+      <canvas className="ClockViewCanvas" id="canvas" ref={canvas} />
     </div>
   );
 };
 
-export default RoomClock;
+export default ClockView;
