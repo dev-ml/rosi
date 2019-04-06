@@ -1,0 +1,15 @@
+.RoomStatusBorder {
+  height: 100%;
+
+  &.free {
+    background: var(--color-green-primary);
+  }
+  
+  &.occupied {
+    background: var(--color-red-primary);
+  }
+
+  &.awaiting {
+    background: var(--color-orange-primary);
+  }
+}

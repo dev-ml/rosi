@@ -1,4 +1,4 @@
-import { uuidv4 } from "../shared/utility";
+import { uuidv4, roundEpochToMinutes } from "../shared/utility";
 
 export default class Allocation {
   public id: string;
@@ -6,8 +6,13 @@ export default class Allocation {
   public by?: string;
   public attendees?: number;
   public agenda?: string;
+  public extId?: string;
+  public extStatus?: string;
 
-  constructor(public title: string, public roomName: string, public from: number, public to: number) {
+  // From and to are epochs rounded to minutes
+  constructor(public title: string, public roomId: string, public from: number, public to: number) {
     this.id = uuidv4();
+    this.from = roundEpochToMinutes(this.from);
+    this.to = roundEpochToMinutes(this.to);
   }
 }

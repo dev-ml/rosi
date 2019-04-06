@@ -1,0 +1,19 @@
+.AllocationMenu {
+  display: flex;
+  flex-wrap: wrap;
+
+  &.free > * {
+    border: 1px solid var(--color-green-primary);
+  }
+  &.occupied > * {
+    border: 1px solid var(--color-red-primary);
+  }
+  &.awaiting > * {
+    border: 1px solid var(--color-orange-primary);
+  }
+
+  > * {
+    margin-top: 1rem;
+    margin-right: 1rem;
+  }
+}

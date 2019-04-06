@@ -1,0 +1,6 @@
+.SyncStatusBar {
+  font-size: var(--font-size-small);
+  > * {
+    margin-right: 1rem;
+  }
+}

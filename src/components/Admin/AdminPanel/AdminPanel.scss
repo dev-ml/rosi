@@ -1,0 +1,15 @@
+.AdminPanel {
+  margin: auto;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  max-width: 90vw;
+  width: 65rem;
+  min-width: 200px;
+
+  padding: 1rem 2rem;
+ 
+  &Buttons {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}

@@ -1,15 +1,37 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
+  "short_name": "ROSI",
+  "name": "ROSI Room Manager",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "scope": "/rosi/",
+  "start_url": "/rosi/index.html",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "assets/icons/icon-32x32-f.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-64x64-f.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-128x128-f.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-256x256-f.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512x512-f.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

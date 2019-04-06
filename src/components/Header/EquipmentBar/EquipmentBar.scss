@@ -1,0 +1,24 @@
+.EquipmentBar {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin: 2rem;
+
+  display: flex;
+
+  > * {
+    margin: 0 0.6rem;
+  }
+
+  .btn {
+    &_broken {
+      .icon { fill: var(--color-red-primary); }
+    }
+    &_notavailable {
+      .icon { fill: var(--color-gray); }
+    }
+    &_available {
+      .icon { fill: var(--color-light); }
+    }
+  }
+}

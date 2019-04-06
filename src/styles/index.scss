@@ -1,6 +1,6 @@
 @import "variables";
 @import "mixins";
-@import "buttons";
+@import "typography";
 
 *,
 *::before,
@@ -15,15 +15,15 @@ html {
 
   @include changeAt(tab-land) {
     // width < 1200?
-    font-size: 55%; //1 rem = 9px, 9/16 = 50%
+    font-size: 50%; //1 rem = 9px, 8/16 
   }
   @include changeAt(tab-port) {
     // width < 900?
-    font-size: 48%; //1 rem = 8px, 8/16 = 50%
+    font-size: 43,75%; //1 rem = 7px, 7/16
   }
   @include changeAt(phone) {
     // width < 600?
-    font-size: 40%; //1 rem = 8px, 8/16 = 50%
+    font-size: 37.5%; //1 rem = 6px, 6/16
   }
 
   @include changeAt(big-desktop) {
@@ -37,6 +37,7 @@ body {
   color: var(--color-light);
   font-family: "Oxygen", sans-serif;
   font-weight: 400;
+
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

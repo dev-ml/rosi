@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 
-import SelectedRoom from "../SelectedRoom/SelectedRoom";
 import "./App.scss";
+import Room from "../Room/Room";
 
 class App extends Component {
   public render() {
-    console.log("hello world", "test");
     return (
       <div className="App">
-        <SelectedRoom/>
+        <Room />
       </div>
     );
   }

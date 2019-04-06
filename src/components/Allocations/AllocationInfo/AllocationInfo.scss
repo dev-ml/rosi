@@ -1,0 +1,17 @@
+@import "../../../styles/mixins";
+
+.AllocationInfo {
+  font-size: var(--font-size-normal);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  margin: 0 20rem;
+
+  // [TODO] when there is no current meeting and next meeting is in confirmation phase,
+  // it should be displayed. So this way of hiding it is too naive to work properly
+  @include changeAt(tab-port) {
+    display: none;
+  }
+}
