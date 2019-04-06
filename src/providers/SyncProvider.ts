@@ -1,10 +1,8 @@
-import ISyncProvider from "./ISyncProvider";
-import GoogleSyncProvider from "./GoogleSyncProvider";
 import Allocation from "../models/Allocation";
-import { getSelectedRoomId } from "../store/UI/UISelectors";
-import store from "../store/store";
 import allocationSlice from "../store/Allocation/AllocationSlice";
-import { getSyncSettings } from "../store/SyncProvider/SyncProviderSelectors";
+import store from "../store/store";
+import GoogleSyncProvider from "./GoogleSyncProvider";
+import ISyncProvider from "./ISyncProvider";
 
 const syncProvider: ISyncProvider = new GoogleSyncProvider();
 
